@@ -24,6 +24,24 @@ npm run build
 npm start
 ```
 
+## Instalar pelo Homebrew
+
+Esta fórmula instala a versão de produção, registra um serviço do macOS e usa
+o perfil local para coletar os contadores. Como este repositório é privado, o
+Git e o SSH do GitHub precisam estar configurados na máquina:
+
+```sh
+brew install --build-from-source ./Formula/tokenusage.rb
+tokenusage start
+```
+
+O comando `tokenusage start` inicia o serviço e abre a dashboard em
+**http://127.0.0.1:3000**. Use `tokenusage stop` para encerrá-lo,
+`tokenusage restart` para reiniciar ou `tokenusage logs` para acompanhar o log.
+O serviço inicia novamente quando você entrar no macOS. Preferências, tarifas
+e logs importados ficam em `~/Library/Application Support/tokenusage`; o
+histórico das ferramentas continua nas pastas originais.
+
 ## Funcionalidades
 
 | Recurso                       | O que você pode acompanhar                                                                                                 |
