@@ -9,7 +9,7 @@ export async function PUT(request: Request) {
     );
   try {
     const text = await request.text();
-    if (text.length > 4096)
+    if (text.length > 16384)
       return Response.json(
         { error: "Configuração muito grande." },
         { status: 413, headers: privateHeaders },

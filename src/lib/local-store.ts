@@ -10,6 +10,12 @@ export const dataDirectory = () =>
       path.join(process.cwd(), ".local-data"),
   );
 const nullableAmount = z.number().finite().min(0).max(1000000).nullable();
+const modelPriceSchema = z.object({
+  inputPer1M: z.number().finite().nonnegative(),
+  outputPer1M: z.number().finite().nonnegative(),
+  cacheReadPer1M: z.number().finite().nonnegative(),
+});
+
 export const settingsSchema = z.object({
   monthlyTokenGoal: z.number().int().positive().max(1e12).nullable(),
   subscriptions: z.object({
@@ -18,6 +24,11 @@ export const settingsSchema = z.object({
     grok: nullableAmount,
     gemini: nullableAmount,
   }),
+  usdToBrlRate: z.number().finite().positive().max(100).optional().default(5.75),
+  customPricing: z
+    .record(z.string().min(1).max(100), modelPriceSchema)
+    .optional()
+    .default({}),
 });
 
 export async function readJson<T>(name: string): Promise<T | null> {

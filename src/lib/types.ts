@@ -1,3 +1,5 @@
+import type { ModelPrice } from "./pricing/types";
+
 export const PROVIDERS = ["codex", "claude", "grok", "gemini"] as const;
 export type Provider = (typeof PROVIDERS)[number];
 export type Channel = "tool" | "api";
@@ -54,11 +56,15 @@ export interface SourceStatus {
 export interface Settings {
   monthlyTokenGoal: number | null;
   subscriptions: Record<Provider, number | null>;
+  usdToBrlRate?: number;
+  customPricing?: Record<string, ModelPrice>;
 }
 
 export const defaultSettings: Settings = {
   monthlyTokenGoal: null,
   subscriptions: { codex: null, claude: null, grok: null, gemini: null },
+  usdToBrlRate: 5.75,
+  customPricing: {},
 };
 
 export interface Snapshot {
