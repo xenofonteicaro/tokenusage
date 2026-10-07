@@ -27,11 +27,11 @@ npm start
 ## Instalar pelo Homebrew
 
 Esta fórmula instala a versão de produção, registra um serviço do macOS e usa
-o perfil local para coletar os contadores. A distribuição usa o tap público
-[`homebrew-tokenusage`](https://github.com/xenofonteicaro/homebrew-tokenusage):
+o perfil local para coletar os contadores. Código, fórmula e releases ficam
+neste mesmo repositório. Use a URL explícita porque o nome não começa com `homebrew-`:
 
 ```sh
-brew tap xenofonteicaro/tokenusage
+brew tap --custom-remote xenofonteicaro/tokenusage https://github.com/xenofonteicaro/tokenusage.git
 brew install --build-from-source xenofonteicaro/tokenusage/tokenusage
 tokenusage start
 ```
@@ -42,6 +42,10 @@ O comando `tokenusage start` inicia o serviço e abre a dashboard em
 O serviço inicia novamente quando você entrar no macOS. Preferências, tarifas
 e logs importados ficam em `~/Library/Application Support/tokenusage`; o
 histórico das ferramentas continua nas pastas originais.
+
+O comando de tap acima também migra instalações que usavam o repositório antigo
+`homebrew-tokenusage`. Depois da migração, `brew update` e `brew upgrade tokenusage`
+consultam este repositório.
 
 O pacote público contém somente os arquivos necessários para construir o app,
 sem histórico Git, documentos internos, screenshots ou dados do perfil. O
