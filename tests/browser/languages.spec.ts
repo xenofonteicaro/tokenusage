@@ -107,7 +107,7 @@ test("language preferences translate the dashboard, survive reloads and fit mobi
       await page
         .getByRole("button", { name: locale.activity, exact: true })
         .click();
-      await expect(page.getByRole("textbox")).toBeVisible();
+      await expect(page.getByRole("searchbox")).toBeVisible();
       await page
         .getByRole("button", { name: locale.settings, exact: true })
         .click();

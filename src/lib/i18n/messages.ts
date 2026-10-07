@@ -361,6 +361,7 @@ export const messages = {
     "{amount} economizados": "{amount} saved",
     "{amount}/mês": "{amount}/month",
     "Meta mensal: {percent}": "Monthly goal: {percent}",
+    "e mais {count}": "and {count} more",
   },
   es: {
     Idioma: "Idioma",
@@ -727,6 +728,7 @@ export const messages = {
     "{amount} economizados": "{amount} ahorrados",
     "{amount}/mês": "{amount}/mes",
     "Meta mensal: {percent}": "Objetivo mensual: {percent}",
+    "e mais {count}": "y {count} más",
   },
   it: {
     Idioma: "Lingua",
@@ -1094,6 +1096,7 @@ export const messages = {
     "{amount} economizados": "{amount} risparmiati",
     "{amount}/mês": "{amount}/mese",
     "Meta mensal: {percent}": "Obiettivo mensile: {percent}",
+    "e mais {count}": "e altri {count}",
   },
   fr: {
     Idioma: "Langue",
@@ -1463,6 +1466,7 @@ export const messages = {
     "{amount} economizados": "{amount} économisés",
     "{amount}/mês": "{amount}/mois",
     "Meta mensal: {percent}": "Objectif mensuel : {percent}",
+    "e mais {count}": "et {count} autres",
   },
   "zh-CN": {
     Idioma: "语言",
@@ -1820,5 +1824,6 @@ export const messages = {
     "{amount} economizados": "已节省 {amount}",
     "{amount}/mês": "{amount}/月",
     "Meta mensal: {percent}": "每月目标：{percent}",
+    "e mais {count}": "及另外 {count} 个",
   },
 } as const;
