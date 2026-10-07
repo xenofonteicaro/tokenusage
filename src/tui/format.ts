@@ -6,18 +6,10 @@ export function bar(fraction: number, width: number): string {
   return "█".repeat(filled) + "░".repeat(Math.max(0, width - filled));
 }
 
-export function percent(fraction: number, digits = 1): string {
-  return `${(fraction * 100).toFixed(digits).replace(".", ",")}%`;
-}
-
-// "2026-10-07" -> "07/10"
-export function shortDate(day: string): string {
+// "2026-10-07" -> "07/10" (day first) or "10/07" for English.
+export function shortDate(day: string, language = "pt-BR"): string {
   const [, month, date] = day.split("-");
-  return `${date}/${month}`;
-}
-
-export function plural(count: number, one: string, many: string): string {
-  return `${count} ${count === 1 ? one : many}`;
+  return language === "en" ? `${month}/${date}` : `${date}/${month}`;
 }
 
 export function clampCursor(cursor: number, length: number): number {

@@ -1,17 +1,13 @@
 import { useMemo } from "react";
 import { Box, Text } from "ink";
-import {
-  dailySeries,
-  formatBRL,
-  formatNumber,
-  formatTokens,
-  formatUSD,
-} from "../../lib/analytics";
+import { dailySeries } from "../../lib/analytics";
 import { overviewMetrics } from "../../lib/overview-metrics";
 import { PROVIDERS, providerInfo, type Provider } from "../../lib/types";
 import { bucketSeries, stackedColumns } from "../chart";
 import { Cell } from "../components/cell";
-import { bar, percent, plural, shortDate, tint } from "../format";
+import { bar, tint } from "../format";
+import { useI18n } from "../i18n-context";
+import type { TuiI18n } from "../i18n";
 import { overviewLayout } from "../layout";
 import type { ScreenProps } from "./types";
 
@@ -23,7 +19,9 @@ interface CardData {
   caption: string;
 }
 
-function cards(data: Metrics, channel: "tool" | "api") {
+function cards(data: Metrics, channel: "tool" | "api", i18n: TuiI18n) {
+  const { t, tn, percent, formatTokens, formatNumber, formatUSD, formatBRL } =
+    i18n;
   const {
     metrics,
     models,
@@ -36,41 +34,46 @@ function cards(data: Metrics, channel: "tool" | "api") {
   } = data;
   const costKind = metrics.estimatedRecords
     ? metrics.costsKnown
-      ? "Misto"
-      : "Estimado"
-    : "Real";
+      ? t("Misto")
+      : t("Estimado")
+    : t("Real");
   const list: CardData[] = [
     {
       label: "TOKENS",
       value: formatTokens(metrics.tokens),
       caption:
         change !== null
-          ? `${change >= 0 ? "▲" : "▼"} ${percent(Math.abs(change))} vs. anterior`
-          : `${formatTokens(metrics.input)} ent. + ${formatTokens(metrics.output)} saí.`,
+          ? `${change >= 0 ? "▲" : "▼"} ${t("{change} vs. anterior", { change: percent(Math.abs(change)) })}`
+          : t("{input} ent. + {output} saí.", {
+              input: formatTokens(metrics.input),
+              output: formatTokens(metrics.output),
+            }),
     },
     {
       label: "CACHE",
       value: percent(metrics.cacheRate),
-      caption: `${formatTokens(metrics.cache)} reutilizados`,
+      caption: t("{count} reutilizados", {
+        count: formatTokens(metrics.cache),
+      }),
     },
     {
-      label: "ECONOMIA POR CACHE",
+      label: t("ECONOMIA POR CACHE"),
       value: hasSavings ? formatUSD(metrics.cacheSavingsUSD) : "—",
       caption: hasSavings
-        ? `${formatBRL(metrics.cacheSavingsBRL)} · ${percent(savingsShare)}${unpricedCache > 0 ? " parcial" : " s/ cache"}`
-        : "Cache sem tarifa",
+        ? `${formatBRL(metrics.cacheSavingsBRL)} · ${percent(savingsShare)} ${unpricedCache > 0 ? t("parcial") : t("s/ cache")}`
+        : t("Cache sem tarifa"),
     },
     {
-      label: channel === "tool" ? "SESSÕES" : "CHAMADAS",
+      label: channel === "tool" ? t("SESSÕES") : t("CHAMADAS"),
       value: formatNumber(metrics.sessions),
-      caption: `${plural(models.length, "modelo", "modelos")} · ${plural(projects.length, "projeto", "projetos")}`,
+      caption: `${tn(models.length, "modelo", "modelos")} · ${tn(projects.length, "projeto", "projetos")}`,
     },
     {
-      label: "CUSTO",
+      label: t("CUSTO"),
       value: hasCost ? formatUSD(metrics.totalCostUSD) : "—",
       caption: hasCost
         ? `${formatBRL(metrics.totalCostBRL)} · ${costKind}`
-        : "Sem tarifa cadastrada",
+        : t("Sem tarifa cadastrada"),
     },
   ];
   return list;
@@ -126,13 +129,15 @@ function Chart({
   width: number;
   rows: number;
 }) {
+  const i18n = useI18n();
+  const { t } = i18n;
   const buckets = bucketSeries(series, width);
   const column = Math.max(1, Math.min(4, Math.floor(width / buckets.length)));
   const grid = stackedColumns(buckets, rows);
   const peak = Math.max(0, ...buckets.map((bucket) => bucket.total));
   const total = buckets.length * column;
-  const first = shortDate(buckets[0].start);
-  const last = shortDate(buckets[buckets.length - 1].end);
+  const first = i18n.shortDate(buckets[0].start);
+  const last = i18n.shortDate(buckets[buckets.length - 1].end);
   const axis =
     total > first.length + last.length
       ? `${first}${" ".repeat(total - first.length - last.length)}${last}`
@@ -140,8 +145,10 @@ function Chart({
   return (
     <Box flexDirection="column">
       <Text wrap="truncate-end" bold>
-        Consumo diário{" "}
-        <Text dimColor>· pico {formatTokens(peak)} por coluna</Text>
+        {t("Consumo diário")}{" "}
+        <Text dimColor>
+          · {t("pico {peak} por coluna", { peak: i18n.formatTokens(peak) })}
+        </Text>
       </Text>
       {grid.map((row, index) => (
         <Text key={index}>
@@ -180,10 +187,11 @@ function Services({
   total: number;
   width: number;
 }) {
+  const { t, percent, formatTokens } = useI18n();
   const barWidth = Math.max(6, Math.min(24, width - 8 - 8 - 8));
   return (
     <Box flexDirection="column" width={width} flexShrink={0}>
-      <Text bold>Por serviço</Text>
+      <Text bold>{t("Por serviço")}</Text>
       {PROVIDERS.map((provider) => {
         const share = total ? values[provider] / total : 0;
         return (
@@ -222,6 +230,7 @@ function Ranking({
   width: number;
   showCache: boolean;
 }) {
+  const { t, percent, formatTokens } = useI18n();
   const fixed = 8 + 7 + (showCache ? 6 : 0);
   const name = Math.max(8, width - fixed - 2);
   return (
@@ -229,7 +238,7 @@ function Ranking({
       <Text bold>{title}</Text>
       <Box>
         <Cell width={name + 2} dimColor>
-          Nome
+          {t("Nome")}
         </Cell>
         <Cell width={8} align="right" dimColor>
           Tokens
@@ -240,7 +249,7 @@ function Ranking({
           </Cell>
         )}
         <Cell width={7} align="right" dimColor>
-          Part.
+          {t("Part.")}
         </Cell>
       </Box>
       {rows.slice(0, limit).map((row, index) => (
@@ -267,25 +276,32 @@ function Ranking({
 }
 
 function Empty({ channel, filtered }: { channel: string; filtered: boolean }) {
+  const { t } = useI18n();
   return (
     <Box flexDirection="column" paddingTop={1}>
       <Text bold>
         {filtered
-          ? "Sem consumo nesta seleção"
+          ? t("Sem consumo nesta seleção")
           : channel === "api"
-            ? "Nenhuma chamada de API importada"
-            : "Seu histórico começa aqui"}
+            ? t("Nenhuma chamada de API importada")
+            : t("Seu histórico começa aqui")}
       </Text>
       <Text dimColor>
         {channel === "api"
-          ? "Importe logs de API pela dashboard web (tokenusage open). Sem registros locais, não há consumo remoto para consultar."
-          : "Esta seleção não tem registros de tokens. Veja a tela Fontes ou mude os filtros."}
+          ? t(
+              "Importe logs de API pela dashboard web (tokenusage open). Sem registros locais, não há consumo remoto para consultar.",
+            )
+          : t(
+              "Esta seleção não tem registros de tokens. Veja a tela Fontes ou mude os filtros.",
+            )}
       </Text>
     </Box>
   );
 }
 
 export function OverviewScreen({ ctx, width, height }: ScreenProps) {
+  const i18n = useI18n();
+  const { t, percent, formatTokens, formatNumber } = i18n;
   const { snapshot, events, filters } = ctx;
   const data = useMemo(
     () => overviewMetrics(snapshot, events, filters),
@@ -320,25 +336,34 @@ export function OverviewScreen({ ctx, width, height }: ScreenProps) {
   return (
     <Box flexDirection="column">
       <CardGrid
-        list={cards(data, filters.channel)}
+        list={cards(data, filters.channel, i18n)}
         columns={layout.cardColumns}
         width={layout.cardWidth}
       />
       {goal ? (
         <Text wrap="truncate-end">
-          <Text dimColor>Meta mensal </Text>
+          <Text dimColor>{t("Meta mensal")} </Text>
           {bar(monthTokens / goal, 20)}
           <Text> {percent(monthTokens / goal, 0)} </Text>
           <Text dimColor>
-            · {formatTokens(monthTokens)} de {formatTokens(goal)} ·{" "}
-            {filters.channel === "tool" ? "ferramentas" : "APIs"}
+            ·{" "}
+            {t("{used} de {goal}", {
+              used: formatTokens(monthTokens),
+              goal: formatTokens(goal),
+            })}{" "}
+            · {filters.channel === "tool" ? t("ferramentas") : "APIs"}
           </Text>
         </Text>
       ) : null}
       {unestimatedRecords > 0 ? (
         <Text wrap="truncate-end" dimColor>
-          {formatNumber(unestimatedRecords)} de {formatNumber(metrics.records)}{" "}
-          registros sem estimativa de custo (modelo sem tarifa).
+          {t(
+            "{missing} de {total} registros sem estimativa de custo (modelo sem tarifa).",
+            {
+              missing: formatNumber(unestimatedRecords),
+              total: formatNumber(metrics.records),
+            },
+          )}
         </Text>
       ) : null}
       {layout.chartRows > 0 && (
@@ -363,7 +388,7 @@ export function OverviewScreen({ ctx, width, height }: ScreenProps) {
       <Box>
         {layout.modelRows > 0 && (
           <Ranking
-            title="Modelos mais usados"
+            title={t("Modelos mais usados")}
             rows={models}
             limit={layout.modelRows}
             total={metrics.tokens}
@@ -374,7 +399,7 @@ export function OverviewScreen({ ctx, width, height }: ScreenProps) {
         {layout.wide && layout.projectRows > 0 && (
           <Box marginLeft={2}>
             <Ranking
-              title="Projetos"
+              title={t("Projetos")}
               rows={projects}
               limit={layout.projectRows}
               total={metrics.tokens}
@@ -386,7 +411,7 @@ export function OverviewScreen({ ctx, width, height }: ScreenProps) {
       </Box>
       {!layout.wide && layout.projectRows > 0 && (
         <Ranking
-          title="Projetos"
+          title={t("Projetos")}
           rows={projects}
           limit={layout.projectRows}
           total={metrics.tokens}

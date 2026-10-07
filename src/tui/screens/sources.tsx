@@ -1,18 +1,22 @@
 import { Box, Text } from "ink";
-import { dayKey, formatNumber, formatTime } from "../../lib/analytics";
+import { dayKey } from "../../lib/analytics";
 import { providerInfo, type SourceStatus } from "../../lib/types";
 import { channelLabel } from "../components/filter-line";
-import { shortDate, tint, visibleWindow } from "../format";
+import { tint, visibleWindow } from "../format";
+import { useI18n } from "../i18n-context";
+import type { Translate } from "../i18n";
 import type { ScreenContext } from "../context";
 import type { ScreenProps } from "./types";
 
-const STATE: Record<SourceStatus["state"], { label: string; color?: string }> =
-  {
-    connected: { label: "Coletando", color: "green" },
-    empty: { label: "Sem contadores", color: "yellow" },
-    missing: { label: "Não encontrado" },
-    error: { label: "Requer atenção", color: "red" },
-  };
+function stateStyle(
+  state: SourceStatus["state"],
+  t: Translate,
+): { label: string; color?: string } {
+  if (state === "connected") return { label: t("Coletando"), color: "green" };
+  if (state === "empty") return { label: t("Sem contadores"), color: "yellow" };
+  if (state === "missing") return { label: t("Não encontrado") };
+  return { label: t("Requer atenção"), color: "red" };
+}
 
 export function sourcesFor(ctx: ScreenContext): SourceStatus[] {
   return ctx.snapshot.sources.filter(
@@ -21,20 +25,21 @@ export function sourcesFor(ctx: ScreenContext): SourceStatus[] {
 }
 
 export function SourcesScreen({ ctx, cursor, pageSize }: ScreenProps) {
+  const { t, tn, shortDate, formatNumber, formatTime } = useI18n();
   const sources = sourcesFor(ctx);
   const { start, end } = visibleWindow(sources.length, cursor, pageSize);
   return (
     <Box flexDirection="column">
       <Text>
-        <Text bold>Fontes de dados</Text>
+        <Text bold>{t("Fontes de dados")}</Text>
         <Text dimColor>
           {" "}
-          · {channelLabel(ctx.filters.channel)} · leitura local, sem chaves de
-          API
+          · {channelLabel(ctx.filters.channel, t)} ·{" "}
+          {t("leitura local, sem chaves de API")}
         </Text>
       </Text>
       {sources.slice(start, end).map((source, offset) => {
-        const state = STATE[source.state];
+        const state = stateStyle(source.state, t);
         const selected = start + offset === cursor;
         return (
           <Box
@@ -48,7 +53,7 @@ export function SourcesScreen({ ctx, cursor, pageSize }: ScreenProps) {
                 <Text color={tint(providerInfo[source.provider].color)}>
                   {providerInfo[source.provider].letter}
                 </Text>{" "}
-                {source.name}
+                {t(source.name)}
               </Text>
               <Box flexShrink={0} marginLeft={2}>
                 <Text color={tint(state.color)} dimColor={!state.color}>
@@ -58,34 +63,42 @@ export function SourcesScreen({ ctx, cursor, pageSize }: ScreenProps) {
             </Box>
             <Text wrap="truncate-end" dimColor>
               {"  "}
-              {source.location}
+              {t(source.location)}
             </Text>
             <Text wrap="truncate-end">
               {"  "}
-              {source.detail}
+              {t(source.detail)}
             </Text>
             <Text wrap="truncate-end" dimColor>
               {"  "}
-              {formatNumber(source.files)} arquivos ·{" "}
-              {formatNumber(source.events)} registros
+              {tn(source.files, "arquivo", "arquivos", formatNumber)} ·{" "}
+              {tn(source.events, "registro", "registros", formatNumber)}
               {source.latest
-                ? ` · último ${shortDate(dayKey(source.latest))} ${formatTime(source.latest)}`
+                ? ` · ${t("último {date}", { date: `${shortDate(dayKey(source.latest))} ${formatTime(source.latest)}` })}`
                 : ""}
               {source.warnings > 0 ? (
                 <Text color={tint("red")}>
                   {" "}
-                  · ⚠ {source.warnings} com falha, totais podem estar
-                  incompletos
+                  ·{" "}
+                  {t("⚠ {count} com falha, totais podem estar incompletos", {
+                    count: source.warnings,
+                  })}
                 </Text>
               ) : null}
             </Text>
           </Box>
         );
       })}
-      {sources.length === 0 && <Text dimColor>Nenhuma fonte neste canal.</Text>}
+      {sources.length === 0 && (
+        <Text dimColor>{t("Nenhuma fonte neste canal.")}</Text>
+      )}
       {sources.length > 0 && (
         <Text dimColor>
-          {start + 1}–{end} de {sources.length}
+          {t("{from}–{to} de {total}", {
+            from: start + 1,
+            to: end,
+            total: sources.length,
+          })}
         </Text>
       )}
     </Box>

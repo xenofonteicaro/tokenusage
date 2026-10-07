@@ -3,8 +3,6 @@ import assert from "node:assert/strict";
 import {
   bar,
   clampCursor,
-  percent,
-  plural,
   shortDate,
   tint,
   visibleWindow,
@@ -15,11 +13,6 @@ test("bar fills proportionally and clamps", () => {
   assert.equal(bar(2, 3), "███");
   assert.equal(bar(-1, 3), "░░░");
   assert.equal(bar(Number.NaN, 4), "░░░░");
-});
-
-test("percent uses a decimal comma", () => {
-  assert.equal(percent(0.1234), "12,3%");
-  assert.equal(percent(0.5, 0), "50%");
 });
 
 test("shortDate turns an ISO day into dd/MM", () => {
@@ -53,8 +46,8 @@ test("tint drops colors when NO_COLOR is set", () => {
   }
 });
 
-test("plural picks the singular only for one", () => {
-  assert.equal(plural(1, "modelo", "modelos"), "1 modelo");
-  assert.equal(plural(0, "modelo", "modelos"), "0 modelos");
-  assert.equal(plural(3, "modelo", "modelos"), "3 modelos");
+test("shortDate follows the order of each language", () => {
+  assert.equal(shortDate("2026-10-07", "pt-BR"), "07/10");
+  assert.equal(shortDate("2026-10-07", "en"), "10/07");
+  assert.equal(shortDate("2026-10-07"), "07/10");
 });

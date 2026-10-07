@@ -1,21 +1,31 @@
 import { render, renderToString } from "ink";
+import { readSettings } from "../lib/local-store";
 import { buildUsagePayload } from "../lib/usage-snapshot";
 import { App } from "./app";
-import { HELP_TEXT, parseArgs, type TuiOptions } from "./args";
+import { helpText, languageFromArgs, parseArgs, type TuiOptions } from "./args";
+import { createTuiI18n } from "./i18n";
 import { OnceView } from "./once";
 
 async function main() {
+  const argv = process.argv.slice(2);
+  // The language saved in the web preferences; a broken file just means the
+  // default language.
+  const saved = await readSettings()
+    .then((settings) => settings.language)
+    .catch(() => undefined);
   let options: TuiOptions;
   try {
-    options = parseArgs(process.argv.slice(2));
+    options = parseArgs(argv, createTuiI18n(languageFromArgs(argv) ?? saved).t);
   } catch (error) {
+    const { t } = createTuiI18n(languageFromArgs(argv) ?? saved);
     console.error(error instanceof Error ? error.message : String(error));
-    console.error("Use tokenusage tui --help para ver as opções.");
+    console.error(t("Use tokenusage tui --help para ver as opções."));
     process.exitCode = 2;
     return;
   }
+  const i18n = createTuiI18n(options.lang ?? saved);
   if (options.help) {
-    console.log(HELP_TEXT);
+    console.log(helpText(i18n.t));
     return;
   }
   if (options.once) {
@@ -35,12 +45,16 @@ async function main() {
   }
   if (!process.stdin.isTTY || !process.stdout.isTTY) {
     console.error(
-      "A TUI precisa de um terminal interativo. Use --once para uma saída estática.",
+      i18n.t(
+        "A TUI precisa de um terminal interativo. Use --once para uma saída estática.",
+      ),
     );
     process.exitCode = 1;
     return;
   }
-  const instance = render(<App options={options} />, { alternateScreen: true });
+  const instance = render(<App options={options} initialLanguage={saved} />, {
+    alternateScreen: true,
+  });
   await instance.waitUntilExit();
 }
 

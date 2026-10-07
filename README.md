@@ -70,7 +70,8 @@ tokenusage tui --once                # imprime a visão geral uma vez e sai
 ```
 
 Requer um terminal de pelo menos 80×24. As opções `--days` (7, 30 ou 90) e
-`--channel` (`tool` ou `api`) definem os filtros iniciais.
+`--channel` (`tool` ou `api`) definem os filtros iniciais; `--lang` escolhe o
+idioma da interface (`pt-BR` ou `en`).
 
 | Tecla                 | Ação                                                            |
 | --------------------- | --------------------------------------------------------------- |
@@ -85,7 +86,9 @@ Esta primeira fase é somente leitura: preferências, tarifas, importação de l
 e exportação CSV continuam na dashboard web. Cores seguem `NO_COLOR`. O comando
 `npm run build:tui` gera o bundle único `dist/tui.mjs`; o subcomando
 `tokenusage tui` no Homebrew entra junto com o próximo release da fórmula.
-A interface da TUI está em português (PT-BR); os demais idiomas valem só para a web.
+A TUI fala português (PT-BR) e inglês. Sem `--lang`, ela segue o idioma salvo em
+**Preferências → Geral → Idioma da interface** da dashboard; espanhol, italiano,
+francês e chinês ainda aparecem em português na TUI, nunca misturados.
 
 ## Funcionalidades
 

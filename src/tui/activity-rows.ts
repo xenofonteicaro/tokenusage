@@ -1,16 +1,16 @@
 import { dayKey, groupEvents, sessionGroups, totals } from "../lib/analytics";
 import type { PricingConfig } from "../lib/pricing/types";
 import { providerInfo, type Provider, type UsageEvent } from "../lib/types";
-import { shortDate } from "./format";
+import { createTuiI18n, type TuiI18n, type Translate } from "./i18n";
 
 export type GroupMode = "session" | "model" | "project" | "day";
 export const GROUP_MODES: GroupMode[] = ["session", "model", "project", "day"];
-export const GROUP_LABELS: Record<GroupMode, string> = {
-  session: "Sessão",
-  model: "Modelo",
-  project: "Projeto",
-  day: "Dia",
-};
+export function groupLabel(mode: GroupMode, t: Translate): string {
+  if (mode === "session") return t("Sessão");
+  if (mode === "model") return t("Modelo");
+  if (mode === "project") return t("Projeto");
+  return t("Dia");
+}
 
 export type CostKind = "real" | "est." | "misto";
 
@@ -64,6 +64,7 @@ export function activityRows(
   mode: GroupMode,
   search: string,
   pricing?: PricingConfig,
+  i18n: Pick<TuiI18n, "tn" | "shortDate"> = createTuiI18n("pt-BR"),
 ): ActivityRow[] {
   let rows: ActivityRow[];
   if (mode === "session") {
@@ -88,8 +89,8 @@ export function activityRows(
         return {
           key: day,
           providers: [...new Set(group.map((row) => row.provider))],
-          label: shortDate(day),
-          detail: `${metrics.sessions} ${metrics.sessions === 1 ? "sessão" : "sessões"}`,
+          label: i18n.shortDate(day),
+          detail: i18n.tn(metrics.sessions, "sessão", "sessões"),
           timestamp: group
             .map((row) => row.timestamp)
             .sort()

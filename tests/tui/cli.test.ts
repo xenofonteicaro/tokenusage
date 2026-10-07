@@ -89,3 +89,52 @@ test("--once prints the overview for a synthetic profile", async () => {
     await rm(fixture, { recursive: true, force: true });
   }
 });
+
+test("--lang en switches help, errors and the --once frame to English", async () => {
+  const help = await tui(["--help", "--lang", "en"]);
+  assert.equal(help.code, 0);
+  assert.match(help.stdout, /Usage: tokenusage tui/);
+  const bad = await tui(["--days", "15", "--lang", "en"]);
+  assert.equal(bad.code, 2);
+  assert.match(bad.stderr, /Use --days with 7, 30 or 90/);
+  const fixture = await mkdtemp(join(tmpdir(), "tokenusage-lang-test-"));
+  try {
+    const once = await tui(["--once", "--lang", "en"], {
+      TOKENUSAGE_PROFILE_DIR: join(fixture, "vazio"),
+      TOKENUSAGE_DATA_DIR: join(fixture, "data"),
+      NO_COLOR: "1",
+    });
+    assert.equal(once.code, 0, once.stderr);
+    assert.match(once.stdout, /tokenusage · Overview/);
+    assert.match(once.stdout, /Period: 30 days/);
+  } finally {
+    await rm(fixture, { recursive: true, force: true });
+  }
+});
+
+test("--once and --help follow the language saved in the preferences", async () => {
+  const fixture = await mkdtemp(join(tmpdir(), "tokenusage-lang-saved-"));
+  try {
+    const data = join(fixture, "data");
+    await mkdir(data, { recursive: true });
+    await writeFile(
+      join(data, "settings.json"),
+      JSON.stringify({
+        monthlyTokenGoal: null,
+        subscriptions: { codex: null, claude: null, grok: null, gemini: null },
+        language: "en",
+      }),
+    );
+    const env = {
+      TOKENUSAGE_PROFILE_DIR: join(fixture, "vazio"),
+      TOKENUSAGE_DATA_DIR: data,
+      NO_COLOR: "1",
+    };
+    const once = await tui(["--once"], env);
+    assert.match(once.stdout, /tokenusage · Overview/);
+    const help = await tui(["--help"], env);
+    assert.match(help.stdout, /Usage: tokenusage tui/);
+  } finally {
+    await rm(fixture, { recursive: true, force: true });
+  }
+});

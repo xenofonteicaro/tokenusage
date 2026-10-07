@@ -7,6 +7,7 @@ import {
   type ActivityRow,
   type GroupMode,
 } from "./activity-rows";
+import { createTuiI18n, type TuiI18n } from "./i18n";
 
 // Everything a screen needs, derived once per snapshot / filter change.
 export interface ScreenContext {
@@ -24,6 +25,7 @@ export function buildContext(
   filters: Filters,
   search: string,
   group: GroupMode,
+  i18n: TuiI18n = createTuiI18n("pt-BR"),
 ): ScreenContext {
   const events = selectEvents(
     snapshot.events,
@@ -41,6 +43,6 @@ export function buildContext(
     pricing,
     search,
     group,
-    rows: activityRows(events, group, search, pricing),
+    rows: activityRows(events, group, search, pricing, i18n),
   };
 }

@@ -260,3 +260,155 @@ test("cache savings and cost show a dash, not zero, without any tariff", async (
     app.unmount();
   }
 });
+
+const english = () => {
+  const base = payload();
+  return payload({ settings: { ...base.settings, language: "en" } });
+};
+
+test("follows the language saved in the web preferences", async () => {
+  const app = mount({ load: async () => english() });
+  try {
+    await app.seen("Daily usage");
+    const frame = app.frame();
+    assert.match(frame, /Overview/);
+    assert.match(
+      frame,
+      /Channel: Tools · Period: 30 days · Service: All · Project: All/,
+    );
+    assert.match(frame, /Updated 12:00/);
+    assert.match(frame, /Monthly goal/);
+    assert.match(frame, /Most used models/);
+    assert.match(frame, /Tab screens {2}c channel {2}d period/);
+    assert.match(frame, /7\.2K/);
+    assert.doesNotMatch(frame, /Visão geral|Período|Consumo diário|Modelos/);
+  } finally {
+    app.unmount();
+  }
+});
+
+test("the --lang option wins over the saved preference", async () => {
+  const app = mount({
+    load: async () => english(),
+    options: {
+      once: false,
+      help: false,
+      days: 30,
+      channel: "tool",
+      lang: "pt-BR",
+    },
+  });
+  try {
+    await app.seen("Consumo diário");
+    assert.match(app.frame(), /Período: 30 dias/);
+  } finally {
+    app.unmount();
+  }
+});
+
+test("activity, sources, help and project picker speak English", async () => {
+  const app = mount({ load: async () => english() });
+  try {
+    await app.seen("Daily usage");
+    await app.press("2");
+    assert.match(app.frame(), /Grouped by Session \(g\) · 3 items/);
+    assert.match(app.frame(), /\/ search/);
+    assert.match(
+      app.frame(),
+      /Project .*Models .*Last .*Tokens .*Cache .*Cost/,
+    );
+    await app.press("g");
+    assert.match(app.frame(), /Grouped by Model/);
+    await app.press("g");
+    await app.press("g");
+    assert.match(app.frame(), /1 session/);
+    await app.press("/");
+    assert.match(app.frame(), /Type to search · Enter confirms · Esc clears/);
+    await app.press(KEYS.escape);
+    await app.press("3");
+    assert.match(app.frame(), /Data sources/);
+    assert.match(app.frame(), /Collecting/);
+    assert.match(app.frame(), /Needs attention/);
+    assert.match(app.frame(), /files · .* records/);
+    await app.press("?");
+    assert.match(app.frame(), /Shortcuts/);
+    assert.match(app.frame(), /Switch screen/);
+    await app.press("x");
+    await app.press("p");
+    assert.match(app.frame(), /All projects/);
+    assert.match(app.frame(), /↑↓ choose · Enter confirm · Esc cancel/);
+  } finally {
+    app.unmount();
+  }
+});
+
+test("English covers errors, loading and partial cost states", async () => {
+  const loading = mount({
+    load: () => new Promise(() => {}),
+    options: {
+      once: false,
+      help: false,
+      days: 30,
+      channel: "tool",
+      lang: "en",
+    },
+  });
+  try {
+    assert.match(loading.frame(), /Collecting/);
+  } finally {
+    loading.unmount();
+  }
+  const failing = mount({
+    load: async () => {
+      throw new Error("disk unavailable");
+    },
+    options: {
+      once: false,
+      help: false,
+      days: 30,
+      channel: "tool",
+      lang: "en",
+    },
+  });
+  try {
+    await failing.seen("Could not read your history.");
+    assert.match(failing.frame(), /r retries · q quits/);
+  } finally {
+    failing.unmount();
+  }
+  const noTariff = mount({
+    load: async () => {
+      const base = payload({ events: [events[1]] });
+      return {
+        ...base,
+        settings: { ...base.settings, language: "en" as const },
+      };
+    },
+  });
+  try {
+    await noTariff.seen("Daily usage");
+    assert.match(noTariff.frame(), /Cache without tariff/);
+    assert.match(noTariff.frame(), /No tariff set/);
+  } finally {
+    noTariff.unmount();
+  }
+});
+
+test("English uses month-first dates, full times and singular counts", async () => {
+  const app = mount({ load: async () => english() });
+  try {
+    await app.seen("Daily usage");
+    await app.press("2");
+    assert.match(app.frame(), /10\/07 \d{2}:\d{2} [AP]M/);
+    await app.press("g");
+    await app.press("g");
+    await app.press("g");
+    assert.match(app.frame(), /10\/07/);
+    assert.doesNotMatch(app.frame(), /07\/10/);
+    await app.press("3");
+    await app.press("c");
+    assert.match(app.frame(), /1 file · 1 record /);
+  } finally {
+    app.unmount();
+  }
+});

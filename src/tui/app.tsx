@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { Box, Text, useApp, useInput, useWindowSize } from "ink";
-import { formatTime } from "../lib/analytics";
 import { buildUsagePayload, type UsagePayload } from "../lib/usage-snapshot";
 import { GROUP_MODES, type GroupMode } from "./activity-rows";
 import type { TuiOptions } from "./args";
@@ -8,6 +7,8 @@ import { FilterLine } from "./components/filter-line";
 import { HelpOverlay, ProjectPicker } from "./components/overlays";
 import { Tabs } from "./components/tabs";
 import { buildContext } from "./context";
+import { createTuiI18n } from "./i18n";
+import { I18nContext } from "./i18n-context";
 import {
   initialFilters,
   nextChannel,
@@ -29,21 +30,26 @@ export interface AppProps {
   intervalMs?: number;
   // Fixed terminal size, used by tests; otherwise follows the real window.
   size?: { columns: number; rows: number };
+  // Language used until the first snapshot reveals the saved preference.
+  initialLanguage?: string;
 }
-
-const HINTS =
-  "Tab telas  c canal  d período  s serviço  p projeto  r atualizar  ? ajuda  q sair";
 
 export function App({
   options,
   load = buildUsagePayload,
   intervalMs = 60_000,
   size,
+  initialLanguage,
 }: AppProps) {
   const live = useWindowSize();
   const { columns, rows } = size ?? live;
   const { exit } = useApp();
   const { snapshot, loading, error, refresh } = useSnapshot(load, intervalMs);
+  // --lang wins, then the language saved in the web preferences.
+  const language =
+    options.lang ?? snapshot?.settings.language ?? initialLanguage;
+  const i18n = useMemo(() => createTuiI18n(language), [language]);
+  const { t } = i18n;
   const [screen, setScreen] = useState(0);
   const [filters, setFilters] = useState(() => initialFilters(options));
   const [search, setSearch] = useState("");
@@ -57,8 +63,9 @@ export function App({
   const [help, setHelp] = useState(false);
 
   const ctx = useMemo(
-    () => (snapshot ? buildContext(snapshot, filters, search, group) : null),
-    [snapshot, filters, search, group],
+    () =>
+      snapshot ? buildContext(snapshot, filters, search, group, i18n) : null,
+    [snapshot, filters, search, group, i18n],
   );
   const def = SCREENS[screen];
   const errorRows = error && snapshot ? 1 : 0;
@@ -161,32 +168,34 @@ export function App({
 
   const status = loading
     ? snapshot
-      ? "Atualizando…"
-      : "Coletando…"
+      ? t("Atualizando…")
+      : t("Coletando…")
     : snapshot
-      ? `Atualizado ${formatTime(snapshot.generatedAt)}`
+      ? t("Atualizado {time}", { time: i18n.formatTime(snapshot.generatedAt) })
       : "";
 
   let body;
   if (tooSmall)
     body = (
       <Text>
-        Janela pequena ({columns}×{rows}). Use pelo menos {MIN_COLUMNS}×
-        {MIN_ROWS} ou pressione q para sair.
+        {t(
+          "Janela pequena ({columns}×{rows}). Use pelo menos {minColumns}×{minRows} ou pressione q para sair.",
+          { columns, rows, minColumns: MIN_COLUMNS, minRows: MIN_ROWS },
+        )}
       </Text>
     );
   else if (!ctx)
     body = error ? (
       <Box flexDirection="column">
         <Text bold color="red">
-          Não foi possível consultar seu histórico.
+          {t("Não foi possível consultar seu histórico.")}
         </Text>
         <Text>{error}</Text>
-        <Text dimColor>r tenta novamente · q sai</Text>
+        <Text dimColor>{t("r tenta novamente · q sai")}</Text>
       </Box>
     ) : (
       <Text dimColor>
-        Coletando o histórico local… a primeira leitura pode demorar.
+        {t("Coletando o histórico local… a primeira leitura pode demorar.")}
       </Text>
     );
   else if (help) body = <HelpOverlay />;
@@ -212,20 +221,28 @@ export function App({
     );
 
   return (
-    <Box flexDirection="column" width={columns} height={rows}>
-      <Tabs labels={SCREENS.map((item) => item.label)} active={screen} />
-      <FilterLine filters={filters} status={status} />
-      {errorRows ? (
-        <Text color="red" wrap="truncate-end">
-          ⚠ Falha ao atualizar: {error} (mostrando os últimos dados)
+    <I18nContext.Provider value={i18n}>
+      <Box flexDirection="column" width={columns} height={rows}>
+        <Tabs labels={SCREENS.map((item) => t(item.label))} active={screen} />
+        <FilterLine filters={filters} status={status} />
+        {errorRows ? (
+          <Text color="red" wrap="truncate-end">
+            {t("⚠ Falha ao atualizar: {error} (mostrando os últimos dados)", {
+              error: error ?? "",
+            })}
+          </Text>
+        ) : null}
+        <Box flexDirection="column" flexGrow={1}>
+          {body}
+        </Box>
+        <Text dimColor wrap="truncate-end">
+          {searching
+            ? t("Digite para buscar · Enter confirma · Esc limpa")
+            : t(
+                "Tab telas  c canal  d período  s serviço  p projeto  r atualizar  ? ajuda  q sair",
+              )}
         </Text>
-      ) : null}
-      <Box flexDirection="column" flexGrow={1}>
-        {body}
       </Box>
-      <Text dimColor wrap="truncate-end">
-        {searching ? "Digite para buscar · Enter confirma · Esc limpa" : HINTS}
-      </Text>
-    </Box>
+    </I18nContext.Provider>
   );
 }
