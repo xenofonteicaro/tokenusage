@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const sans = IBM_Plex_Sans({
@@ -14,6 +15,7 @@ const mono = IBM_Plex_Mono({
   variable: "--font-mono",
   display: "swap",
 });
+
 export const metadata: Metadata = {
   title: "Tokenusage · Seu consumo de IA",
   description:
@@ -24,8 +26,17 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR">
-      <body className={`${sans.variable} ${mono.variable}`}>{children}</body>
+    <html lang="pt-BR" suppressHydrationWarning>
+      <body className={`${sans.variable} ${mono.variable}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
