@@ -41,6 +41,10 @@ export function ActivityScreen({
   const nameWidth = Math.floor(flex * 0.4);
   const detailWidth = flex - nameWidth;
   const [nameTitle, detailTitle] = COLUMN_TITLES[group];
+  // Keep the end of long (pasted) queries and leave the header room to breathe.
+  const searchRoom = Math.max(4, Math.floor(width / 2) - 8);
+  const shownSearch =
+    search.length > searchRoom ? `…${search.slice(-(searchRoom - 1))}` : search;
   const partial = rows.some((row) => row.costUSD !== null && row.uncovered > 0);
   return (
     <Box flexDirection="column">
@@ -54,7 +58,7 @@ export function ActivityScreen({
           {search || searching ? (
             <Text>
               <Text dimColor>Busca: </Text>
-              {search}
+              {shownSearch}
               {searching ? "▌" : ""}
             </Text>
           ) : (

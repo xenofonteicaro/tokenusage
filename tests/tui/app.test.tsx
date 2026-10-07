@@ -219,3 +219,20 @@ test("narrow windows still render the overview within 80x24", async () => {
     app.unmount();
   }
 });
+
+test("a long pasted search keeps the activity header and frame size intact", async () => {
+  const app = mount({ size: { columns: 80, rows: 24 } });
+  try {
+    await app.seen("Consumo diário");
+    await app.press("2");
+    await app.press("/");
+    await app.press(`/Users/synthetic/${"muito-longo/".repeat(8)}fim`);
+    const lines = app.frame().split("\n");
+    assert.ok(lines.length <= 24, `frame has ${lines.length} lines`);
+    assert.ok(lines.every((line) => line.length <= 80));
+    assert.match(app.frame(), /Agrupado por Sessão/);
+    assert.match(app.frame(), /Busca: .*fim▌/);
+  } finally {
+    app.unmount();
+  }
+});
