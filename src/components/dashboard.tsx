@@ -40,6 +40,7 @@ import { ActivityPanel } from "./activity-panel";
 import { Overview } from "./overview";
 import { SettingsPanel } from "./settings-panel";
 import { SourcesPanel } from "./sources-panel";
+import { ThemeToggle } from "./theme-toggle";
 
 type View = "overview" | "activity" | "sources" | "settings";
 const views: { id: View; label: string; icon: LucideIcon }[] = [
@@ -273,6 +274,7 @@ export default function Dashboard() {
               <i />
               Dados locais
             </span>
+            <ThemeToggle />
             <button
               className="icon-button"
               aria-label="Como funciona a coleta"

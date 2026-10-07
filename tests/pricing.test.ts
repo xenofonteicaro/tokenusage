@@ -5,7 +5,6 @@ import {
   calculateEventCost,
   calculateCacheSavings,
 } from "../src/lib/pricing/calculator";
-import { DEFAULT_MODEL_PRICES } from "../src/lib/pricing/defaults";
 import type { UsageEvent } from "../src/lib/types";
 
 test("findModelPrice resolves exact matches, prefix variations and custom overrides", () => {

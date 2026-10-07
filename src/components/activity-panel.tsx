@@ -10,6 +10,7 @@ import {
   sessionGroups,
 } from "@/lib/analytics";
 import { providerInfo, type Channel, type UsageEvent } from "@/lib/types";
+import { Badge } from "@/components/ui/badge";
 
 export function ActivityPanel({
   events,
@@ -99,7 +100,20 @@ export function ActivityPanel({
                       {(row.cacheRate * 100).toFixed(0)}%
                     </td>
                     <td className="mono">
-                      {row.costsKnown ? formatUSD(row.cost) : "—"}
+                      {row.totalCostUSD > 0 ? (
+                        <span className="flex items-center gap-1">
+                          {formatUSD(row.totalCostUSD)}
+                          {row.estimatedRecords > 0 && !row.costsKnown && (
+                            <Badge variant="outline" className="text-[9px] px-1 py-0">
+                              Est.
+                            </Badge>
+                          )}
+                        </span>
+                      ) : row.costsKnown ? (
+                        formatUSD(row.cost)
+                      ) : (
+                        "—"
+                      )}
                     </td>
                   </tr>
                 ))}

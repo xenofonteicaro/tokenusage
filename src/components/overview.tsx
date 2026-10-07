@@ -32,6 +32,7 @@ import {
   type Snapshot,
   type UsageEvent,
 } from "@/lib/types";
+import { Badge } from "@/components/ui/badge";
 import { ProviderDonut, UsageChart } from "./usage-chart";
 
 export function Overview({
@@ -47,13 +48,18 @@ export function Overview({
   onFilter: (filters: Filters) => void;
   navigate: (view: "activity" | "settings" | "sources") => void;
 }) {
-  const metrics = totals(events),
-    models = groupEvents(events, "model"),
-    projects = groupEvents(events, "project");
+  const pricingConfig = {
+    customPrices: snapshot.settings.customPricing,
+    usdToBrlRate: snapshot.settings.usdToBrlRate,
+  };
+  const metrics = totals(events, pricingConfig),
+    models = groupEvents(events, "model", pricingConfig),
+    projects = groupEvents(events, "project", pricingConfig);
   const values = Object.fromEntries(
     PROVIDERS.map((provider) => [
       provider,
-      totals(events.filter((row) => row.provider === provider)).tokens,
+      totals(events.filter((row) => row.provider === provider), pricingConfig)
+        .tokens,
     ]),
   ) as Record<Provider, number>;
   const now = new Date(snapshot.generatedAt);
@@ -122,8 +128,30 @@ export function Overview({
         >
           <span>
             {hasData
-              ? `${formatTokens(metrics.cache)} tokens de entrada reutilizados`
+              ? `${formatTokens(metrics.cache)} tokens reutilizados`
               : "Aguardando contadores de tokens"}
+          </span>
+        </Metric>
+        <Metric
+          label="ECONOMIA POR CACHE"
+          value={
+            hasData && metrics.cacheSavingsUSD > 0
+              ? formatUSD(metrics.cacheSavingsUSD)
+              : "—"
+          }
+          icon={Sparkles}
+        >
+          <span>
+            {hasData && metrics.cacheSavingsUSD > 0 ? (
+              <>
+                <Badge variant="success" className="mr-1 text-[10px] px-1.5 py-0">
+                  Economizado
+                </Badge>
+                {formatBRL(metrics.cacheSavingsBRL)}
+              </>
+            ) : (
+              "Sem tokens de cache no período"
+            )}
           </span>
         </Metric>
         <Metric
@@ -142,17 +170,36 @@ export function Overview({
           </span>
         </Metric>
         <Metric
-          label="CUSTO INFORMADO"
-          value={metrics.costsKnown ? formatUSD(metrics.cost) : "—"}
+          label="CUSTO ESTIMADO / REAL"
+          value={
+            metrics.totalCostUSD > 0
+              ? formatUSD(metrics.totalCostUSD)
+              : metrics.costsKnown
+                ? formatUSD(metrics.cost)
+                : "—"
+          }
           icon={Coins}
         >
           <span>
-            {metrics.costsKnown
-              ? `${costCoverageLabel} dos registros têm custo`
-              : "Custo não disponível nas fontes"}
+            {metrics.totalCostUSD > 0 ? (
+              <>
+                <span className="font-medium mr-1">
+                  {formatBRL(metrics.totalCostBRL)}
+                </span>
+                {metrics.estimatedRecords > 0 && (
+                  <Badge variant="outline" className="text-[10px] px-1.5 py-0">
+                    {metrics.costsKnown > 0 ? "Híbrido" : "Estimado"}
+                  </Badge>
+                )}
+              </>
+            ) : metrics.costsKnown ? (
+              `${costCoverageLabel} dos registros têm custo`
+            ) : (
+              "Preço por modelo não cadastrado"
+            )}
             <span
               className="info-tip"
-              title="Valores registrados pela ferramenta ou pelo arquivo importado. Cobertura parcial; não representam a fatura total nem o preço da assinatura."
+              title="Valores calculados com base na tabela de preços por modelo em USD/BRL e nos custos nativos informados pelas ferramentas."
             >
               <CircleHelp size={13} />
             </span>
