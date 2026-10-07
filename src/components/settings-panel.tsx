@@ -1,16 +1,49 @@
 "use client";
 import { useState } from "react";
-import { Check, Save, ShieldCheck, Wallet } from "lucide-react";
+import {
+  CheckIcon,
+  RotateCcwIcon,
+  SaveIcon,
+  ShieldCheckIcon,
+  Trash2Icon,
+} from "lucide-react";
 import { PROVIDERS, providerInfo, type Settings } from "@/lib/types";
 import { formatBRL } from "@/lib/analytics";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-import { Table } from "@/components/ui/table";
 import type { ModelPrice } from "@/lib/pricing/types";
 import { DEFAULT_MODEL_PRICES } from "@/lib/pricing/defaults";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export function SettingsPanel({
   settings,
@@ -24,6 +57,7 @@ export function SettingsPanel({
     [error, setError] = useState("");
   const [modelName, setModelName] = useState("");
   const prices = { ...DEFAULT_MODEL_PRICES, ...values.customPricing };
+  const hasCustom = Object.keys(values.customPricing ?? {}).length > 0;
   function updatePrice(model: string, field: keyof ModelPrice, value: number) {
     setState("idle");
     setValues({
@@ -85,249 +119,291 @@ export function SettingsPanel({
     }
   }
   return (
-    <div className="settings-layout">
-      <form onSubmit={save} className="panel settings-form">
-        <div className="panel-heading">
-          <div>
-            <span className="eyebrow">DO SEU JEITO</span>
-            <h2>Preferências de acompanhamento</h2>
-          </div>
-          <Wallet size={22} />
-        </div>
-        <Tabs defaultValue="general">
-          <TabsList aria-label="Preferências">
-            <TabsTrigger value="general">Geral</TabsTrigger>
-            <TabsTrigger value="pricing">Tabela de preços</TabsTrigger>
-          </TabsList>
-          <TabsContent value="general">
-            <p className="muted">
-              Informe o que você paga nas assinaturas. Esses valores ficam
-              separados dos custos registrados pelas ferramentas.
-            </p>
-            <div className="subscription-fields">
-              {PROVIDERS.map((provider) => (
-                <label key={provider}>
-                  <span>
-                    <span className={`provider-mark ${provider}`}>
-                      {providerInfo[provider].letter}
+    <div className="grid grid-cols-1 items-start gap-4 md:gap-6 lg:grid-cols-3">
+      <form onSubmit={save} className="lg:col-span-2">
+        <Card>
+          <CardHeader>
+            <CardTitle role="heading" aria-level={2}>
+              Preferências de acompanhamento
+            </CardTitle>
+            <CardDescription>
+              Mensalidades, meta de tokens, cotação e tarifas por modelo.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Tabs defaultValue="general">
+              <TabsList aria-label="Preferências" activateOnFocus>
+                <TabsTrigger value="general">Geral</TabsTrigger>
+                <TabsTrigger value="pricing">Tabela de preços</TabsTrigger>
+              </TabsList>
+              <TabsContent value="general" className="pt-4">
+                <FieldGroup>
+                  <p className="text-sm text-muted-foreground">
+                    Informe o que você paga nas assinaturas. Esses valores ficam
+                    separados dos custos registrados pelas ferramentas.
+                  </p>
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    {PROVIDERS.map((provider) => (
+                      <Field key={provider}>
+                        <FieldLabel htmlFor={`subscription-${provider}`}>
+                          {providerInfo[provider].name}
+                          <span className="font-normal text-muted-foreground">
+                            R$ / mês
+                          </span>
+                        </FieldLabel>
+                        <Input
+                          id={`subscription-${provider}`}
+                          type="number"
+                          min="0"
+                          max="1000000"
+                          step="0.01"
+                          inputMode="decimal"
+                          placeholder="Não informado"
+                          value={values.subscriptions[provider] ?? ""}
+                          onChange={(event) => {
+                            setState("idle");
+                            setValues({
+                              ...values,
+                              subscriptions: {
+                                ...values.subscriptions,
+                                [provider]:
+                                  event.target.value === ""
+                                    ? null
+                                    : Number(event.target.value),
+                              },
+                            });
+                          }}
+                        />
+                      </Field>
+                    ))}
+                  </div>
+                  <div className="flex items-baseline justify-between text-sm">
+                    <span className="text-muted-foreground">
+                      Total mensal informado
                     </span>
-                    {providerInfo[provider].name}
-                    <small>R$ / mês</small>
-                  </span>
-                  <Input
-                    type="number"
-                    min="0"
-                    max="1000000"
-                    step="0.01"
-                    inputMode="decimal"
-                    placeholder="Não informado"
-                    value={values.subscriptions[provider] ?? ""}
-                    onChange={(event) => {
-                      setState("idle");
-                      setValues({
-                        ...values,
-                        subscriptions: {
-                          ...values.subscriptions,
-                          [provider]:
+                    <span className="font-medium tabular-nums">
+                      {formatBRL(monthly)}
+                    </span>
+                  </div>
+                  <Separator />
+                  <Field>
+                    <FieldLabel htmlFor="monthly-goal">
+                      Meta mensal de tokens
+                    </FieldLabel>
+                    <Input
+                      id="monthly-goal"
+                      type="number"
+                      min="1"
+                      max="1000000000000"
+                      step="1"
+                      inputMode="numeric"
+                      placeholder="Ex.: 100000000"
+                      value={values.monthlyTokenGoal ?? ""}
+                      onChange={(event) => {
+                        setState("idle");
+                        setValues({
+                          ...values,
+                          monthlyTokenGoal:
                             event.target.value === ""
                               ? null
                               : Number(event.target.value),
-                        },
-                      });
-                    }}
-                  />
-                </label>
-              ))}
-            </div>
-            <div className="subscription-total">
-              <span>Total mensal informado</span>
-              <strong>{formatBRL(monthly)}</strong>
-            </div>
-            <label className="goal-field">
-              <span>Meta mensal de tokens</span>
-              <small>
-                Opcional. Acompanhamento de consumo, sem bloquear suas
-                ferramentas.
-              </small>
-              <Input
-                type="number"
-                min="1"
-                max="1000000000000"
-                step="1"
-                inputMode="numeric"
-                placeholder="Ex.: 100000000"
-                value={values.monthlyTokenGoal ?? ""}
-                onChange={(event) => {
-                  setState("idle");
-                  setValues({
-                    ...values,
-                    monthlyTokenGoal:
-                      event.target.value === ""
-                        ? null
-                        : Number(event.target.value),
-                  });
-                }}
-              />
-            </label>
-
-            <label className="goal-field">
-              <span>Cotação do Dólar (USD / BRL)</span>
-              <small>
-                Usada para estimar custos e economia em reais. Padrão: R$ 5,75.
-              </small>
-              <Input
-                type="number"
-                min="0.01"
-                max="100"
-                step="any"
-                inputMode="decimal"
-                placeholder="5.75"
-                value={values.usdToBrlRate ?? 5.75}
-                onChange={(event) => {
-                  setState("idle");
-                  setValues({
-                    ...values,
-                    usdToBrlRate:
-                      event.target.value === ""
-                        ? 5.75
-                        : Number(event.target.value),
-                  });
-                }}
-              />
-            </label>
-          </TabsContent>
-          <TabsContent value="pricing">
-            <div className="pricing-section pt-2">
-              <div className="flex items-center justify-between mb-2">
-                <div>
-                  <strong className="block text-sm font-semibold">
-                    Tabela de Preços por Modelo (USD por 1M tokens)
-                  </strong>
-                  <small className="text-[var(--muted-foreground)]">
-                    Preços de referência históricos, sem atualização automática.
-                    Personalize para estimar ferramentas sem custo informado.
-                  </small>
-                </div>
-              </div>
-
-              <div className="add-model-fields">
-                <label>
-                  <span>Nome do modelo</span>
-                  <Input
-                    value={modelName}
-                    maxLength={100}
-                    placeholder="Ex.: meu-modelo"
-                    onChange={(event) => setModelName(event.target.value)}
-                  />
-                </label>
-                <Button variant="outline" type="button" onClick={addModel}>
-                  Adicionar modelo
-                </Button>
-              </div>
-              <div className="table-scroll pricing-table-scroll">
-                <Table className="pricing-table">
-                  <thead>
-                    <tr>
-                      <th>Modelo</th>
-                      <th>Entrada ($)</th>
-                      <th>Saída ($)</th>
-                      <th>Cache ($)</th>
-                      <th>Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Object.entries(prices).map(([model, price]) => (
-                      <tr key={model}>
-                        <td className="pricing-model">
-                          {model}
-                          {values.customPricing?.[model] && (
-                            <Badge variant="outline">Personalizado</Badge>
+                        });
+                      }}
+                    />
+                    <FieldDescription>
+                      Opcional. Acompanhamento de consumo, sem bloquear suas
+                      ferramentas.
+                    </FieldDescription>
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="usd-brl">
+                      Cotação do Dólar (USD / BRL)
+                    </FieldLabel>
+                    <Input
+                      id="usd-brl"
+                      type="number"
+                      min="0.01"
+                      max="100"
+                      step="any"
+                      inputMode="decimal"
+                      placeholder="5.75"
+                      value={values.usdToBrlRate ?? 5.75}
+                      onChange={(event) => {
+                        setState("idle");
+                        setValues({
+                          ...values,
+                          usdToBrlRate:
+                            event.target.value === ""
+                              ? 5.75
+                              : Number(event.target.value),
+                        });
+                      }}
+                    />
+                    <FieldDescription>
+                      Usada para estimar custos e economia em reais. Padrão: R$
+                      5,75.
+                    </FieldDescription>
+                  </Field>
+                </FieldGroup>
+              </TabsContent>
+              <TabsContent value="pricing" className="pt-4">
+                <FieldGroup>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-sm font-medium">
+                      Tabela de Preços por Modelo (USD por 1M tokens)
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Preços de referência históricos, sem atualização
+                      automática. Personalize para estimar ferramentas sem custo
+                      informado.
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
+                    <Field className="sm:flex-1">
+                      <FieldLabel htmlFor="model-name">
+                        Nome do modelo
+                      </FieldLabel>
+                      <Input
+                        id="model-name"
+                        value={modelName}
+                        maxLength={100}
+                        placeholder="Ex.: meu-modelo"
+                        onChange={(event) => setModelName(event.target.value)}
+                      />
+                    </Field>
+                    <Button variant="outline" type="button" onClick={addModel}>
+                      Adicionar modelo
+                    </Button>
+                  </div>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Modelo</TableHead>
+                        <TableHead>Entrada ($)</TableHead>
+                        <TableHead>Saída ($)</TableHead>
+                        <TableHead>Cache ($)</TableHead>
+                        {hasCustom && (
+                          <TableHead className="text-right">Ações</TableHead>
+                        )}
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {Object.entries(prices).map(([model, price]) => (
+                        <TableRow key={model}>
+                          <TableCell className="font-medium">
+                            <span className="inline-flex items-center gap-2">
+                              {model}
+                              {values.customPricing?.[model] && (
+                                <Badge variant="secondary">Personalizado</Badge>
+                              )}
+                            </span>
+                          </TableCell>
+                          {(
+                            [
+                              ["inputPer1M", "Entrada"],
+                              ["outputPer1M", "Saída"],
+                              ["cacheReadPer1M", "Cache"],
+                            ] as const
+                          ).map(([field, label]) => (
+                            <TableCell key={field}>
+                              <Input
+                                className="w-24 text-right tabular-nums"
+                                type="number"
+                                min="0"
+                                max="1000000"
+                                step="any"
+                                required
+                                inputMode="decimal"
+                                aria-label={`${label} de ${model}`}
+                                value={price[field]}
+                                onChange={(event) =>
+                                  updatePrice(
+                                    model,
+                                    field,
+                                    Number(event.target.value),
+                                  )
+                                }
+                              />
+                            </TableCell>
+                          ))}
+                          {hasCustom && (
+                            <TableCell className="text-right">
+                              {values.customPricing?.[model] && (
+                                <Tooltip>
+                                  <TooltipTrigger
+                                    render={
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="icon-sm"
+                                        aria-label={`${DEFAULT_MODEL_PRICES[model] ? "Restaurar padrão" : "Remover modelo"} de ${model}`}
+                                        onClick={() => removePrice(model)}
+                                      />
+                                    }
+                                  >
+                                    {DEFAULT_MODEL_PRICES[model] ? (
+                                      <RotateCcwIcon />
+                                    ) : (
+                                      <Trash2Icon />
+                                    )}
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    {DEFAULT_MODEL_PRICES[model]
+                                      ? "Restaurar padrão"
+                                      : "Remover modelo"}
+                                  </TooltipContent>
+                                </Tooltip>
+                              )}
+                            </TableCell>
                           )}
-                        </td>
-                        {(
-                          [
-                            ["inputPer1M", "Entrada"],
-                            ["outputPer1M", "Saída"],
-                            ["cacheReadPer1M", "Cache"],
-                          ] as const
-                        ).map(([field, label]) => (
-                          <td key={field}>
-                            <Input
-                              type="number"
-                              min="0"
-                              max="1000000"
-                              step="any"
-                              required
-                              inputMode="decimal"
-                              aria-label={`${label} de ${model}`}
-                              value={price[field]}
-                              onChange={(event) =>
-                                updatePrice(
-                                  model,
-                                  field,
-                                  Number(event.target.value),
-                                )
-                              }
-                            />
-                          </td>
-                        ))}
-                        <td>
-                          {values.customPricing?.[model] && (
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              aria-label={`${DEFAULT_MODEL_PRICES[model] ? "Restaurar padrão" : "Remover modelo"} de ${model}`}
-                              onClick={() => removePrice(model)}
-                            >
-                              {DEFAULT_MODEL_PRICES[model]
-                                ? "Restaurar padrão"
-                                : "Remover modelo"}
-                            </Button>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              </div>
-            </div>
-          </TabsContent>
-        </Tabs>
-        {error && (
-          <p className="form-error" role="alert">
-            {error}
-          </p>
-        )}
-        <Button
-          variant="outline"
-          className="button primary"
-          disabled={state === "saving"}
-          type="submit"
-        >
-          {state === "saved" ? <Check size={16} /> : <Save size={16} />}
-          {state === "saving"
-            ? "Salvando…"
-            : state === "saved"
-              ? "Preferências salvas"
-              : "Salvar preferências"}
-        </Button>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </FieldGroup>
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+          <CardFooter className="flex-col items-start gap-3 sm:flex-row sm:items-center">
+            <Button disabled={state === "saving"} type="submit">
+              {state === "saved" ? (
+                <CheckIcon data-icon="inline-start" />
+              ) : (
+                <SaveIcon data-icon="inline-start" />
+              )}
+              {state === "saving"
+                ? "Salvando…"
+                : state === "saved"
+                  ? "Preferências salvas"
+                  : "Salvar preferências"}
+            </Button>
+            {error && <FieldError role="alert">{error}</FieldError>}
+          </CardFooter>
+        </Card>
       </form>
-      <Card className="privacy-panel">
-        <ShieldCheck size={30} />
-        <h3>Seu histórico fica aqui.</h3>
-        <p>
-          Os coletores leem contadores de tokens e metadados de sessão. O
-          conteúdo das conversas não é enviado ao navegador.
-        </p>
-        <p>
-          Preferências e métricas são guardadas localmente neste computador. A
-          dashboard não usa cookies de login nem chaves das suas ferramentas.
-        </p>
-        <span className="privacy-badge">
-          <i />
-          Execução local
-        </span>
+      <Card>
+        <CardHeader>
+          <CardTitle role="heading" aria-level={2}>
+            Seu histórico fica aqui
+          </CardTitle>
+          <CardDescription>Execução local, sem login.</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-3 text-sm text-muted-foreground">
+          <p>
+            Os coletores leem contadores de tokens e metadados de sessão. O
+            conteúdo das conversas não é enviado ao navegador.
+          </p>
+          <p>
+            Preferências e métricas são guardadas localmente neste computador. A
+            dashboard não usa cookies de login nem chaves das suas ferramentas.
+          </p>
+        </CardContent>
+        <CardFooter>
+          <Badge variant="outline">
+            <ShieldCheckIcon data-icon="inline-start" />
+            Execução local
+          </Badge>
+        </CardFooter>
       </Card>
     </div>
   );

@@ -35,7 +35,7 @@ Não apresentar ausência de informação como zero consumo ou zero custo.
 
 ## Produto
 
-Interface em português, visual claro com navegação em grafite e acento verde.
+Interface em português, visual shadcn/ui neutro com temas claro, escuro e sistema.
 Visão geral: tokens, proporção de cache, sessões, custo informado e cobertura;
 série diária por serviço, participação por serviço, ranking por modelo/projeto.
 Atividade: sessões pesquisáveis com tokens/cache e datas. Fontes: diagnóstico
