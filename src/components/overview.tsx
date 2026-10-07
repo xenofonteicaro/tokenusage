@@ -15,24 +15,19 @@ import {
 } from "lucide-react";
 import {
   dailySeries,
-  dayKey,
   formatBRL,
   formatNumber,
   formatTokens,
   formatUSD,
-  groupEvents,
-  previousChange,
-  totals,
   type Filters,
 } from "@/lib/analytics";
+import { overviewMetrics } from "@/lib/overview-metrics";
 import {
   PROVIDERS,
   providerInfo,
-  type Provider,
   type Snapshot,
   type UsageEvent,
 } from "@/lib/types";
-import { calculateEventCost } from "@/lib/pricing/calculator";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -51,54 +46,20 @@ export function Overview({
   onFilter: (filters: Filters) => void;
   navigate: (view: "activity" | "settings" | "sources") => void;
 }) {
-  const pricingConfig = {
-    customPrices: snapshot.settings.customPricing,
-    usdToBrlRate: snapshot.settings.usdToBrlRate,
-  };
-  const metrics = totals(events, pricingConfig),
-    models = groupEvents(events, "model", pricingConfig),
-    projects = groupEvents(events, "project", pricingConfig);
-  const values = Object.fromEntries(
-    PROVIDERS.map((provider) => [
-      provider,
-      totals(
-        events.filter((row) => row.provider === provider),
-        pricingConfig,
-      ).tokens,
-    ]),
-  ) as Record<Provider, number>;
-  const now = new Date(snapshot.generatedAt);
-  const change = previousChange(snapshot.events, filters, now),
+  const {
+    metrics,
+    models,
+    projects,
+    values,
+    change,
+    unestimatedRecords,
+    savingsPercentage,
+    subscriptions,
+    goal,
+    monthTokens,
+  } = overviewMetrics(snapshot, events, filters);
+  const now = new Date(snapshot.generatedAt),
     hasData = events.length > 0;
-  const unestimatedRecords = Math.max(
-    0,
-    metrics.records - metrics.costsKnown - metrics.estimatedRecords,
-  );
-  const modeledCostUSD = events.reduce(
-    (sum, event) =>
-      sum +
-      (calculateEventCost({ ...event, costUSD: null }, pricingConfig).costUSD ??
-        0),
-    0,
-  );
-  const savingsPercentage =
-    modeledCostUSD + metrics.cacheSavingsUSD > 0
-      ? (metrics.cacheSavingsUSD / (modeledCostUSD + metrics.cacheSavingsUSD)) *
-        100
-      : 0;
-  const subscriptions = Object.values(
-    snapshot.settings.subscriptions,
-  ).reduce<number>((sum, value) => sum + (value ?? 0), 0);
-  const goal = snapshot.settings.monthlyTokenGoal;
-  const monthTokens = totals(
-    snapshot.events.filter(
-      (row) =>
-        row.channel === filters.channel &&
-        (filters.provider === "all" || row.provider === filters.provider) &&
-        (!filters.project || row.project === filters.project) &&
-        dayKey(row.timestamp).slice(0, 7) === dayKey(now).slice(0, 7),
-    ),
-  ).tokens;
   return (
     <>
       <div className="metric-grid">
