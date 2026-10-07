@@ -24,20 +24,59 @@ npm run build
 npm start
 ```
 
-## O que aparece
+## Funcionalidades
 
-- **Design System Shadcn & Temas**: alternância suave entre temas Claro, Escuro e Automático (Sistema).
-- Tokens de entrada, saída e cache por serviço, modelo, projeto e período.
-- **Economia por Cache**: cálculo do valor poupado em dólares e reais graças ao prompt caching.
-- **Motor de Precificação & Custos Híbridos**:
-  - Custos reais preservados quando informados pela ferramenta (ex.: Grok ou logs importados).
-  - Custos estimados calculados automaticamente com base na tabela de preços por modelo (Anthropic, OpenAI, xAI, Google) quando a ferramenta não informa o valor (ex.: Codex, Claude Code).
-  - Cotação USD/BRL configurável para conversão financeira unificada.
-- Série diária e comparação com o período anterior, em horários de São Paulo.
-- Histórico de sessões pesquisável e exportação CSV dos registros filtrados,
-  agrupados por sessão, modelo, projeto e dia.
-- Mensalidades em BRL, meta mensal de tokens e tabela de tarifas customizáveis, guardadas localmente.
-- Diagnóstico das fontes e de arquivos/registros que não puderam ser lidos.
+| Recurso                       | O que você pode acompanhar                                                                                                 |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **Quatro ferramentas**        | Histórico local de Codex, Claude Code, Grok Build e Gemini CLI com contadores disponíveis.                                 |
+| **Ferramentas e APIs**        | Visões separadas para sessões locais e logs importados em JSON ou JSONL, com deduplicação.                                 |
+| **Filtros e gráficos**        | Tokens de entrada, saída e cache por serviço, modelo, projeto e período; série diária e comparação com o período anterior. |
+| **Custos em USD e BRL**       | Valores informados pelos logs preservados, estimativas por modelo e cobertura explícita dos registros sem tarifa.          |
+| **Economia por cache**        | Valor estimado economizado em dólares e reais, aproveitamento de tokens e percentual em relação ao cenário sem cache.      |
+| **Tarifas editáveis**         | Edite entrada, saída e leitura de cache; adicione modelos personalizados, restaure padrões ou remova substituições.        |
+| **Preferências locais**       | Cotação USD/BRL, mensalidades em reais e meta mensal de tokens, com atualização dos custos após salvar.                    |
+| **Histórico e exportação**    | Busca por projeto ou modelo e CSV dos registros filtrados, agrupados por sessão, modelo, projeto e dia.                    |
+| **Temas e mobile**            | Temas Claro, Escuro e Sistema; interface responsiva e abas navegáveis pelo teclado.                                        |
+| **Diagnóstico e privacidade** | Estado das fontes e avisos de registros incompletos; execução local sem chaves administrativas ou conteúdo de conversas.   |
+
+## Screenshots
+
+Capturas da aplicação com **dados sintéticos de teste**. Os nomes de projetos,
+contadores, custos e preferências abaixo são exemplos; não representam histórico
+ou métricas pessoais. As tarifas são referências históricas editáveis.
+
+### Visão geral — tema claro
+
+Tokens, cache, custos informados e estimados, gráficos e filtros em uma única visão.
+
+![Dashboard no tema claro com métricas e custos de chamadas sintéticas](docs/screenshots/dashboard-light.png)
+
+<details>
+<summary>Visão geral no tema escuro</summary>
+
+![Dashboard no tema escuro com os mesmos dados sintéticos](docs/screenshots/dashboard-dark.png)
+
+</details>
+
+<details>
+<summary>Preferências e tabela de preços</summary>
+
+Tarifas por milhão de tokens, editáveis para cada modelo.
+
+![Tabela de preços por modelo no tema escuro](docs/screenshots/pricing.png)
+
+</details>
+
+<details>
+<summary>Interface mobile</summary>
+
+Menu compacto e tabela com rolagem horizontal dentro do painel.
+
+<img src="docs/screenshots/mobile.png" alt="Preferências e tabela de preços em uma tela mobile" width="390" />
+
+</details>
+
+## Fontes e formatos
 
 ### Fontes automáticas
 
@@ -148,7 +187,8 @@ npm run test:e2e
 
 Os testes de navegador usam um perfil sintético separado em `.test-profile`,
 dados em `.test-data` e porta 3101, sem modificar o perfil real. Screenshots
-de validação ficam em `artifacts/`, ignorados pelo Git.
+de validação ficam em `artifacts/`, ignorados pelo Git. As capturas sintéticas
+selecionadas para este README ficam em `docs/screenshots/` e são versionadas.
 
 `npm audit --omit=dev` não identificou vulnerabilidades na validação inicial.
 A auditoria completa sinalizou a cadeia de `braces` usada por `eslint-config-next`
