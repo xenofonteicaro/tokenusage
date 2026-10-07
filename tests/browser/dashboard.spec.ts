@@ -124,3 +124,31 @@ test("mobile navigation fits the viewport and the dashboard has no horizontal ov
     fullPage: true,
   });
 });
+
+test("toggles light and dark themes and displays cache savings and cost metrics", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  // Verify theme switcher
+  const darkBtn = page.getByRole("button", { name: "Tema escuro" });
+  const lightBtn = page.getByRole("button", { name: "Tema claro" });
+  await expect(darkBtn).toBeVisible();
+
+  await darkBtn.click();
+  await expect(page.locator("html")).toHaveClass(/dark/);
+
+  await lightBtn.click();
+  await expect(page.locator("html")).not.toHaveClass(/dark/);
+
+  // Verify Cache Savings and Cost cards
+  await expect(page.getByText("ECONOMIA POR CACHE", { exact: false })).toBeVisible();
+  await expect(page.getByText("CUSTO ESTIMADO / REAL", { exact: false })).toBeVisible();
+
+  // Verify pricing configuration in settings
+  await page.getByRole("button", { name: "Preferências", exact: true }).click();
+  await expect(
+    page.getByText("Tabela de Preços por Modelo", { exact: false }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Cotação do Dólar", { exact: false })).toBeVisible();
+});
