@@ -54,7 +54,7 @@ export async function readJson<T>(name: string): Promise<T | null> {
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return null;
     throw new Error(
-      "Não foi possível ler os dados locais. Verifique o arquivo e as permissões.",
+      "Could not read local data. Check the file and permissions.",
     );
   }
 }

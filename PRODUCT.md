@@ -7,38 +7,48 @@
 web
 
 ## Users
-Uma pessoa desenvolvedora (uso pessoal, confirmado) que usa Codex, Claude Code, Grok Build e Gemini CLI no próprio computador. Abre o painel para uma olhada rápida e recorrente no consumo de tokens, no custo em USD/BRL e na economia de cache, sem enviar nada para a nuvem.
+
+A developer using Codex, Claude Code, Grok Build, and Gemini CLI on their own computer. Personal use is confirmed. They open the dashboard for frequent, quick checks of token usage, USD/BRL costs, and cache savings, without sending their history to the cloud.
 
 ## Product Purpose
-Dashboard local, em português, que lê o histórico preservado das ferramentas de IA no perfil da máquina (até 90 dias) e aceita logs de chamadas de API em JSON/JSONL, sem chaves administrativas. Sucesso: a pessoa entende em segundos quanto consumiu, quanto isso custa e quanto o cache economizou, e confia que os números não escondem lacunas.
+
+A local dashboard that reads retained tool histories (up to 90 days) and imports API logs in JSON/JSONL without administrative keys. Success means understanding usage, costs, and cache savings within seconds while seeing coverage gaps explicitly.
 
 ## Positioning
-Coleta 100% local pelo perfil da máquina, sem credenciais, sem ler prompts ou respostas, e com honestidade sobre o que falta: registros sem tarifa ou sem contadores aparecem como lacuna, nunca como zero.
+
+Local collection from the computer profile, without provider credentials or conversation content in dashboard outputs. Records without prices or counters are shown as gaps rather than zero usage.
 
 ## Operating Context
-Roda em 127.0.0.1 (Next.js), também instalável pelo Homebrew como serviço do macOS. Atualiza a cada minuto com a aba visível. Dias agrupados em America/Sao_Paulo. Ferramentas (sessões locais) e APIs (logs importados) são visões separadas, porque somá-las pode contar a mesma chamada duas vezes.
+
+Runs on 127.0.0.1 using Next.js and can be installed as a macOS Homebrew service. Refreshes every minute while visible. Days are grouped in America/Sao_Paulo. Local tools and imported API requests are separate views to avoid possible double counting.
 
 ## Capabilities and Constraints
-- Quatro fontes automáticas (Codex, Claude Code, Grok Build, Gemini CLI) e importação de logs de API com deduplicação.
-- Filtros por serviço, modelo, projeto e período; série diária, comparação com o período anterior, participação por serviço, ranking por modelo e projeto.
-- Custos em USD e BRL: valores informados pelos logs, estimativas por tarifa editável e cobertura explícita dos registros sem tarifa. Economia de cache, mensalidades em BRL e meta mensal de tokens.
-- Abas: Visão geral, Atividade, Fontes de dados, Preferências. Exportação CSV respeitando filtros. Temas Claro, Escuro e Sistema, interface responsiva, abas navegáveis por teclado.
-- Stack existente: Next.js App Router, React, Tailwind 4, componentes shadcn, next-themes, lucide-react.
-- Limites a respeitar: histórico de até 90 dias; Gemini sem contadores não gera métricas; ausência de dado nunca é exibida como zero.
+
+- Four automatic sources and deduplicated API log imports.
+- Filters by service, project, and period; daily usage, period comparison, provider shares, and model/project rankings.
+- USD/BRL costs, preserving reported amounts; editable model estimates and explicit uncovered records.
+- Cache savings, BRL subscription fees, and monthly token goals.
+- Overview, Activity, Data sources, and Preferences views. Filtered CSV export, Light/Dark/System themes, keyboard navigation, and responsive layouts.
+- Interface languages: Portuguese (Brazil), English, Spanish, Italian, French, and Simplified Chinese. Portuguese is the default; the selected language is stored locally.
+- Stack: Next.js App Router, React, Tailwind 4, shadcn components, next-themes, and lucide-react.
+- Retain the 90-day limit and explicit missing-data states. Old Gemini logs without counters do not produce usage metrics.
 
 ## Brand Commitments
-Nome "tokenusage" e interface em português do Brasil. Os dois temas (claro e escuro) são requisito do produto.
-Visual definido pelo usuário (07/10/2026): shadcn/ui padrão, simples, tema neutro e cores pouco saturadas. Direções experimentais ou vibrantes foram rejeitadas.
+
+Keep the name `tokenusage`. Both light and dark themes are requirements. The approved visual direction (2026-10-07) is stock shadcn/ui with neutral tokens and subdued colors; experimental or vibrant directions were rejected. Source and documentation are written in English, with supported interface languages held in localization resources.
 
 ## Evidence on Hand
-Capturas com dados sintéticos em `docs/screenshots/` (visão geral clara e escura, preferências/tarifas, mobile). Não existem depoimentos, clientes ou métricas reais para exibir; qualquer número de demonstração deve ser rotulado como sintético.
+
+Synthetic captures in `docs/screenshots/` show light/dark overview, preferences/prices, and mobile. There are no customer claims or real metrics to publish; example figures must be labeled synthetic.
 
 ## Product Principles
-- Confiança antes de brilho: todo número mostra de onde vem e o que não cobre.
-- Privacidade é a premissa: nada sai da máquina, nada de conteúdo de conversa.
-- Lacuna é informação: dado ausente aparece como ausente, nunca como zero.
-- Uma olhada responde a pergunta do dia: consumo, custo e economia de cache primeiro.
-- Os dois temas têm o mesmo nível de cuidado, nenhum é derivado do outro.
+
+- Every number explains its source and coverage.
+- Privacy is the premise: normalized local metrics, without conversation content in the browser or cloud.
+- A missing value is useful information and stays visibly missing.
+- Usage, cost, and cache savings answer the daily question first.
+- Give both themes the same care.
 
 ## Accessibility & Inclusion
-Navegação por teclado nas abas e controles; legibilidade nos dois temas e no mobile.
+
+Keyboard-accessible tabs and controls, readable themes, responsive layouts, and correctly labeled language selection.

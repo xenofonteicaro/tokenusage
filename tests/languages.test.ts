@@ -6,6 +6,8 @@ import { join } from "node:path";
 import { LANGUAGE_CODES } from "../src/lib/i18n/languages";
 import { messages } from "../src/lib/i18n/messages";
 import { createI18n } from "../src/lib/i18n/translate";
+import { exportCSV } from "../src/lib/analytics";
+import { parseImport, mergeImports } from "../src/lib/import-usage";
 import {
   settingsSchema,
   writeJson,
@@ -26,18 +28,58 @@ test("all translations retain the same messages and interpolation values", () =>
   }
   const chinese = createI18n("zh-CN");
   assert.equal(
-    chinese.t("{input} entrada + {output} saída", { input: 120, output: 30 }),
+    chinese.t("{input} input + {output} output", { input: 120, output: 30 }),
     "输入 120 + 输出 30",
   );
   assert.equal(
-    createI18n("en").t(
-      "Registro 2: contadores devem ser inteiros não negativos.",
-    ),
+    createI18n("en").t("Record 2: counters must be nonnegative integers."),
     "Record 2: counters must be nonnegative integers.",
   );
   assert.equal(
     createI18n("fr").t("project-provided-name"),
     "project-provided-name",
+  );
+  assert.equal(
+    createI18n("pt-BR").t("Record 2: counters must be nonnegative integers."),
+    "Registro 2: contadores devem ser inteiros não negativos.",
+  );
+});
+
+test("CSV headers use stable English field names", () => {
+  const headers = exportCSV([])
+    .replace(/^\uFEFF/, "")
+    .split(";");
+  assert.deepEqual(headers, [
+    '"timestamp_utc"',
+    '"provider"',
+    '"channel"',
+    '"model"',
+    '"project"',
+    '"input_tokens"',
+    '"output_tokens"',
+    '"cached_tokens"',
+    '"cache_write_tokens"',
+    '"reasoning_tokens"',
+    '"total_tokens"',
+    '"reported_cost_usd"',
+  ]);
+});
+
+test("English source labels preserve pre-existing IDs for imports without a project or request ID", () => {
+  const rows = parseImport(
+    JSON.stringify({
+      provider: "grok",
+      timestamp: "2026-10-07T12:00:00Z",
+      model: "test",
+      usage: { prompt_tokens: 10, completion_tokens: 2 },
+    }),
+  );
+  // Golden ID from the released 0.2.0 importer, before English source labels.
+  assert.equal(rows[0].id, "9059205c820f7c75953dc4ac");
+  assert.equal(
+    mergeImports([{ ...rows[0], project: "previous-display-label" }], rows)
+      .length,
+    1,
   );
 });
 

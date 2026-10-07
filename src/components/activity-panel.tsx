@@ -66,21 +66,19 @@ export function ActivityPanel({
     <Card>
       <CardHeader>
         <CardTitle>
-          {channel === "tool"
-            ? t("Histórico de sessões")
-            : t("Histórico de chamadas")}
+          {channel === "tool" ? t("Session history") : t("Request history")}
         </CardTitle>
         <CardDescription>
           {formatNumber(sessions.length)}{" "}
-          {channel === "tool" ? t("sessões") : t("chamadas")}{" "}
-          {t("no período selecionado")}
+          {channel === "tool" ? t("sessions") : t("requests")}{" "}
+          {t("in the selected period")}
         </CardDescription>
         <CardAction>
           <Input
             type="search"
             className="w-48 sm:w-64"
-            aria-label={t("Buscar atividade")}
-            placeholder={t("Buscar projeto ou modelo")}
+            aria-label={t("Search activity")}
+            placeholder={t("Search project or model")}
             value={search}
             onChange={(event) => {
               setSearch(event.target.value);
@@ -94,13 +92,13 @@ export function ActivityPanel({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>{t("Projeto")}</TableHead>
-                <TableHead>{t("Serviço")}</TableHead>
-                <TableHead>{t("Modelos")}</TableHead>
-                <TableHead>{t("Última atividade")}</TableHead>
+                <TableHead>{t("Project")}</TableHead>
+                <TableHead>{t("Service")}</TableHead>
+                <TableHead>{t("Models")}</TableHead>
+                <TableHead>{t("Last activity")}</TableHead>
                 <TableHead className="text-right">{t("Tokens")}</TableHead>
                 <TableHead className="text-right">{t("Cache")}</TableHead>
-                <TableHead className="text-right">{t("Custo")}</TableHead>
+                <TableHead className="text-right">{t("Cost")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -140,9 +138,9 @@ export function ActivityPanel({
                           <Badge variant="secondary">
                             {row.estimatedRecords
                               ? row.costsKnown
-                                ? t("Misto")
-                                : t("Estimado")
-                              : t("Real")}
+                                ? t("Mixed")
+                                : t("Estimated")
+                              : t("Actual")}
                           </Badge>
                         </div>
                       ) : (
@@ -150,7 +148,7 @@ export function ActivityPanel({
                       )}
                       {missing > 0 && (
                         <div className="text-xs text-muted-foreground">
-                          {formatNumber(missing)} {t("sem estimativa")}
+                          {formatNumber(missing)} {t("without an estimate")}
                         </div>
                       )}
                     </TableCell>
@@ -166,10 +164,10 @@ export function ActivityPanel({
                 <SearchIcon />
               </EmptyMedia>
               <EmptyTitle role="heading" aria-level={3}>
-                {t("Nenhum registro encontrado")}
+                {t("No records found")}
               </EmptyTitle>
               <EmptyDescription>
-                {t("Experimente outro período, serviço ou busca.")}
+                {t("Try another period, service or search.")}
               </EmptyDescription>
             </EmptyHeader>
           </Empty>
@@ -178,7 +176,7 @@ export function ActivityPanel({
       {sessions.length > limit && (
         <CardFooter className="justify-center">
           <Button variant="ghost" onClick={() => setLimit(limit + 20)}>
-            {t("Mostrar mais 20")}
+            {t("Show 20 more")}
             <ChevronDownIcon data-icon="inline-end" />
           </Button>
         </CardFooter>

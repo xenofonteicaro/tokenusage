@@ -1,12 +1,11 @@
 import { z } from "zod";
 import { PROVIDERS, type UsageEvent } from "./types";
 import { count, date, event, hash, object } from "./collectors/normalize";
+import { LEGACY_IMPORTED_API_PROJECT } from "./i18n/legacy-identifiers";
 
 const envelope = z.object({
   provider: z.enum(PROVIDERS),
-  timestamp: z
-    .string()
-    .refine((value) => date(value) !== null, "Data inválida"),
+  timestamp: z.string().refine((value) => date(value) !== null, "Invalid date"),
   id: z.string().max(200).optional(),
   model: z.string().max(120),
   project: z.string().max(100).optional(),
@@ -28,18 +27,18 @@ export function parseImport(text: string): UsageEvent[] {
         .map((line) => JSON.parse(line));
     } catch {
       throw new Error(
-        "Arquivo inválido. Use JSON ou JSONL com um registro de consumo por chamada.",
+        "Invalid file. Use JSON or JSONL with one usage record per request.",
       );
     }
   }
   if (!records.length || records.length > 10000)
-    throw new Error("Importe entre 1 e 10.000 registros por arquivo.");
+    throw new Error("Import between 1 and 10,000 records per file.");
   const unique = new Map<string, UsageEvent>();
   records.forEach((raw, index) => {
     const parsed = envelope.safeParse(raw);
     if (!parsed.success)
       throw new Error(
-        `Registro ${index + 1}: informe provider, timestamp, model e usage (ou usageMetadata).`,
+        `Record ${index + 1}: provide provider, timestamp, model and usage (or usageMetadata).`,
       );
     const row = parsed.data;
     const usage = object(row.usage ?? row.usageMetadata);
@@ -80,7 +79,7 @@ export function parseImport(text: string): UsageEvent[] {
       )
     )
       throw new Error(
-        `Registro ${index + 1}: contadores devem ser inteiros não negativos.`,
+        `Record ${index + 1}: counters must be nonnegative integers.`,
       );
     let input = 0,
       output = 0,
@@ -113,14 +112,20 @@ export function parseImport(text: string): UsageEvent[] {
     }
     if (!input && !output)
       throw new Error(
-        `Registro ${index + 1}: nenhum contador de tokens reconhecido para ${row.provider}.`,
+        `Record ${index + 1}: no recognized token counter for ${row.provider}.`,
       );
     const timestamp = date(row.timestamp)!;
-    const project = row.project || "API importada";
+    const project = row.project || "Imported API";
     const identity =
       row.id ||
       hash(
-        JSON.stringify([row.provider, timestamp, row.model, project, usage]),
+        JSON.stringify([
+          row.provider,
+          timestamp,
+          row.model,
+          row.project || LEGACY_IMPORTED_API_PROJECT,
+          usage,
+        ]),
       );
     const normalized = event(row.provider, {
       id: identity,

@@ -1,74 +1,73 @@
-# Fase 1: Shadcn UI, Temas e Motor de Custos com Economia de Cache
+# Phase 1: Shadcn UI, themes, pricing, and cache savings
 
-## 1. Contexto e Motivação
+## Context
 
-O projeto Tokenusage lê métricas reais do perfil local do usuário (Codex, Claude Code, Grok Build e Gemini CLI) e logs de API importados. Na entrega inicial, os custos só eram exibidos quando a ferramenta fornecia o valor explicitamente (ex.: Grok em ticks e logs com `costUSD`). Ferramentas como Claude Code e Codex não fornecem custos em dólares nos arquivos locais, deixando o campo como desconhecido.
+Tokenusage reads local histories from Codex, Claude Code, Grok Build, and Gemini
+CLI, plus imported API logs. The initial delivery showed costs only when
+explicitly reported, such as Grok ticks or imported `costUSD`. Other local tools
+may omit USD costs, leaving them unknown.
 
-Esta Fase 1 adiciona:
+Phase 1 adds:
 
-1. **Design System com Shadcn UI e Suporte a Temas (Light / Dark / System)** usando Tailwind CSS e `next-themes`.
-2. **Motor de Precificação por Modelo**: cálculo de custo estimado quando o custo nativo não é informado.
-3. **Métrica de Economia por Cache**: cálculo da economia obtida graças ao reaproveitamento de tokens em cache.
-4. **Cotação de Câmbio (USD -> BRL)** configurável para unificar o planejamento financeiro com as mensalidades já existentes em BRL.
+1. A shadcn design system with Light/Dark/System themes, Tailwind, and next-themes.
+2. Model-based estimated costs when reported costs are absent.
+3. Estimated savings from reused cached tokens.
+4. A configurable USD/BRL exchange rate alongside existing BRL subscriptions.
 
-## 2. Decisões Arquiteturais
+## Architecture decisions
 
-### 2.1 UI e Temas (Tailwind v4 + Shadcn + next-themes)
+### UI and themes
 
-- Utilização de Tailwind v4 com `@tailwindcss/postcss` ou imports nativos CSS e variáveis CSS para cores (HSL/OKLCH).
-- `next-themes` para persistência e detecção de tema do sistema operacional sem flash de tema incorreto (FOUC).
-- Criação dos componentes atômicos em `src/components/ui/`: `button.tsx`, `card.tsx`, `badge.tsx`, `input.tsx`, `select.tsx`, `tabs.tsx`, `table.tsx`, `switch.tsx`, `dropdown-menu.tsx`.
-- Refatoração dos componentes existentes (`overview.tsx`, `dashboard.tsx`, `activity-panel.tsx`, `sources-panel.tsx`, `settings-panel.tsx`, `usage-chart.tsx`) para utilizar a biblioteca de componentes e os tokens de design.
+Use Tailwind v4, `@tailwindcss/postcss`, CSS color variables, and next-themes for
+persistent theme selection/system detection. Compose components from
+`src/components/ui/` in dashboard, overview, activity, sources, settings, and
+charts. The later approved design uses stock shadcn base-nova neutral tokens.
 
-### 2.2 Motor de Custos (`src/lib/pricing/`)
+### Pricing engine
 
-- Mapeamento padrão embutido em `src/lib/pricing/defaults.ts` com tarifas por 1 milhão de tokens (input, output, cache-read):
-  - **Anthropic**:
-    - `claude-3-7-sonnet`: Input $3.00, Output $15.00, Cache Read $0.30
-    - `claude-3-5-sonnet`: Input $3.00, Output $15.00, Cache Read $0.30
-    - `claude-3-5-haiku`: Input $0.80, Output $4.00, Cache Read $0.08
-    - `claude-3-opus`: Input $15.00, Output $75.00, Cache Read $1.50
-  - **OpenAI**:
-    - `gpt-4o`: Input $2.50, Output $10.00, Cache Read $1.25
-    - `gpt-4o-mini`: Input $0.15, Output $0.60, Cache Read $0.075
-    - `o1`: Input $15.00, Output $60.00, Cache Read $7.50
-    - `o3-mini`: Input $1.10, Output $4.40, Cache Read $0.55
-    - Fallback para codex: `gpt-5.6-terra` / equivalentes
-  - **xAI**:
-    - `grok-2`: Input $2.00, Output $10.00, Cache Read $0.50
-    - `grok-3`: Input $3.00, Output $15.00, Cache Read $0.75
-  - **Google**:
-    - `gemini-1.5-pro`: Input $3.50, Output $10.50, Cache Read $0.875
-    - `gemini-1.5-flash`: Input $0.075, Output $0.30, Cache Read $0.01875
-    - `gemini-2.0-flash`: Input $0.10, Output $0.40, Cache Read $0.025
-- Casamento de modelo tolerante a sufixos/datas (ex.: `claude-3-7-sonnet-20250219` casa com `claude-3-7-sonnet`).
-- Usuário pode sobrescrever ou adicionar preços em `Preferências` (persistido em `.local-data/settings.json`).
+Keep historical reference prices in `src/lib/pricing/defaults.ts`. The original
+planned rates below are USD per million input/output/cache-read tokens and are
+not a current provider quote:
 
-### 2.3 Regras de Exibição de Custos e Economia
+| Provider  | Model             | Input | Output | Cache read |
+| --------- | ----------------- | ----: | -----: | ---------: |
+| Anthropic | claude-3-7-sonnet |  3.00 |  15.00 |       0.30 |
+| Anthropic | claude-3-5-sonnet |  3.00 |  15.00 |       0.30 |
+| Anthropic | claude-3-5-haiku  |  0.80 |   4.00 |       0.08 |
+| Anthropic | claude-3-opus     | 15.00 |  75.00 |       1.50 |
+| OpenAI    | gpt-4o            |  2.50 |  10.00 |       1.25 |
+| OpenAI    | gpt-4o-mini       |  0.15 |   0.60 |      0.075 |
+| OpenAI    | o1                | 15.00 |  60.00 |       7.50 |
+| OpenAI    | o3-mini           |  1.10 |   4.40 |       0.55 |
+| xAI       | grok-2            |  2.00 |  10.00 |       0.50 |
+| xAI       | grok-3            |  3.00 |  15.00 |       0.75 |
+| Google    | gemini-1.5-pro    |  3.50 |  10.50 |      0.875 |
+| Google    | gemini-1.5-flash  | 0.075 |   0.30 |    0.01875 |
+| Google    | gemini-2.0-flash  |  0.10 |   0.40 |      0.025 |
 
-- **Custo Real**: Sempre preservado se informado pelo log da ferramenta (ex.: Grok ou logs de API).
-- **Custo Estimado**: Calculado para eventos sem custo nativo multiplicando tokens por tarifário do modelo. Se o modelo não for reconhecido, o custo daquele evento permanece não-estimado (cobertura explícita).
-- **Economia por Cache**:
-  - `tokens_cache * (preço_input - preço_cache) / 1_000_000`.
-  - Exibido em destaque como valor economizado em USD e BRL.
-- **Cotação USD / BRL**:
-  - Padrão 5.75, customizável em Preferências.
+Match exact model names and supported dated snapshots, such as
+`claude-3-7-sonnet-20250219`. Users can add/override prices in Preferences,
+persisted in the settings store. Unpriced models, including `gpt-5.6-terra` and
+`gemini-2.0-pro`, remain explicitly uncovered until a price is supplied.
 
-### 2.4 Armazenamento e Segurança
+### Cost and savings rules
 
-- Customizações de preços e câmbio são salvas no arquivo existente `.local-data/settings.json`.
-- Nenhum histórico real, token ou credencial é versionado no Git.
-- Validação estrita via Zod para as novas configurações de preço.
+- Preserve reported costs, including zero, instead of replacing them with estimates.
+- Estimate unreported costs from model rates; unknown models stay unestimated.
+- Estimate cache savings as `cachedTokens * (inputRate - cacheReadRate) / 1_000_000`.
+- Display USD/BRL savings and compare the modeled cost with the no-cache scenario.
+- Default USD/BRL exchange rate: 5.75, editable in Preferences.
+- Keep subscription fees separate from usage-based costs.
 
-## 3. Plano de Testes
+### Storage and security
 
-- **Testes Unitários**:
-  - Verificação de casamento de nomes de modelos (exatos e por prefixo).
-  - Cálculo de custo exato com e sem cache.
-  - Cálculo de economia de cache.
-  - Prioridade entre custo real vs. custo estimado.
-  - Persistência e sobreposição de preços em configurações.
-- **Testes de Navegador (Playwright)**:
-  - Alternância de temas Claro / Escuro / Sistema refletindo classes no `<html>`.
-  - Exibição do card de Economia de Cache e badge de Custo Estimado.
-  - Edição de cotação e preços no painel de configurações.
+Use the existing settings store for prices/rate. Do not version real histories,
+personal metrics, or credentials. Strictly validate configuration with Zod and
+retain local request-origin protection.
+
+## Validation
+
+Unit tests cover exact/dated model matching, costs with/without cache, reported
+cost precedence, unknown-model coverage, cache savings, exchange conversion,
+and persisted overrides. Browser tests cover theme classes on `html`, cache
+savings and cost coverage, and live price/exchange edits in Preferences.

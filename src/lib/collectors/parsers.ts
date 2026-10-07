@@ -16,8 +16,8 @@ export interface LineParser {
 
 export function codexParser(fallbackSession: string): LineParser {
   let session = fallbackSession;
-  let project = "Sem projeto";
-  let model = "Modelo não informado";
+  let project = "No project";
+  let model = "Model not provided";
   let previous: number[] | null = null;
   const events = new Map<string, UsageEvent>();
   return {
@@ -166,7 +166,7 @@ export function grokEvents(raw: unknown, metadata: unknown): UsageEvent[] {
 
 export function geminiParser(
   fallbackSession: string,
-  fallbackProject = "Sem projeto",
+  fallbackProject = "No project",
 ): LineParser {
   let session = fallbackSession;
   let project = fallbackProject;

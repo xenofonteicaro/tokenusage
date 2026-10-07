@@ -7,7 +7,7 @@ import { PROVIDERS, type SourceStatus, type UsageEvent } from "@/lib/types";
 export async function GET(request: Request) {
   if (!isLocalRequest(request))
     return Response.json(
-      { error: "Acesso permitido apenas pela dashboard local." },
+      { error: "Access is allowed only from the local dashboard." },
       { status: 403, headers: privateHeaders },
     );
   try {
@@ -23,11 +23,11 @@ export async function GET(request: Request) {
         id: `${provider}-api`,
         provider,
         channel: "api",
-        name: `${provider} · logs de API`,
+        name: `${provider} · API logs`,
         state: matching.length ? "connected" : "missing",
         files: matching.length ? 1 : 0,
         events: matching.length,
-        location: "Importação local JSON / JSONL",
+        location: "Local JSON / JSONL import",
         warnings: 0,
         latest:
           matching
@@ -35,8 +35,8 @@ export async function GET(request: Request) {
             .sort()
             .at(-1) ?? null,
         detail: matching.length
-          ? "Consumo extraído dos arquivos importados. Custos informados são preservados; os demais são estimados quando há preço configurado."
-          : "Importe logs com os contadores retornados pela API. Não requer chave administrativa.",
+          ? "Usage extracted from imported files. Reported costs are preserved; others are estimated when a price is configured."
+          : "Import logs with counters returned by the API. No admin key required.",
       };
     });
     const compacted = compactEvents([...local.events, ...events]);
@@ -69,7 +69,7 @@ export async function GET(request: Request) {
     return Response.json(
       {
         error:
-          error instanceof Error ? error.message : "Falha na coleta local.",
+          error instanceof Error ? error.message : "Local collection failed.",
       },
       { status: 500, headers: privateHeaders },
     );

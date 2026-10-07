@@ -85,8 +85,8 @@ export function SettingsPanel({
     if (!model || Object.hasOwn(prices, model)) {
       setError(
         model
-          ? t("Este modelo já está na tabela.")
-          : t("Informe o nome do modelo."),
+          ? t("This model is already in the table.")
+          : t("Enter the model name."),
       );
       return;
     }
@@ -120,9 +120,7 @@ export function SettingsPanel({
       onSave(result.settings);
       setState("saved");
     } catch (error) {
-      setError(
-        error instanceof Error ? error.message : t("Não foi possível salvar."),
-      );
+      setError(error instanceof Error ? error.message : t("Could not save."));
       setState("idle");
     }
   }
@@ -132,25 +130,25 @@ export function SettingsPanel({
         <Card>
           <CardHeader>
             <CardTitle role="heading" aria-level={2}>
-              {t("Preferências de acompanhamento")}
+              {t("Tracking preferences")}
             </CardTitle>
             <CardDescription>
-              {t("Mensalidades, meta de tokens, cotação e tarifas por modelo.")}
+              {t(
+                "Subscription fees, token goal, exchange rate and model prices.",
+              )}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="general">
-              <TabsList aria-label={t("Preferências")} activateOnFocus>
-                <TabsTrigger value="general">{t("Geral")}</TabsTrigger>
-                <TabsTrigger value="pricing">
-                  {t("Tabela de preços")}
-                </TabsTrigger>
+              <TabsList aria-label={t("Preferences")} activateOnFocus>
+                <TabsTrigger value="general">{t("General")}</TabsTrigger>
+                <TabsTrigger value="pricing">{t("Price table")}</TabsTrigger>
               </TabsList>
               <TabsContent value="general" className="pt-4">
                 <FieldGroup>
                   <Field className="language-field">
                     <FieldLabel htmlFor="interface-language">
-                      {t("Idioma da interface")}
+                      {t("Interface language")}
                     </FieldLabel>
                     <NativeSelect
                       id="interface-language"
@@ -171,13 +169,13 @@ export function SettingsPanel({
                       ))}
                     </NativeSelect>
                     <FieldDescription id="language-hint">
-                      {t("A escolha será aplicada ao salvar as preferências.")}
+                      {t("Your choice takes effect when you save preferences.")}
                     </FieldDescription>
                   </Field>
                   <Separator />
                   <p className="text-sm text-muted-foreground">
                     {t(
-                      "Informe o que você paga nas assinaturas. Esses valores ficam separados dos custos registrados pelas ferramentas.",
+                      "Enter what you pay for subscriptions. These amounts are separate from costs recorded by the tools.",
                     )}
                   </p>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -186,7 +184,7 @@ export function SettingsPanel({
                         <FieldLabel htmlFor={`subscription-${provider}`}>
                           {providerInfo[provider].name}
                           <span className="font-normal text-muted-foreground">
-                            {t("R$ / mês")}
+                            {t("R$ / month")}
                           </span>
                         </FieldLabel>
                         <Input
@@ -196,7 +194,7 @@ export function SettingsPanel({
                           max="1000000"
                           step="0.01"
                           inputMode="decimal"
-                          placeholder={t("Não informado")}
+                          placeholder={t("Not provided")}
                           value={values.subscriptions[provider] ?? ""}
                           onChange={(event) => {
                             setState("idle");
@@ -217,7 +215,7 @@ export function SettingsPanel({
                   </div>
                   <div className="flex items-baseline justify-between text-sm">
                     <span className="text-muted-foreground">
-                      {t("Total mensal informado")}
+                      {t("Reported monthly total")}
                     </span>
                     <span className="font-medium tabular-nums">
                       {formatBRL(monthly)}
@@ -226,7 +224,7 @@ export function SettingsPanel({
                   <Separator />
                   <Field>
                     <FieldLabel htmlFor="monthly-goal">
-                      {t("Meta mensal de tokens")}
+                      {t("Monthly token goal")}
                     </FieldLabel>
                     <Input
                       id="monthly-goal"
@@ -235,7 +233,7 @@ export function SettingsPanel({
                       max="1000000000000"
                       step="1"
                       inputMode="numeric"
-                      placeholder={t("Ex.: 100000000")}
+                      placeholder={t("E.g. 100000000")}
                       value={values.monthlyTokenGoal ?? ""}
                       onChange={(event) => {
                         setState("idle");
@@ -249,14 +247,12 @@ export function SettingsPanel({
                       }}
                     />
                     <FieldDescription>
-                      {t(
-                        "Opcional. Acompanhamento de consumo, sem bloquear suas ferramentas.",
-                      )}
+                      {t("Optional. Track usage without blocking your tools.")}
                     </FieldDescription>
                   </Field>
                   <Field>
                     <FieldLabel htmlFor="usd-brl">
-                      {t("Cotação do Dólar (USD / BRL)")}
+                      {t("Dollar exchange rate (USD / BRL)")}
                     </FieldLabel>
                     <Input
                       id="usd-brl"
@@ -280,7 +276,7 @@ export function SettingsPanel({
                     />
                     <FieldDescription>
                       {t(
-                        "Usada para estimar custos e economia em reais. Padrão: R$ 5,75.",
+                        "Used to estimate costs and savings in BRL. Default: R$ 5.75.",
                       )}
                     </FieldDescription>
                   </Field>
@@ -290,41 +286,41 @@ export function SettingsPanel({
                 <FieldGroup>
                   <div className="flex flex-col gap-1">
                     <p className="text-sm font-medium">
-                      {t("Tabela de Preços por Modelo (USD por 1M tokens)")}
+                      {t("Model price table (USD per 1M tokens)")}
                     </p>
                     <p className="text-sm text-muted-foreground">
                       {t(
-                        "Preços de referência históricos, sem atualização automática. Personalize para estimar ferramentas sem custo informado.",
+                        "Historical reference prices, without automatic updates. Customize to estimate tools with no reported costs.",
                       )}
                     </p>
                   </div>
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
                     <Field className="sm:flex-1">
                       <FieldLabel htmlFor="model-name">
-                        {t("Nome do modelo")}
+                        {t("Model name")}
                       </FieldLabel>
                       <Input
                         id="model-name"
                         value={modelName}
                         maxLength={100}
-                        placeholder={t("Ex.: meu-modelo")}
+                        placeholder={t("E.g. my-model")}
                         onChange={(event) => setModelName(event.target.value)}
                       />
                     </Field>
                     <Button variant="outline" type="button" onClick={addModel}>
-                      {t("Adicionar modelo")}
+                      {t("Add model")}
                     </Button>
                   </div>
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>{t("Modelo")}</TableHead>
-                        <TableHead>{t("Entrada ($)")}</TableHead>
-                        <TableHead>{t("Saída ($)")}</TableHead>
+                        <TableHead>{t("Model")}</TableHead>
+                        <TableHead>{t("Input ($)")}</TableHead>
+                        <TableHead>{t("Output ($)")}</TableHead>
                         <TableHead>{t("Cache ($)")}</TableHead>
                         {hasCustom && (
                           <TableHead className="text-right">
-                            {t("Ações")}
+                            {t("Actions")}
                           </TableHead>
                         )}
                       </TableRow>
@@ -336,16 +332,14 @@ export function SettingsPanel({
                             <span className="inline-flex items-center gap-2">
                               {model}
                               {values.customPricing?.[model] && (
-                                <Badge variant="secondary">
-                                  {t("Personalizado")}
-                                </Badge>
+                                <Badge variant="secondary">{t("Custom")}</Badge>
                               )}
                             </span>
                           </TableCell>
                           {(
                             [
-                              ["inputPer1M", t("Entrada")],
-                              ["outputPer1M", t("Saída")],
+                              ["inputPer1M", t("Input")],
+                              ["outputPer1M", t("Output")],
                               ["cacheReadPer1M", t("Cache")],
                             ] as const
                           ).map(([field, label]) => (
@@ -358,7 +352,7 @@ export function SettingsPanel({
                                 step="any"
                                 required
                                 inputMode="decimal"
-                                aria-label={t("{label} de {model}", {
+                                aria-label={t("{label} for {model}", {
                                   label: t(label),
                                   model,
                                 })}
@@ -383,10 +377,10 @@ export function SettingsPanel({
                                         type="button"
                                         variant="ghost"
                                         size="icon-sm"
-                                        aria-label={t("{label} de {model}", {
+                                        aria-label={t("{label} for {model}", {
                                           label: DEFAULT_MODEL_PRICES[model]
-                                            ? t("Restaurar padrão")
-                                            : t("Remover modelo"),
+                                            ? t("Restore default")
+                                            : t("Remove model"),
                                           model,
                                         })}
                                         onClick={() => removePrice(model)}
@@ -401,8 +395,8 @@ export function SettingsPanel({
                                   </TooltipTrigger>
                                   <TooltipContent>
                                     {DEFAULT_MODEL_PRICES[model]
-                                      ? t("Restaurar padrão")
-                                      : t("Remover modelo")}
+                                      ? t("Restore default")
+                                      : t("Remove model")}
                                   </TooltipContent>
                                 </Tooltip>
                               )}
@@ -424,10 +418,10 @@ export function SettingsPanel({
                 <SaveIcon data-icon="inline-start" />
               )}
               {state === "saving"
-                ? t("Salvando…")
+                ? t("Saving…")
                 : state === "saved"
-                  ? t("Preferências salvas")
-                  : t("Salvar preferências")}
+                  ? t("Preferences saved")
+                  : t("Save preferences")}
             </Button>
             {error && <FieldError role="alert">{t(error)}</FieldError>}
           </CardFooter>
@@ -436,26 +430,26 @@ export function SettingsPanel({
       <Card>
         <CardHeader>
           <CardTitle role="heading" aria-level={2}>
-            {t("Seu histórico fica aqui")}
+            {t("Your history stays here")}
           </CardTitle>
-          <CardDescription>{t("Execução local, sem login.")}</CardDescription>
+          <CardDescription>{t("Local execution, no login.")}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-3 text-sm text-muted-foreground">
           <p>
             {t(
-              "Os coletores leem contadores de tokens e metadados de sessão. O conteúdo das conversas não é enviado ao navegador.",
+              "Collectors read token counters and session metadata. Conversation content is not sent to the browser.",
             )}
           </p>
           <p>
             {t(
-              "Preferências e métricas são guardadas localmente neste computador. A dashboard não usa cookies de login nem chaves das suas ferramentas.",
+              "Preferences and metrics are stored locally on this computer. The dashboard uses no login cookies or tool keys.",
             )}
           </p>
         </CardContent>
         <CardFooter>
           <Badge variant="outline">
             <ShieldCheckIcon data-icon="inline-start" />
-            {t("Execução local")}
+            {t("Local execution")}
           </Badge>
         </CardFooter>
       </Card>

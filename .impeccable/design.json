@@ -4,43 +4,192 @@
   "title": "Design System: tokenusage",
   "extensions": {
     "colorMeta": {
-      "primary": { "role": "primary", "displayName": "Ink Black", "canonical": "oklch(0.205 0 0)", "tonalRamp": ["oklch(0.145 0 0)", "oklch(0.205 0 0)", "oklch(0.269 0 0)", "oklch(0.371 0 0)", "oklch(0.439 0 0)", "oklch(0.556 0 0)", "oklch(0.708 0 0)", "oklch(0.922 0 0)"] },
-      "dark-primary": { "role": "primary", "displayName": "Paper Grey (dark primary)", "canonical": "oklch(0.922 0 0)", "tonalRamp": ["oklch(0.145 0 0)", "oklch(0.205 0 0)", "oklch(0.269 0 0)", "oklch(0.371 0 0)", "oklch(0.556 0 0)", "oklch(0.708 0 0)", "oklch(0.87 0 0)", "oklch(0.922 0 0)"] },
-      "background": { "role": "neutral", "displayName": "White", "canonical": "oklch(1 0 0)" },
-      "foreground": { "role": "neutral", "displayName": "Near Black", "canonical": "oklch(0.145 0 0)" },
-      "card": { "role": "neutral", "displayName": "White", "canonical": "oklch(1 0 0)" },
-      "primary-foreground": { "role": "neutral", "displayName": "Off-white", "canonical": "oklch(0.985 0 0)" },
-      "secondary": { "role": "neutral", "displayName": "Smoke", "canonical": "oklch(0.97 0 0)" },
-      "muted": { "role": "neutral", "displayName": "Smoke", "canonical": "oklch(0.97 0 0)" },
-      "muted-foreground": { "role": "neutral", "displayName": "Mid Grey", "canonical": "oklch(0.556 0 0)" },
-      "border": { "role": "neutral", "displayName": "Hairline", "canonical": "oklch(0.922 0 0)" },
-      "input": { "role": "neutral", "displayName": "Hairline", "canonical": "oklch(0.922 0 0)" },
-      "ring": { "role": "neutral", "displayName": "Ring Grey", "canonical": "oklch(0.708 0 0)" },
-      "sidebar": { "role": "neutral", "displayName": "Off-white Sidebar", "canonical": "oklch(0.985 0 0)" },
-      "destructive": { "role": "semantic", "displayName": "Destructive Red", "canonical": "oklch(0.577 0.245 27.325)", "tonalRamp": ["oklch(0.25 0.1 27.325)", "oklch(0.35 0.14 27.325)", "oklch(0.45 0.19 27.325)", "oklch(0.577 0.245 27.325)", "oklch(0.65 0.2 27.325)", "oklch(0.75 0.14 27.325)", "oklch(0.85 0.08 27.325)", "oklch(0.95 0.03 27.325)"] },
-      "dark-background": { "role": "neutral", "displayName": "Near Black (dark page)", "canonical": "oklch(0.145 0 0)" },
-      "dark-foreground": { "role": "neutral", "displayName": "Off-white (dark text)", "canonical": "oklch(0.985 0 0)" },
-      "dark-card": { "role": "neutral", "displayName": "Graphite", "canonical": "oklch(0.205 0 0)" },
-      "dark-primary-foreground": { "role": "neutral", "displayName": "Graphite", "canonical": "oklch(0.205 0 0)" },
-      "dark-muted": { "role": "neutral", "displayName": "Dark Smoke", "canonical": "oklch(0.269 0 0)" },
-      "dark-muted-foreground": { "role": "neutral", "displayName": "Light Mid Grey", "canonical": "oklch(0.708 0 0)" },
-      "dark-border": { "role": "neutral", "displayName": "Dark Hairline", "canonical": "oklch(1 0 0 / 10%)" },
-      "dark-input": { "role": "neutral", "displayName": "Dark Input Stroke", "canonical": "oklch(1 0 0 / 15%)" },
-      "dark-destructive": { "role": "semantic", "displayName": "Destructive Red (dark)", "canonical": "oklch(0.704 0.191 22.216)" }
+      "primary": {
+        "role": "primary",
+        "displayName": "Ink Black",
+        "canonical": "oklch(0.205 0 0)",
+        "tonalRamp": [
+          "oklch(0.145 0 0)",
+          "oklch(0.205 0 0)",
+          "oklch(0.269 0 0)",
+          "oklch(0.371 0 0)",
+          "oklch(0.439 0 0)",
+          "oklch(0.556 0 0)",
+          "oklch(0.708 0 0)",
+          "oklch(0.922 0 0)"
+        ]
+      },
+      "dark-primary": {
+        "role": "primary",
+        "displayName": "Paper Grey (dark primary)",
+        "canonical": "oklch(0.922 0 0)",
+        "tonalRamp": [
+          "oklch(0.145 0 0)",
+          "oklch(0.205 0 0)",
+          "oklch(0.269 0 0)",
+          "oklch(0.371 0 0)",
+          "oklch(0.556 0 0)",
+          "oklch(0.708 0 0)",
+          "oklch(0.87 0 0)",
+          "oklch(0.922 0 0)"
+        ]
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "oklch(1 0 0)"
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Near Black",
+        "canonical": "oklch(0.145 0 0)"
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "oklch(1 0 0)"
+      },
+      "primary-foreground": {
+        "role": "neutral",
+        "displayName": "Off-white",
+        "canonical": "oklch(0.985 0 0)"
+      },
+      "secondary": {
+        "role": "neutral",
+        "displayName": "Smoke",
+        "canonical": "oklch(0.97 0 0)"
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Smoke",
+        "canonical": "oklch(0.97 0 0)"
+      },
+      "muted-foreground": {
+        "role": "neutral",
+        "displayName": "Mid Grey",
+        "canonical": "oklch(0.556 0 0)"
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(0.922 0 0)"
+      },
+      "input": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(0.922 0 0)"
+      },
+      "ring": {
+        "role": "neutral",
+        "displayName": "Ring Grey",
+        "canonical": "oklch(0.708 0 0)"
+      },
+      "sidebar": {
+        "role": "neutral",
+        "displayName": "Off-white Sidebar",
+        "canonical": "oklch(0.985 0 0)"
+      },
+      "destructive": {
+        "role": "semantic",
+        "displayName": "Destructive Red",
+        "canonical": "oklch(0.577 0.245 27.325)",
+        "tonalRamp": [
+          "oklch(0.25 0.1 27.325)",
+          "oklch(0.35 0.14 27.325)",
+          "oklch(0.45 0.19 27.325)",
+          "oklch(0.577 0.245 27.325)",
+          "oklch(0.65 0.2 27.325)",
+          "oklch(0.75 0.14 27.325)",
+          "oklch(0.85 0.08 27.325)",
+          "oklch(0.95 0.03 27.325)"
+        ]
+      },
+      "dark-background": {
+        "role": "neutral",
+        "displayName": "Near Black (dark page)",
+        "canonical": "oklch(0.145 0 0)"
+      },
+      "dark-foreground": {
+        "role": "neutral",
+        "displayName": "Off-white (dark text)",
+        "canonical": "oklch(0.985 0 0)"
+      },
+      "dark-card": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "oklch(0.205 0 0)"
+      },
+      "dark-primary-foreground": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "oklch(0.205 0 0)"
+      },
+      "dark-muted": {
+        "role": "neutral",
+        "displayName": "Dark Smoke",
+        "canonical": "oklch(0.269 0 0)"
+      },
+      "dark-muted-foreground": {
+        "role": "neutral",
+        "displayName": "Light Mid Grey",
+        "canonical": "oklch(0.708 0 0)"
+      },
+      "dark-border": {
+        "role": "neutral",
+        "displayName": "Dark Hairline",
+        "canonical": "oklch(1 0 0 / 10%)"
+      },
+      "dark-input": {
+        "role": "neutral",
+        "displayName": "Dark Input Stroke",
+        "canonical": "oklch(1 0 0 / 15%)"
+      },
+      "dark-destructive": {
+        "role": "semantic",
+        "displayName": "Destructive Red (dark)",
+        "canonical": "oklch(0.704 0.191 22.216)"
+      }
     },
     "typographyMeta": {
-      "metric": { "displayName": "Metric", "purpose": "Headline number of each summary card and the monthly goal figure; tabular." },
-      "title": { "displayName": "Title", "purpose": "Card titles and the header page title." },
-      "body": { "displayName": "Body", "purpose": "Descriptions, card footers, table cells, form text." },
-      "label": { "displayName": "Label", "purpose": "Badges, sidebar group labels and menu badges, metadata rows." },
-      "mono": { "displayName": "Mono", "purpose": "File paths, JSON examples, chart tooltip values." }
+      "metric": {
+        "displayName": "Metric",
+        "purpose": "Headline number of each summary card and the monthly goal figure; tabular."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles and the header page title."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Descriptions, card footers, table cells, form text."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Badges, sidebar group labels and menu badges, metadata rows."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "File paths, JSON examples, chart tooltip values."
+      }
     },
     "shadows": [
-      { "name": "inset-panel", "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)", "purpose": "Main content panel inside the inset sidebar layout, md and up only." }
+      {
+        "name": "inset-panel",
+        "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "purpose": "Main content panel inside the inset sidebar layout, md and up only."
+      }
     ],
     "motion": [
-      { "name": "transition-colors", "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Default Tailwind transition on buttons, badges and selects for hover and focus." },
-      { "name": "refresh-spin", "value": "animate-spin", "purpose": "Refresh icon while a collection is running; theme changes disable transitions." }
+      {
+        "name": "transition-colors",
+        "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Default Tailwind transition on buttons, badges and selects for hover and focus."
+      },
+      {
+        "name": "refresh-spin",
+        "value": "animate-spin",
+        "purpose": "Refresh icon while a collection is running; theme changes disable transitions."
+      }
     ],
     "breakpoints": [
       { "name": "sm", "value": "640px" },
@@ -54,24 +203,24 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Single main action per view, e.g. Exportar CSV.",
-      "html": "<button class=\"ds-btn-primary\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"7 10 12 15 17 10\"/><line x1=\"12\" x2=\"12\" y1=\"15\" y2=\"3\"/></svg>Exportar CSV</button>",
+      "description": "Single main action per view, e.g. Export CSV.",
+      "html": "<button class=\"ds-btn-primary\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"7 10 12 15 17 10\"/><line x1=\"12\" x2=\"12\" y1=\"15\" y2=\"3\"/></svg>Export CSV</button>",
       "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 10px 0 6px; border: 1px solid transparent; border-radius: 0.5rem; background: var(--primary, oklch(0.205 0 0)); color: var(--primary-foreground, oklch(0.985 0 0)); font: 500 0.8rem/1 Geist, ui-sans-serif, system-ui, sans-serif; cursor: pointer; transition: all 150ms; } .ds-btn-primary:hover { background: color-mix(in oklch, var(--primary, oklch(0.205 0 0)) 80%, transparent); } .ds-btn-primary:focus-visible { outline: none; border-color: var(--ring, oklch(0.708 0 0)); box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring, oklch(0.708 0 0)) 50%, transparent); } .ds-btn-primary:active { transform: translateY(1px); }"
     },
     {
       "name": "Outline Button",
       "kind": "button",
       "refersTo": "button-outline",
-      "description": "Secondary actions: Atualizar, Configurar.",
-      "html": "<button class=\"ds-btn-outline\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/><path d=\"M8 16H3v5\"/></svg>Atualizar</button>",
+      "description": "Secondary actions: Refresh, Configure.",
+      "html": "<button class=\"ds-btn-outline\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/><path d=\"M8 16H3v5\"/></svg>Refresh</button>",
       "css": ".ds-btn-outline { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 10px 0 6px; border: 1px solid var(--border, oklch(0.922 0 0)); border-radius: 0.5rem; background: var(--background, oklch(1 0 0)); color: var(--foreground, oklch(0.145 0 0)); font: 500 0.8rem/1 Geist, ui-sans-serif, system-ui, sans-serif; cursor: pointer; transition: all 150ms; } .ds-btn-outline:hover { background: var(--muted, oklch(0.97 0 0)); } .ds-btn-outline:focus-visible { outline: none; border-color: var(--ring, oklch(0.708 0 0)); box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring, oklch(0.708 0 0)) 50%, transparent); } .ds-btn-outline:active { transform: translateY(1px); }"
     },
     {
       "name": "State Badge (outline)",
       "kind": "chip",
       "refersTo": "badge-outline",
-      "description": "Names the quality of a number: Parcial, Estimada, Sem dados, sem tarifa.",
-      "html": "<span class=\"ds-badge-outline\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3\"/><path d=\"M12 9v4\"/><path d=\"M12 17h.01\"/></svg>Parcial</span> <span class=\"ds-badge-outline\">Sem dados</span>",
+      "description": "Names the quality of a number: Partial, Estimated, No data, no rate.",
+      "html": "<span class=\"ds-badge-outline\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3\"/><path d=\"M12 9v4\"/><path d=\"M12 17h.01\"/></svg>Partial</span> <span class=\"ds-badge-outline\">No data</span>",
       "css": ".ds-badge-outline { display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 2px 8px; border: 1px solid var(--border, oklch(0.922 0 0)); border-radius: 1.625rem; color: var(--foreground, oklch(0.145 0 0)); font: 500 0.75rem/1 Geist, ui-sans-serif, system-ui, sans-serif; white-space: nowrap; } .ds-badge-outline:has(svg) { padding-left: 6px; }"
     },
     {
@@ -87,7 +236,7 @@
       "kind": "card",
       "refersTo": "card",
       "description": "Metric card: description, tabular metric, CardAction state badge, footer with statement and muted detail. Missing values render as an em dash.",
-      "html": "<div class=\"ds-card\"><div class=\"ds-card-header\"><div class=\"ds-card-desc\">Custo no período</div><div class=\"ds-card-metric\">US$ 0,10</div><span class=\"ds-card-action\">Parcial</span></div><div class=\"ds-card-footer\"><div class=\"ds-card-strong\">R$ 0,60 · cotação 6,00</div><div class=\"ds-card-muted\">2 de 3 registros sem estimativa</div></div></div>",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-header\"><div class=\"ds-card-desc\">Cost in this period</div><div class=\"ds-card-metric\">$0.10</div><span class=\"ds-card-action\">Partial</span></div><div class=\"ds-card-footer\"><div class=\"ds-card-strong\">R$0.60 · exchange rate 6.00</div><div class=\"ds-card-muted\">2 of 3 records without an estimate</div></div></div>",
       "css": ".ds-card { display: flex; flex-direction: column; gap: 16px; width: 260px; padding-top: 16px; overflow: hidden; border-radius: 0.875rem; background: var(--card, oklch(1 0 0)); color: var(--card-foreground, oklch(0.145 0 0)); box-shadow: 0 0 0 1px color-mix(in oklch, var(--foreground, oklch(0.145 0 0)) 10%, transparent); font: 400 0.875rem/1.43 Geist, ui-sans-serif, system-ui, sans-serif; } .ds-card-header { display: grid; grid-template-columns: 1fr auto; gap: 4px; padding: 0 16px; } .ds-card-desc { color: var(--muted-foreground, oklch(0.556 0 0)); } .ds-card-metric { grid-row: 2; font-size: 1.5rem; font-weight: 600; font-variant-numeric: tabular-nums; } .ds-card-action { grid-column: 2; grid-row: 1 / span 2; align-self: start; height: 20px; padding: 2px 8px; border: 1px solid var(--border, oklch(0.922 0 0)); border-radius: 1.625rem; font-size: 0.75rem; font-weight: 500; } .ds-card-footer { display: flex; flex-direction: column; gap: 4px; padding: 16px; border-top: 1px solid var(--border, oklch(0.922 0 0)); background: color-mix(in oklch, var(--muted, oklch(0.97 0 0)) 50%, transparent); } .ds-card-strong { font-weight: 500; } .ds-card-muted { color: var(--muted-foreground, oklch(0.556 0 0)); }"
     },
     {
@@ -95,15 +244,15 @@
       "kind": "input",
       "refersTo": "native-select",
       "description": "Native select used for service, project and period filters.",
-      "html": "<label class=\"ds-select-wrap\"><select class=\"ds-select\" aria-label=\"Período\"><option>Últimos 30 dias</option><option>Últimos 7 dias</option><option>Últimos 90 dias</option></select><svg class=\"ds-select-icon\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m6 9 6 6 6-6\"/></svg></label>",
+      "html": "<label class=\"ds-select-wrap\"><select class=\"ds-select\" aria-label=\"Period\"><option>Last 30 days</option><option>Last 7 days</option><option>Last 90 days</option></select><svg class=\"ds-select-icon\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m6 9 6 6 6-6\"/></svg></label>",
       "css": ".ds-select-wrap { position: relative; display: inline-block; width: 160px; } .ds-select { appearance: none; width: 100%; height: 32px; padding: 4px 32px 4px 10px; border: 1px solid var(--input, oklch(0.922 0 0)); border-radius: 0.625rem; background: transparent; color: var(--foreground, oklch(0.145 0 0)); font: 400 0.875rem/1 Geist, ui-sans-serif, system-ui, sans-serif; outline: none; transition: color 150ms, border-color 150ms, box-shadow 150ms; } .ds-select:focus-visible { border-color: var(--ring, oklch(0.708 0 0)); box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring, oklch(0.708 0 0)) 50%, transparent); } .ds-select-icon { position: absolute; top: 50%; right: 10px; transform: translateY(-50%); pointer-events: none; color: var(--muted-foreground, oklch(0.556 0 0)); }"
     },
     {
       "name": "Sidebar Navigation",
       "kind": "nav",
       "refersTo": "sidebar",
-      "description": "Inset sidebar: grouped items with lucide icons; tool rows with status dot and token total or 'sem dados'.",
-      "html": "<nav class=\"ds-nav\"><div class=\"ds-nav-label\">Acompanhamento</div><a class=\"ds-nav-item is-active\" href=\"#\" aria-current=\"page\">Visão geral</a><a class=\"ds-nav-item\" href=\"#\">Atividade</a><div class=\"ds-nav-label\">Ferramentas</div><a class=\"ds-nav-item\" href=\"#\"><span class=\"ds-dot\"></span>Codex<span class=\"ds-nav-badge\">1,2 mil</span></a><a class=\"ds-nav-item\" href=\"#\"><span class=\"ds-dot is-off\"></span>Gemini<span class=\"ds-nav-badge\">sem dados</span></a></nav>",
+      "description": "Inset sidebar: grouped items with lucide icons; tool rows with status dot and token total or 'no data'.",
+      "html": "<nav class=\"ds-nav\"><div class=\"ds-nav-label\">Tracking</div><a class=\"ds-nav-item is-active\" href=\"#\" aria-current=\"page\">Overview</a><a class=\"ds-nav-item\" href=\"#\">Activity</a><div class=\"ds-nav-label\">Tools</div><a class=\"ds-nav-item\" href=\"#\"><span class=\"ds-dot\"></span>Codex<span class=\"ds-nav-badge\">1.2K</span></a><a class=\"ds-nav-item\" href=\"#\"><span class=\"ds-dot is-off\"></span>Gemini<span class=\"ds-nav-badge\">no data</span></a></nav>",
       "css": ".ds-nav { display: flex; flex-direction: column; gap: 4px; width: 220px; padding: 8px; background: var(--sidebar, oklch(0.985 0 0)); font: 400 0.875rem/1.43 Geist, ui-sans-serif, system-ui, sans-serif; } .ds-nav-label { padding: 8px 8px 4px; font-size: 0.75rem; font-weight: 500; color: color-mix(in oklch, var(--foreground, oklch(0.145 0 0)) 70%, transparent); } .ds-nav-item { display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 0.375rem; color: var(--foreground, oklch(0.145 0 0)); text-decoration: none; } .ds-nav-item:hover, .ds-nav-item.is-active { background: var(--muted, oklch(0.97 0 0)); } .ds-nav-item.is-active { font-weight: 500; } .ds-nav-item:focus-visible { outline: 2px solid var(--ring, oklch(0.708 0 0)); } .ds-dot { width: 8px; height: 8px; border-radius: 50%; background: color-mix(in oklch, var(--foreground, oklch(0.145 0 0)) 70%, transparent); } .ds-dot.is-off { background: transparent; border: 1px solid var(--muted-foreground, oklch(0.556 0 0)); } .ds-nav-badge { margin-left: auto; font-size: 0.75rem; font-weight: 500; font-variant-numeric: tabular-nums; }"
     }
   ],
@@ -114,19 +263,35 @@
       "Neutral oklch tokens with zero chroma for every surface, text, border and chart color.",
       "Geist for all text, Geist Mono for paths, code and chart tooltip values; tabular numerals on every figure.",
       "Flat cards defined by a hairline ring, not shadows; one radius base (0.625rem).",
-      "State language in outline badges (\"Sem dados\", \"sem tarifa\", \"Parcial\", \"Estimada\").",
+      "State language in outline badges (\"No data\", \"no rate\", \"Partial\", \"Estimated\").",
       "Missing data is shown as missing, never as zero."
     ],
     "rules": [
-      { "name": "The Neutral Primary Rule", "body": "There is no accent color beyond the neutral primary. Charts, progress bars, active states and calls to action all use the primary or a grey step; destructive red appears only when something failed.", "section": "colors" },
-      { "name": "The Same Selection Rule", "body": "Text selection uses the primary as background and primary-foreground as text in both themes; the scrollbar thumb uses the border color on a transparent track. Both are set globally, never per component.", "section": "colors" },
-      { "name": "The Tabular Figures Rule", "body": "Every number that can change (tokens, currency, percentages, counts) is set with tabular numerals, and numeric table columns are right-aligned.", "section": "typography" },
-      { "name": "The Ring Not Shadow Rule", "body": "Containers are outlined by a hairline ring; do not add shadows to cards, badges or inputs.", "section": "elevation" }
+      {
+        "name": "The Neutral Primary Rule",
+        "body": "There is no accent color beyond the neutral primary. Charts, progress bars, active states and calls to action all use the primary or a grey step; destructive red appears only when something failed.",
+        "section": "colors"
+      },
+      {
+        "name": "The Same Selection Rule",
+        "body": "Text selection uses the primary as background and primary-foreground as text in both themes; the scrollbar thumb uses the border color on a transparent track. Both are set globally, never per component.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Figures Rule",
+        "body": "Every number that can change (tokens, currency, percentages, counts) is set with tabular numerals, and numeric table columns are right-aligned.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ring Not Shadow Rule",
+        "body": "Containers are outlined by a hairline ring; do not add shadows to cards, badges or inputs.",
+        "section": "elevation"
+      }
     ],
     "dos": [
       "Do use only the neutral tokens; reach for the primary (oklch(0.205 0 0) light, oklch(0.922 0 0) dark) for any emphasis, chart series or progress fill.",
-      "Do show missing data as missing: an em dash in metric slots, an outline \"Sem dados\" or \"sem tarifa\" badge or muted text, and an explanation line in the card footer.",
-      "Do label the quality of a number with an outline badge in the card's action slot (\"Parcial\", \"Estimada\", \"Real\").",
+      "Do show missing data as missing: an em dash in metric slots, an outline \"No data\" or \"no rate\" badge or muted text, and an explanation line in the card footer.",
+      "Do label the quality of a number with an outline badge in the card's action slot (\"Partial\", \"Estimated\", \"Real\").",
       "Do use the native select for filters (service, project, period).",
       "Do set every figure in tabular numerals and right-align numeric columns.",
       "Do keep shadcn primitives as generated (Card, Badge, Button, NativeSelect, Table, Alert, Progress, ToggleGroup, Sidebar, Empty) and compose them rather than restyling them.",

@@ -6,12 +6,12 @@ import type { UsageEvent } from "@/lib/types";
 export async function POST(request: Request) {
   if (!isLocalRequest(request, true))
     return Response.json(
-      { error: "Origem não permitida." },
+      { error: "Origin not allowed." },
       { status: 403, headers: privateHeaders },
     );
   try {
     const reader = request.body?.getReader();
-    if (!reader) throw new Error("Selecione um arquivo de consumo.");
+    if (!reader) throw new Error("Select a usage file.");
     const decoder = new TextDecoder();
     let text = "",
       size = 0;
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       if (size > 4 * 1024 * 1024) {
         await reader.cancel();
         return Response.json(
-          { error: "O arquivo deve ter até 4 MB." },
+          { error: "The file must be no larger than 4 MB." },
           { status: 413, headers: privateHeaders },
         );
       }
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       const existing = (await readJson<UsageEvent[]>("api-usage.json")) ?? [];
       const merged = mergeImports(existing, incoming);
       if (merged.length > 100000)
-        throw new Error("Limite de 100.000 registros locais atingido.");
+        throw new Error("The limit of 100,000 local records has been reached.");
       await writeJson("api-usage.json", merged);
       return merged.length - existing.length;
     });
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     return Response.json(
-      { error: error instanceof Error ? error.message : "Falha ao importar." },
+      { error: error instanceof Error ? error.message : "Import failed." },
       { status: 400, headers: privateHeaders },
     );
   }

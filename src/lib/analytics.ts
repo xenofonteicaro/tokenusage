@@ -292,18 +292,18 @@ export function exportCSV(events: UsageEvent[]): string {
     row.costUSD,
   ]);
   const headers = [
-    "data_utc",
-    "servico",
-    "origem",
-    "modelo",
-    "projeto",
-    "tokens_entrada",
-    "tokens_saida",
-    "tokens_cache",
-    "tokens_escrita_cache",
-    "tokens_raciocinio",
-    "tokens_total",
-    "custo_usd_informado",
+    "timestamp_utc",
+    "provider",
+    "channel",
+    "model",
+    "project",
+    "input_tokens",
+    "output_tokens",
+    "cached_tokens",
+    "cache_write_tokens",
+    "reasoning_tokens",
+    "total_tokens",
+    "reported_cost_usd",
   ];
   return (
     "\ufeff" +
