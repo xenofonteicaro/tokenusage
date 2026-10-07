@@ -61,6 +61,41 @@ python3 scripts/package-homebrew.py --ref HEAD --out /tmp/tokenusage.tar.gz
 The script uses an explicit source allowlist and normalizes archive ownership
 and timestamps. The formula pins the archive's SHA-256 checksum.
 
+## Terminal UI (TUI)
+
+Besides the web dashboard, a terminal version shows the same numbers: an
+overview, a searchable activity list, and source diagnostics. It reads the local
+history directly, so it needs neither the web service nor port 3000.
+
+```sh
+npm run tui                          # from the repository
+tokenusage tui --days 7 --channel api
+tokenusage tui --once                # print the overview once and exit
+```
+
+It needs a terminal of at least 80×24. `--days` (7, 30, or 90) and `--channel`
+(`tool` or `api`) set the initial filters; `--lang` sets the interface language
+(`pt-BR` or `en`).
+
+| Key                   | Action                                                         |
+| --------------------- | -------------------------------------------------------------- |
+| `1` `2` `3` or `Tab`  | Overview, Activity, and Sources                                |
+| `c` `d` `s` `p`       | Channel, period, service, and project                          |
+| `/` and `g`           | Search and grouping in Activity (session, model, project, day) |
+| `↑` `↓` `PgUp` `PgDn` | Scroll lists                                                   |
+| `r`                   | Refresh now (automatic every 60 s)                             |
+| `?` and `q`           | Help and quit                                                  |
+
+This first phase is read-only: preferences, prices, log import, and CSV export
+stay in the web dashboard. Colors follow `NO_COLOR`. `npm run build:tui` builds
+the single bundle `dist/tui.mjs`; the `tokenusage tui` Homebrew subcommand ships
+with the next formula release.
+
+The TUI speaks Portuguese (Brazil) and English. Without `--lang` it follows the
+language saved under **Preferences → General → Interface language**. Spanish,
+Italian, French, and Chinese show the English text in the TUI, never a mix of
+languages on one screen.
+
 ## Interface languages
 
 Under **Preferences → General → Interface language**, choose Portuguese

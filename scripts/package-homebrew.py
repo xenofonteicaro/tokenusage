@@ -12,6 +12,7 @@ import tarfile
 ROOT_FILES = {
     "package.json", "package-lock.json", "next.config.ts",
     "tsconfig.json", "postcss.config.mjs", "eslint.config.mjs",
+    "scripts/build-tui.mjs",
 }
 
 
