@@ -27,11 +27,11 @@ npm start
 ## Instalar pelo Homebrew
 
 Esta fórmula instala a versão de produção, registra um serviço do macOS e usa
-o perfil local para coletar os contadores. Como este repositório é privado, o
-Git e o SSH do GitHub precisam estar configurados na máquina:
+o perfil local para coletar os contadores. Código, fórmula e releases ficam
+neste mesmo repositório. Use a URL explícita porque o nome não começa com `homebrew-`:
 
 ```sh
-brew tap xenofonteicaro/tokenusage git@github.com:xenofonteicaro/tokenusage.git
+brew tap --custom-remote xenofonteicaro/tokenusage https://github.com/xenofonteicaro/tokenusage.git
 brew install --build-from-source xenofonteicaro/tokenusage/tokenusage
 tokenusage start
 ```
@@ -42,6 +42,20 @@ O comando `tokenusage start` inicia o serviço e abre a dashboard em
 O serviço inicia novamente quando você entrar no macOS. Preferências, tarifas
 e logs importados ficam em `~/Library/Application Support/tokenusage`; o
 histórico das ferramentas continua nas pastas originais.
+
+O comando de tap acima também migra instalações que usavam o repositório antigo
+`homebrew-tokenusage`. Depois da migração, `brew update` e `brew upgrade tokenusage`
+consultam este repositório.
+
+O pacote público contém somente os arquivos necessários para construir o app,
+sem histórico Git, documentos internos, screenshots ou dados do perfil. O
+script `python3 scripts/package-homebrew.py --ref HEAD --out /tmp/tokenusage.tar.gz`
+gera esse pacote a partir de uma revisão Git e normaliza os metadados do arquivo.
+
+Em **Preferências → Geral → Idioma da interface**, escolha Português (PT-BR),
+English, Español, Italiano, Français ou 简体中文 (chinês simplificado), e salve.
+A escolha fica no armazenamento local e altera textos, números e datas da
+interface. Moedas, fuso de São Paulo e agrupamento do consumo permanecem iguais.
 
 ## Funcionalidades
 

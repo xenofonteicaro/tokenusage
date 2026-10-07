@@ -10,13 +10,13 @@ test("shows local metrics, filters, session search, diagnostic and filtered CSV"
   await expect(
     page.getByText("3 de 4 fontes locais com histórico", { exact: false }),
   ).toBeVisible();
-  await expect(page.locator(".metric-highlight > strong")).toHaveText(
-    "3,6 mil",
-  );
+  await expect(
+    page.locator('[data-metric="tokens"] [data-slot="card-title"]'),
+  ).toHaveText("3,6 mil");
   await page.getByLabel("Serviço", { exact: true }).selectOption("codex");
-  await expect(page.locator(".metric-highlight > strong")).toHaveText(
-    "1,2 mil",
-  );
+  await expect(
+    page.locator('[data-metric="tokens"] [data-slot="card-title"]'),
+  ).toHaveText("1,2 mil");
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "Exportar CSV" }).click();
   const file = await download;
@@ -68,8 +68,10 @@ test("imports API logs without duplicate consumption and persists settings", asy
   await upload();
   await expect(page.getByRole("status")).toContainText("0 novos registros");
   await page.getByRole("button", { name: "Visão geral", exact: true }).click();
-  await page.getByRole("button", { name: "APIs", exact: true }).click();
-  await expect(page.locator(".metric-highlight > strong")).toHaveText("120");
+  await page.getByRole("tab", { name: "APIs", exact: true }).click();
+  await expect(
+    page.locator('[data-metric="tokens"] [data-slot="card-title"]'),
+  ).toHaveText("120");
   await page.getByRole("button", { name: "Preferências", exact: true }).click();
   await page.getByLabel("Codex", { exact: false }).fill("99.90");
   await page
@@ -105,7 +107,7 @@ test("mobile navigation fits the viewport and the dashboard has no horizontal ov
       () => document.documentElement.scrollWidth <= window.innerWidth,
     ),
   ).toBe(true);
-  await page.getByRole("button", { name: "Abrir menu" }).click();
+  await page.getByRole("button", { name: "Alternar menu lateral" }).click();
   await page
     .getByRole("button", { name: "Fontes de dados", exact: false })
     .click();
@@ -117,7 +119,7 @@ test("mobile navigation fits the viewport and the dashboard has no horizontal ov
       () => document.documentElement.scrollWidth <= window.innerWidth,
     ),
   ).toBe(true);
-  await page.getByRole("button", { name: "Abrir menu" }).click();
+  await page.getByRole("button", { name: "Alternar menu lateral" }).click();
   await page.getByRole("button", { name: "Visão geral", exact: true }).click();
   await page.screenshot({
     path: "artifacts/dashboard-mobile-synthetic.png",
@@ -143,10 +145,10 @@ test("toggles light and dark themes and displays cache savings and cost metrics"
 
   // Verify Cache Savings and Cost cards
   await expect(
-    page.getByText("ECONOMIA POR CACHE", { exact: false }),
+    page.getByText("Economia por cache", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText("CUSTO ESTIMADO / REAL", { exact: false }),
+    page.getByText("Custo no período", { exact: true }),
   ).toBeVisible();
 
   await page.emulateMedia({ colorScheme: "dark" });
@@ -213,7 +215,7 @@ test("edits and persists model prices and exchange rate, updating costs immediat
   });
   await expect(page.getByRole("status")).toContainText("processados");
   await page.getByRole("button", { name: "Visão geral", exact: true }).click();
-  await page.getByRole("button", { name: "APIs", exact: true }).click();
+  await page.getByRole("tab", { name: "APIs", exact: true }).click();
   await page
     .getByLabel("Projeto", { exact: true })
     .selectOption("pricing-synthetic");
@@ -235,19 +237,15 @@ test("edits and persists model prices and exchange rate, updating costs immediat
     page.getByRole("button", { name: "Preferências salvas" }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Visão geral", exact: true }).click();
-  const costCard = page
-    .locator(".metric-card")
-    .filter({ hasText: "CUSTO ESTIMADO / REAL" });
+  const costCard = page.locator('[data-metric="cost"]');
   await expect(costCard).toContainText(/25,32/);
   await expect(costCard).toContainText(/4,22/);
   await expect(costCard).toContainText(/0,42/);
-  const savingsCard = page
-    .locator(".metric-card")
-    .filter({ hasText: "ECONOMIA POR CACHE" });
+  const savingsCard = page.locator('[data-metric="savings"]');
   await expect(savingsCard).toContainText(/1,20/);
   await page.getByRole("button", { name: "Atividade", exact: true }).click();
-  await expect(page.locator(".activity-panel")).toContainText(/3,80/);
-  await expect(page.locator(".activity-panel")).toContainText(/0,42/);
+  await expect(page.locator("main")).toContainText(/3,80/);
+  await expect(page.locator("main")).toContainText(/0,42/);
   await page.reload();
   await page.getByRole("button", { name: "Preferências", exact: true }).click();
   await expect(
@@ -276,13 +274,7 @@ test("edits and persists model prices and exchange rate, updating costs immediat
     fullPage: true,
   });
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect
-    .poll(() =>
-      page
-        .locator(".sidebar")
-        .evaluate((element) => element.getBoundingClientRect().right),
-    )
-    .toBeLessThanOrEqual(0);
+  await expect(page.getByRole("dialog")).toHaveCount(0);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -347,25 +339,19 @@ test("cache percentage uses model tariffs even for native zero costs and unknown
   });
   expect(result.ok()).toBe(true);
   await page.goto("/");
-  await page.getByRole("button", { name: "APIs", exact: true }).click();
+  await page.getByRole("tab", { name: "APIs", exact: true }).click();
   await page
     .getByLabel("Projeto", { exact: true })
     .selectOption("native-zero-synthetic");
-  await expect(
-    page.locator(".metric-card").filter({ hasText: "ECONOMIA POR CACHE" }),
-  ).toContainText("60,0%");
-  await expect(
-    page.locator(".metric-card").filter({ hasText: "CUSTO ESTIMADO / REAL" }),
-  ).toContainText("0,00");
+  await expect(page.locator('[data-metric="savings"]')).toContainText("60,0%");
+  await expect(page.locator('[data-metric="cost"]')).toContainText("0,00");
   await page
     .getByLabel("Projeto", { exact: true })
     .selectOption("unknown-synthetic");
-  await expect(
-    page.locator(".metric-card").filter({ hasText: "CUSTO ESTIMADO / REAL" }),
-  ).toContainText("1 de 1 registros sem estimativa");
-  await expect(
-    page.locator(".metric-card").filter({ hasText: "ECONOMIA POR CACHE" }),
-  ).toContainText("0,00");
+  await expect(page.locator('[data-metric="cost"]')).toContainText(
+    "1 de 1 registros sem estimativa",
+  );
+  await expect(page.locator('[data-metric="savings"]')).toContainText("0,00");
   await page.getByRole("button", { name: "Tema claro" }).click();
   await page.screenshot({
     path: "artifacts/dashboard-light-synthetic.png",

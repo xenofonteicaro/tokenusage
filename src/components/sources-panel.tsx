@@ -1,20 +1,33 @@
 "use client";
+import { useI18n } from "./language-provider";
 import { useRef, useState } from "react";
 import {
-  ArrowUpRight,
-  CheckCircle2,
-  FileJson2,
-  FolderOpen,
-  Info,
-  Upload,
-  CircleDashed,
-  TriangleAlert,
+  CheckCircle2Icon,
+  ChevronRightIcon,
+  CircleDashedIcon,
+  InfoIcon,
+  TriangleAlertIcon,
+  UploadIcon,
 } from "lucide-react";
-import { formatDate, formatNumber, formatTime } from "@/lib/analytics";
 import { providerInfo, type SourceStatus } from "@/lib/types";
-import { Card } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+
 const statusLabels = {
   connected: "Coletando",
   empty: "Sem contadores",
@@ -29,6 +42,7 @@ export function SourcesPanel({
   sources: SourceStatus[];
   onImport: () => Promise<void>;
 }) {
+  const { t, formatNumber, formatDate, formatTime } = useI18n();
   const fileInput = useRef<HTMLInputElement>(null),
     [uploading, setUploading] = useState(false),
     [message, setMessage] = useState(""),
@@ -40,7 +54,7 @@ export function SourcesPanel({
     setError(false);
     try {
       if (file.size > 4 * 1024 * 1024)
-        throw new Error("Selecione um arquivo de até 4 MB.");
+        throw new Error(t("Selecione um arquivo de até 4 MB."));
       const response = await fetch("/api/import", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -49,142 +63,183 @@ export function SourcesPanel({
       const result = await response.json();
       if (!response.ok) throw new Error(result.error);
       setMessage(
-        `${formatNumber(result.added)} novos registros; ${formatNumber(result.processed)} processados. Importações repetidas não duplicam consumo.`,
+        t(
+          "{added} novos registros; {processed} processados. Importações repetidas não duplicam consumo.",
+          {
+            added: formatNumber(result.added),
+            processed: formatNumber(result.processed),
+          },
+        ),
       );
       await onImport();
     } catch (error) {
       setError(true);
       setMessage(
-        error instanceof Error ? error.message : "Não foi possível importar.",
+        error instanceof Error
+          ? error.message
+          : t("Não foi possível importar."),
       );
     } finally {
       setUploading(false);
       if (fileInput.current) fileInput.current.value = "";
     }
   }
+  const tools = sources.filter((source) => source.channel === "tool");
   return (
-    <div className="sources-layout">
-      <Card className="panel">
-        <div className="panel-heading">
-          <div>
-            <span className="eyebrow">PERFIL DESTE COMPUTADOR</span>
-            <h2>Suas fontes de consumo</h2>
-          </div>
-          <FolderOpen size={20} />
-        </div>
-        <p className="muted">
-          Leitura automática do histórico local. Nenhuma chave de API
-          necessária.
-        </p>
-        <div className="source-detail-list">
-          {sources
-            .filter((source) => source.channel === "tool")
-            .map((source) => (
-              <article key={source.id} className="source-detail">
-                <div className="source-detail-heading">
-                  <span className={`provider-mark ${source.provider}`}>
-                    {providerInfo[source.provider].letter}
-                  </span>
-                  <div>
-                    <h3>{source.name}</h3>
-                    <code>{source.location}</code>
+    <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-3">
+      <Card className="lg:col-span-2">
+        <CardHeader>
+          <CardTitle role="heading" aria-level={2}>
+            {t("Suas fontes de consumo")}
+          </CardTitle>
+          <CardDescription>
+            {t(
+              "Leitura automática do histórico local deste computador. Nenhuma chave de API necessária.",
+            )}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          {tools.map((source, index) => (
+            <div key={source.id} className="flex flex-col gap-4">
+              {index > 0 && <Separator />}
+              <article className="flex flex-col gap-2">
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <div className="flex min-w-0 flex-col gap-1">
+                    <h3 className="text-sm font-medium">{t(source.name)}</h3>
+                    <code className="truncate font-mono text-xs text-muted-foreground">
+                      {t(source.location)}
+                    </code>
                   </div>
-                  <span className={`status-pill ${source.state}`}>
+                  <Badge
+                    variant={
+                      source.state === "error"
+                        ? "destructive"
+                        : source.state === "connected"
+                          ? "secondary"
+                          : "outline"
+                    }
+                  >
                     {source.state === "connected" ? (
-                      <CheckCircle2 size={12} />
+                      <CheckCircle2Icon data-icon="inline-start" />
                     ) : source.state === "error" ? (
-                      <TriangleAlert size={12} />
+                      <TriangleAlertIcon data-icon="inline-start" />
                     ) : (
-                      <CircleDashed size={12} />
+                      <CircleDashedIcon data-icon="inline-start" />
                     )}
-                    {statusLabels[source.state]}
-                  </span>
+                    {t(statusLabels[source.state])}
+                  </Badge>
                 </div>
-                <p>{source.detail}</p>
-                <div className="source-metadata">
-                  <span>{formatNumber(source.files)} arquivos consultados</span>
-                  <span>{formatNumber(source.events)} registros de uso</span>
+                <p className="text-sm text-muted-foreground">
+                  {t(source.detail)}
+                </p>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground tabular-nums">
+                  <span>
+                    {formatNumber(source.files)}{" "}
+                    {source.files === 1
+                      ? t("arquivo consultado")
+                      : t("arquivos consultados")}
+                  </span>
+                  <span>
+                    {formatNumber(source.events)}{" "}
+                    {source.events === 1
+                      ? t("registro de uso")
+                      : t("registros de uso")}
+                  </span>
                   {source.latest && (
                     <span>
-                      Último: {formatDate(source.latest)},{" "}
+                      {t("Último:")} {formatDate(source.latest)},{" "}
                       {formatTime(source.latest)}
                     </span>
                   )}
                 </div>
                 {source.warnings > 0 && (
-                  <p className="source-warning">
-                    {source.warnings} arquivo(s) ou registro(s) não puderam ser
-                    lidos. Os totais podem estar incompletos.
+                  <p className="text-sm text-destructive">
+                    {source.warnings} {t("arquivo(s) ou registro(s) de")}{" "}
+                    {providerInfo[source.provider].name}{" "}
+                    {t(
+                      "não puderam ser lidos. Os totais podem estar incompletos.",
+                    )}
                   </p>
                 )}
               </article>
-            ))}
-        </div>
+            </div>
+          ))}
+        </CardContent>
       </Card>
-      <div className="source-aside">
-        <Card className="panel import-panel">
-          <span className="import-icon">
-            <FileJson2 size={25} />
-          </span>
-          <span className="eyebrow">CHAMADAS DOS SEUS PROJETOS</span>
-          <h2>Traga seus logs de API</h2>
-          <p>
-            Importe os contadores retornados por Grok, OpenAI, Claude ou Gemini.
-            O arquivo é processado neste computador.
-          </p>
-          <Input
-            hidden
-            ref={fileInput}
-            type="file"
-            accept=".json,.jsonl,application/json"
-            aria-label="Arquivo de consumo de API"
-            onChange={(event) => upload(event.target.files?.[0])}
-          />
-          <Button
-            variant="outline"
-            className="button primary"
-            disabled={uploading}
-            onClick={() => fileInput.current?.click()}
-          >
-            <Upload size={16} />
-            {uploading ? "Importando…" : "Importar JSON ou JSONL"}
-          </Button>
-          <small>Até 4 MB · 10.000 registros por arquivo</small>
-          {message && (
-            <p
-              className={error ? "form-error" : "form-success"}
-              role={error ? "alert" : "status"}
+      <div className="flex flex-col gap-4 md:gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle role="heading" aria-level={2}>
+              {t("Traga seus logs de API")}
+            </CardTitle>
+            <CardDescription>
+              {t(
+                "Importe os contadores retornados por Grok, OpenAI, Claude ou Gemini. O arquivo é processado neste computador.",
+              )}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-3">
+            <Input
+              hidden
+              ref={fileInput}
+              type="file"
+              accept=".json,.jsonl,application/json"
+              aria-label={t("Arquivo de consumo de API")}
+              onChange={(event) => upload(event.target.files?.[0])}
+            />
+            <Button
+              disabled={uploading}
+              onClick={() => fileInput.current?.click()}
             >
-              {message}
+              <UploadIcon data-icon="inline-start" />
+              {uploading ? t("Importando…") : t("Importar JSON ou JSONL")}
+            </Button>
+            <p className="text-xs text-muted-foreground">
+              {t("Até 4 MB · 10.000 registros por arquivo")}
             </p>
-          )}
-          <details>
-            <summary>
-              Como preparar o arquivo <ArrowUpRight size={14} />
-            </summary>
-            <p>
-              Uma chamada por registro, com provider (codex, claude, grok ou
-              gemini), timestamp, model, project opcional e usage. Para Gemini
-              use usageMetadata. Inclua o ID da chamada para deduplicar.
-            </p>
-            <pre>
-              {
-                '{\n  "provider": "grok",\n  "timestamp": "DATA_ISO_DA_CHAMADA",\n  "id": "ID_DA_CHAMADA",\n  "model": "MODELO_UTILIZADO",\n  "usage": {\n    "prompt_tokens": 1200,\n    "completion_tokens": 300\n  }\n}'
-              }
-            </pre>
-            <small>
-              Exemplo de formato. Esses valores não entram na dashboard.
-            </small>
-          </details>
+            {message && (
+              <p
+                className={
+                  error ? "text-sm text-destructive" : "text-sm text-foreground"
+                }
+                role={error ? "alert" : "status"}
+              >
+                {t(message)}
+              </p>
+            )}
+            <Collapsible className="rounded-lg border text-sm">
+              <CollapsibleTrigger className="group flex w-full items-center gap-2 rounded-lg p-3 text-left font-medium outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
+                <ChevronRightIcon className="size-4 text-muted-foreground transition-transform group-data-panel-open:rotate-90" />
+                {t("Como preparar o arquivo")}
+              </CollapsibleTrigger>
+              <CollapsibleContent className="flex flex-col gap-2 px-3 pb-3 text-muted-foreground">
+                <p>
+                  {t(
+                    "Uma chamada por registro, com provider (codex, claude, grok ou gemini), timestamp, model, project opcional e usage. Para Gemini use usageMetadata. Inclua o ID da chamada para deduplicar.",
+                  )}
+                </p>
+                <pre className="overflow-x-auto rounded-md bg-muted p-3 font-mono text-xs text-foreground">
+                  {
+                    '{\n  "provider": "grok",\n  "timestamp": "DATA_ISO_DA_CHAMADA",\n  "id": "ID_DA_CHAMADA",\n  "model": "MODELO_UTILIZADO",\n  "usage": {\n    "prompt_tokens": 1200,\n    "completion_tokens": 300\n  }\n}'
+                  }
+                </pre>
+                <p className="text-xs">
+                  {t(
+                    "Exemplo de formato. Esses valores não entram na dashboard.",
+                  )}
+                </p>
+              </CollapsibleContent>
+            </Collapsible>
+          </CardContent>
         </Card>
-        <div className="source-note">
-          <Info size={18} />
-          <p>
-            O histórico local cobre as sessões salvas nesta máquina. Uso nos
-            sites, em outros computadores e chamadas sem logs não aparece
-            automaticamente.
-          </p>
-        </div>
+        <Alert>
+          <InfoIcon />
+          <AlertDescription>
+            {t(
+              "O histórico local cobre as sessões salvas nesta máquina. Uso nos sites, em outros computadores e chamadas sem logs não aparece automaticamente.",
+            )}
+          </AlertDescription>
+        </Alert>
       </div>
     </div>
   );

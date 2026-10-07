@@ -1,32 +1,26 @@
 "use client";
+import { useI18n } from "./language-provider";
+import { LanguageProvider } from "./language-provider";
+import { resolveLanguage } from "@/lib/i18n/languages";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import {
-  Activity,
-  ArrowDownToLine,
-  ArrowUpRight,
-  ChevronDown,
-  CircleHelp,
-  Cpu,
-  Database,
-  Folder,
-  Layers3,
-  LayoutDashboard,
-  LoaderCircle,
-  Menu,
-  Monitor,
-  Plug2,
-  RefreshCw,
-  ShieldCheck,
-  SlidersHorizontal,
-  X,
+  ActivityIcon,
+  ArrowUpRightIcon,
+  ChartNoAxesColumnIcon,
+  DownloadIcon,
+  LayoutDashboardIcon,
+  PlugIcon,
+  RefreshCwIcon,
+  ShieldCheckIcon,
+  SlidersHorizontalIcon,
+  TriangleAlertIcon,
   type LucideIcon,
 } from "lucide-react";
 import {
   dayKey,
   exportCSV,
-  formatTime,
   selectEvents,
+  totals,
   type Filters,
 } from "@/lib/analytics";
 import {
@@ -36,26 +30,61 @@ import {
   type Provider,
   type Snapshot,
 } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { ActivityPanel } from "./activity-panel";
 import { Overview } from "./overview";
 import { SettingsPanel } from "./settings-panel";
 import { SourcesPanel } from "./sources-panel";
-import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./theme-toggle";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/ui/native-select";
+import { Separator } from "@/components/ui/separator";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+  useSidebar,
+} from "@/components/ui/sidebar";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type View = "overview" | "activity" | "sources" | "settings";
 const views: { id: View; label: string; icon: LucideIcon }[] = [
-  { id: "overview", label: "Visão geral", icon: LayoutDashboard },
-  { id: "activity", label: "Atividade", icon: Activity },
-  { id: "sources", label: "Fontes de dados", icon: Plug2 },
-  { id: "settings", label: "Preferências", icon: SlidersHorizontal },
+  { id: "overview", label: "Visão geral", icon: LayoutDashboardIcon },
+  { id: "activity", label: "Atividade", icon: ActivityIcon },
+  { id: "sources", label: "Fontes de dados", icon: PlugIcon },
+  { id: "settings", label: "Preferências", icon: SlidersHorizontalIcon },
 ];
+
 export default function Dashboard() {
+  return (
+    <LanguageProvider>
+      <DashboardContent />
+    </LanguageProvider>
+  );
+}
+
+function DashboardContent() {
+  const { t, setLanguage, formatTime } = useI18n();
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null),
     [busy, setBusy] = useState(true),
     [error, setError] = useState("");
-  const [view, setView] = useState<View>("overview"),
-    [mobileNav, setMobileNav] = useState(false);
+  const [view, setView] = useState<View>("overview");
   const [filters, setFilters] = useState<Filters>({
     channel: "tool",
     days: 30,
@@ -73,12 +102,13 @@ export default function Dashboard() {
           result.error || "Não foi possível consultar seu histórico.",
         );
       setSnapshot(result);
+      setLanguage(resolveLanguage(result.settings.language));
     } catch (error) {
       setError(error instanceof Error ? error.message : "Falha na coleta.");
     } finally {
       setBusy(false);
     }
-  }, []);
+  }, [setLanguage]);
   useEffect(() => {
     const timer = setTimeout(() => {
       void refresh();
@@ -114,6 +144,22 @@ export default function Dashboard() {
       ].sort(),
     [snapshot, filters.channel, filters.provider],
   );
+  const toolTotals = useMemo(() => {
+    if (!snapshot) return null;
+    const now = new Date(snapshot.generatedAt);
+    return Object.fromEntries(
+      PROVIDERS.map((provider) => [
+        provider,
+        totals(
+          selectEvents(
+            snapshot.events,
+            { channel: "tool", days: filters.days, provider, project: "" },
+            now,
+          ),
+        ).tokens,
+      ]),
+    ) as Record<Provider, number>;
+  }, [snapshot, filters.days]);
   const connected =
     snapshot?.sources.filter(
       (source) =>
@@ -123,11 +169,8 @@ export default function Dashboard() {
     snapshot?.sources
       .filter((source) => source.channel === filters.channel)
       .reduce((sum, source) => sum + source.warnings, 0) ?? 0;
-  const title = views.find((item) => item.id === view)!.label;
-  function navigate(next: View) {
-    setView(next);
-    setMobileNav(false);
-  }
+  const title = t(views.find((item) => item.id === view)!.label);
+  const exportable = ["overview", "activity"].includes(view);
   function changeChannel(channel: Channel) {
     setFilters({ ...filters, channel, project: "" });
   }
@@ -142,300 +185,181 @@ export default function Dashboard() {
     URL.revokeObjectURL(url);
   }
   return (
-    <div className="app-shell">
-      <a className="skip-link" href="#main">
-        Ir para o conteúdo
-      </a>
-      {mobileNav && (
-        <button
-          aria-label="Fechar navegação"
-          className="nav-scrim"
-          onClick={() => setMobileNav(false)}
-        />
-      )}
-      <aside className={`sidebar ${mobileNav ? "open" : ""}`}>
-        <Link className="brand" href="/" aria-label="Tokenusage início">
-          <span className="brand-symbol">
-            <i />
-            <i />
-            <i />
-          </span>
-          tokenusage<span className="brand-dot">.</span>
-        </Link>
-        <div className="workspace">
-          <span className="workspace-icon">
-            <Layers3 size={17} />
-          </span>
-          <div>
-            <strong>Meu workspace</strong>
-            <small>Pessoal · local</small>
-          </div>
-          <span className="workspace-badge">1</span>
-        </div>
-        <span className="nav-label">ACOMPANHAMENTO</span>
-        <nav aria-label="Navegação principal">
-          {views.map(({ id, label, icon: Icon }) => (
-            <button
-              key={id}
-              className={`nav-item ${view === id ? "active" : ""}`}
-              aria-current={view === id ? "page" : undefined}
-              onClick={() => navigate(id)}
-            >
-              <Icon size={18} />
-              <span>{label}</span>
-              {id === "sources" && snapshot && (
-                <small>
-                  {
-                    snapshot.sources.filter(
-                      (source) =>
-                        source.channel === "tool" &&
-                        source.state === "connected",
-                    ).length
-                  }
-                </small>
-              )}
-            </button>
-          ))}
-        </nav>
-        <div className="sidebar-sources">
-          <span className="nav-label">SUAS FERRAMENTAS</span>
-          {PROVIDERS.map((provider) => {
-            const source = snapshot?.sources.find(
-              (source) =>
-                source.provider === provider && source.channel === "tool",
-            );
-            return (
-              <button
-                key={provider}
-                onClick={() => {
-                  setFilters({
-                    ...filters,
-                    provider,
-                    channel: "tool",
-                    project: "",
-                  });
-                  navigate("overview");
-                }}
-              >
-                <span className={`provider-letter ${provider}`}>
-                  {providerInfo[provider].letter}
-                </span>
-                <span>{providerInfo[provider].name}</span>
-                <i
-                  className={
-                    source?.state === "connected" ? "online-dot" : "offline-dot"
-                  }
-                  aria-label={
-                    source?.state === "connected"
-                      ? "Histórico disponível"
-                      : "Sem histórico de tokens"
-                  }
-                />
-              </button>
-            );
-          })}
-        </div>
-        <div className="sidebar-bottom">
-          <div className="local-note">
-            <ShieldCheck size={18} />
-            <strong>Seus dados. Sua máquina.</strong>
-            <p>Métricas locais, sem enviar suas conversas para a nuvem.</p>
-            <button onClick={() => navigate("sources")}>
-              Sobre a coleta <ArrowUpRight size={13} />
-            </button>
-          </div>
-          <div className="computer-profile">
-            <span>
-              <Monitor size={18} />
-            </span>
-            <div>
-              <strong>Este computador</strong>
-              <small>America/Sao_Paulo</small>
-            </div>
-            <i className="online-dot" />
-          </div>
-        </div>
-      </aside>
-      <div className="main-shell">
-        <header className="topbar">
-          <div>
-            <button
-              className="mobile-menu icon-button"
-              onClick={() => setMobileNav(!mobileNav)}
-              aria-label={mobileNav ? "Fechar menu" : "Abrir menu"}
-            >
-              {mobileNav ? <X size={20} /> : <Menu size={20} />}
-            </button>
-            <span className="breadcrumb">
-              Meu workspace <span>/</span> <strong>{title}</strong>
-            </span>
-          </div>
-          <div className="topbar-right">
-            <span className="local-indicator">
-              <i />
-              Dados locais
-            </span>
-            <ThemeToggle />
-            <button
-              className="icon-button"
-              aria-label="Como funciona a coleta"
-              onClick={() => navigate("sources")}
-            >
-              <CircleHelp size={18} />
-            </button>
-            <span className="avatar">EU</span>
-          </div>
-        </header>
-        <main id="main">
-          <div className="page-heading">
-            <div>
-              <span className="eyebrow">INTELIGÊNCIA SOBRE SEU USO DE IA</span>
-              <h1>
-                {title}
-                <span className="heading-dot">.</span>
-              </h1>
-              <p>
-                {view === "overview"
-                  ? "Todos os seus tokens. Uma perspectiva mais clara."
-                  : view === "activity"
-                    ? "Explore o consumo das suas sessões, sem o conteúdo das conversas."
-                    : view === "sources"
-                      ? "Saiba de onde vêm os números e quais dados estão disponíveis."
-                      : "Um acompanhamento que faz sentido para a sua rotina."}
-              </p>
-            </div>
-            <div className="heading-actions">
+    <SidebarProvider>
+      <AppSidebar
+        view={view}
+        snapshot={snapshot}
+        toolTotals={toolTotals}
+        activeProvider={filters.channel === "tool" ? filters.provider : "all"}
+        onNavigate={setView}
+        onPickProvider={(provider) => {
+          setFilters({ ...filters, provider, channel: "tool", project: "" });
+          setView("overview");
+        }}
+      />
+      <SidebarInset id="main">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2 focus:text-sm"
+        >
+          {t("Ir para o conteúdo")}
+        </a>
+        <header className="flex h-14 shrink-0 items-center gap-2 border-b">
+          <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
+            <SidebarTrigger
+              className="-ml-1"
+              aria-label={t("Alternar menu lateral")}
+            />
+            <Separator
+              orientation="vertical"
+              className="mx-2 data-vertical:h-4"
+            />
+            <h1 className="truncate text-base font-medium">{title}</h1>
+            <div className="ml-auto flex items-center gap-2">
+              <ThemeToggle />
               <Button
                 variant="outline"
-                className="button"
+                size="sm"
                 disabled={busy}
+                aria-label={
+                  busy && snapshot ? t("Atualizando") : t("Atualizar")
+                }
                 onClick={() => void refresh()}
               >
-                <RefreshCw size={15} className={busy ? "spinning" : ""} />
-                {busy && snapshot ? "Atualizando" : "Atualizar"}
+                <RefreshCwIcon
+                  data-icon="inline-start"
+                  className={cn(busy && "animate-spin")}
+                />
+                <span className="hidden sm:inline">
+                  {busy && snapshot ? t("Atualizando") : t("Atualizar")}
+                </span>
               </Button>
-              {["overview", "activity"].includes(view) && (
+              {exportable && (
                 <Button
-                  variant="outline"
-                  className="button export-button"
+                  size="sm"
                   disabled={!events.length}
+                  aria-label={t("Exportar CSV")}
                   onClick={download}
                 >
-                  <ArrowDownToLine size={15} />
-                  Exportar CSV
+                  <DownloadIcon data-icon="inline-start" />
+                  <span className="hidden sm:inline">{t("Exportar CSV")}</span>
                 </Button>
               )}
             </div>
           </div>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4 md:gap-6 md:p-6">
           {error && (
-            <div className="error-banner" role="alert">
-              <span>
-                {error}
-                {snapshot &&
-                  " Os números abaixo são da última coleta bem-sucedida."}
-              </span>
-              <button onClick={() => void refresh()}>Tentar novamente</button>
-            </div>
+            <Alert variant="destructive">
+              <TriangleAlertIcon />
+              <AlertTitle>{error}</AlertTitle>
+              <AlertDescription>
+                {snapshot
+                  ? t("Os números abaixo são da última coleta bem-sucedida.")
+                  : t("Nenhum dado foi carregado ainda.")}{" "}
+                <button
+                  type="button"
+                  className="font-medium text-foreground underline underline-offset-3"
+                  onClick={() => void refresh()}
+                >
+                  {t("Tentar novamente")}
+                </button>
+              </AlertDescription>
+            </Alert>
           )}
           {!snapshot && !error ? (
-            <div className="loading-state" role="status">
-              <LoaderCircle className="spinning" size={30} />
-              <h2>Lendo seu histórico local</h2>
-              <p>
-                A primeira coleta pode levar alguns instantes. Depois, os
-                arquivos inalterados ficam em cache.
+            <div role="status" className="flex flex-col gap-4 md:gap-6">
+              <p className="text-sm text-muted-foreground">
+                {t(
+                  "Lendo seu histórico local. A primeira coleta pode levar alguns instantes; depois, os arquivos inalterados ficam em cache.",
+                )}
               </p>
-              <div className="skeleton-grid">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
                 {[0, 1, 2, 3].map((i) => (
-                  <div key={i} />
+                  <Skeleton key={i} className="h-36 rounded-xl" />
                 ))}
               </div>
+              <Skeleton className="h-80 rounded-xl" />
             </div>
           ) : (
             snapshot && (
               <>
-                {["overview", "activity"].includes(view) && (
-                  <div className="filter-bar">
-                    <div
-                      className="channel-tabs"
-                      role="group"
-                      aria-label="Origem do consumo"
+                {exportable && (
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <Tabs
+                      value={filters.channel}
+                      onValueChange={(value) => changeChannel(value as Channel)}
                     >
-                      <button
-                        className={filters.channel === "tool" ? "selected" : ""}
-                        onClick={() => changeChannel("tool")}
+                      <TabsList aria-label={t("Origem do consumo")}>
+                        <TabsTrigger value="tool">
+                          {t("Ferramentas")}
+                        </TabsTrigger>
+                        <TabsTrigger value="api">APIs</TabsTrigger>
+                      </TabsList>
+                    </Tabs>
+                    <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto">
+                      <NativeSelect
+                        aria-label={t("Serviço")}
+                        className="w-full sm:w-44"
+                        value={filters.provider}
+                        onChange={(event) =>
+                          setFilters({
+                            ...filters,
+                            provider: event.target.value as Provider | "all",
+                            project: "",
+                          })
+                        }
                       >
-                        <Cpu size={15} />
-                        Ferramentas
-                      </button>
-                      <button
-                        className={filters.channel === "api" ? "selected" : ""}
-                        onClick={() => changeChannel("api")}
+                        <NativeSelectOption value="all">
+                          {t("Todos os serviços")}
+                        </NativeSelectOption>
+                        {PROVIDERS.map((provider) => (
+                          <NativeSelectOption key={provider} value={provider}>
+                            {providerInfo[provider].name}
+                          </NativeSelectOption>
+                        ))}
+                      </NativeSelect>
+                      <NativeSelect
+                        aria-label={t("Projeto")}
+                        className="w-full sm:w-44"
+                        value={filters.project}
+                        onChange={(event) =>
+                          setFilters({
+                            ...filters,
+                            project: event.target.value,
+                          })
+                        }
                       >
-                        <Database size={15} />
-                        APIs
-                      </button>
-                    </div>
-                    <div className="filters">
-                      <label className="select-wrap">
-                        <select
-                          aria-label="Serviço"
-                          value={filters.provider}
-                          onChange={(event) =>
-                            setFilters({
-                              ...filters,
-                              provider: event.target.value as Provider | "all",
-                              project: "",
-                            })
-                          }
-                        >
-                          <option value="all">Todos os serviços</option>
-                          {PROVIDERS.map((provider) => (
-                            <option key={provider} value={provider}>
-                              {providerInfo[provider].name}
-                            </option>
-                          ))}
-                        </select>
-                        <ChevronDown size={14} />
-                      </label>
-                      <label className="select-wrap project-select">
-                        <Folder size={14} />
-                        <select
-                          aria-label="Projeto"
-                          value={filters.project}
-                          onChange={(event) =>
-                            setFilters({
-                              ...filters,
-                              project: event.target.value,
-                            })
-                          }
-                        >
-                          <option value="">Todos os projetos</option>
-                          {projects.map((project) => (
-                            <option key={project} value={project}>
-                              {project}
-                            </option>
-                          ))}
-                        </select>
-                        <ChevronDown size={14} />
-                      </label>
-                      <label className="select-wrap">
-                        <select
-                          aria-label="Período"
-                          value={filters.days}
-                          onChange={(event) =>
-                            setFilters({
-                              ...filters,
-                              days: Number(event.target.value),
-                            })
-                          }
-                        >
-                          <option value={7}>Últimos 7 dias</option>
-                          <option value={30}>Últimos 30 dias</option>
-                          <option value={90}>Últimos 90 dias</option>
-                        </select>
-                        <ChevronDown size={14} />
-                      </label>
+                        <NativeSelectOption value="">
+                          {t("Todos os projetos")}
+                        </NativeSelectOption>
+                        {projects.map((project) => (
+                          <NativeSelectOption key={project} value={project}>
+                            {project}
+                          </NativeSelectOption>
+                        ))}
+                      </NativeSelect>
+                      <NativeSelect
+                        aria-label={t("Período")}
+                        className="col-span-2 w-full sm:w-40"
+                        value={filters.days}
+                        onChange={(event) =>
+                          setFilters({
+                            ...filters,
+                            days: Number(event.target.value),
+                          })
+                        }
+                      >
+                        <NativeSelectOption value={7}>
+                          {t("Últimos 7 dias")}
+                        </NativeSelectOption>
+                        <NativeSelectOption value={30}>
+                          {t("Últimos 30 dias")}
+                        </NativeSelectOption>
+                        <NativeSelectOption value={90}>
+                          {t("Últimos 90 dias")}
+                        </NativeSelectOption>
+                      </NativeSelect>
                     </div>
                   </div>
                 )}
@@ -445,7 +369,7 @@ export default function Dashboard() {
                     events={events}
                     filters={filters}
                     onFilter={setFilters}
-                    navigate={navigate}
+                    navigate={setView}
                   />
                 )}
                 {view === "activity" && (
@@ -465,38 +389,191 @@ export default function Dashboard() {
                 {view === "settings" && (
                   <SettingsPanel
                     settings={snapshot.settings}
-                    onSave={(settings) =>
-                      setSnapshot({ ...snapshot, settings })
-                    }
+                    onSave={(settings) => {
+                      setSnapshot({ ...snapshot, settings });
+                      setLanguage(resolveLanguage(settings.language));
+                    }}
                   />
                 )}
                 {warnings > 0 && (
-                  <button
-                    className="collection-warning"
-                    onClick={() => navigate("sources")}
-                  >
-                    {warnings} registros ou arquivos não puderam ser lidos. Ver
-                    diagnóstico <ArrowUpRight size={12} />
-                  </button>
+                  <Alert>
+                    <TriangleAlertIcon />
+                    <AlertTitle>
+                      {t(
+                        "{count} registros ou arquivos não puderam ser lidos",
+                        { count: warnings },
+                      )}
+                    </AlertTitle>
+                    <AlertDescription>
+                      {t("Os totais podem estar incompletos.")}{" "}
+                      <button
+                        type="button"
+                        className="font-medium text-foreground underline underline-offset-3"
+                        onClick={() => setView("sources")}
+                      >
+                        {t("Ver diagnóstico")}
+                      </button>
+                    </AlertDescription>
+                  </Alert>
                 )}
-                <footer className="page-footer">
+                <footer className="mt-auto flex flex-wrap justify-between gap-x-6 gap-y-1 text-xs text-muted-foreground">
                   <span>
-                    <i className="online-dot" />
-                    {connected} de 4 fontes{" "}
-                    {filters.channel === "tool" ? "locais" : "importadas"} com
-                    histórico <span>·</span> Atualizado às{" "}
-                    {formatTime(snapshot.generatedAt)}
+                    {t("{count} de 4 fontes {kind} com histórico", {
+                      count: connected,
+                      kind: t(
+                        filters.channel === "tool" ? "locais" : "importadas",
+                      ),
+                    })}{" "}
+                    ·{" "}
+                    {t("Atualizado às {time}", {
+                      time: formatTime(snapshot.generatedAt),
+                    })}
                   </span>
                   <span>
-                    Horários de São Paulo <span>·</span> Histórico de até 90
-                    dias
+                    {t("Horários de São Paulo · Histórico de até 90 dias")}
                   </span>
                 </footer>
               </>
             )
           )}
-        </main>
-      </div>
-    </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  );
+}
+
+function AppSidebar({
+  view,
+  snapshot,
+  toolTotals,
+  activeProvider,
+  onNavigate,
+  onPickProvider,
+}: {
+  view: View;
+  snapshot: Snapshot | null;
+  toolTotals: Record<Provider, number> | null;
+  activeProvider: Provider | "all";
+  onNavigate: (view: View) => void;
+  onPickProvider: (provider: Provider) => void;
+}) {
+  const { t, formatTokens } = useI18n();
+  const { setOpenMobile } = useSidebar();
+  const connectedTools =
+    snapshot?.sources.filter(
+      (source) => source.channel === "tool" && source.state === "connected",
+    ) ?? [];
+  function go(next: View) {
+    onNavigate(next);
+    setOpenMobile(false);
+  }
+  return (
+    <Sidebar variant="inset" collapsible="offcanvas">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" onClick={() => go("overview")}>
+              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <ChartNoAxesColumnIcon />
+              </div>
+              <div className="grid flex-1 text-left leading-tight">
+                <span className="truncate font-semibold">tokenusage</span>
+                <span className="truncate text-xs text-muted-foreground">
+                  {t("Uso local de IA")}
+                </span>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>{t("Acompanhamento")}</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {views.map(({ id, label, icon: Icon }) => (
+                <SidebarMenuItem key={id}>
+                  <SidebarMenuButton
+                    isActive={view === id}
+                    aria-current={view === id ? "page" : undefined}
+                    onClick={() => go(id)}
+                  >
+                    <Icon />
+                    <span>{t(label)}</span>
+                  </SidebarMenuButton>
+                  {id === "sources" && snapshot && (
+                    <SidebarMenuBadge>{connectedTools.length}</SidebarMenuBadge>
+                  )}
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>{t("Ferramentas")}</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {PROVIDERS.map((provider) => {
+                const available = connectedTools.some(
+                  (source) => source.provider === provider,
+                );
+                return (
+                  <SidebarMenuItem key={provider}>
+                    <SidebarMenuButton
+                      isActive={
+                        view === "overview" && activeProvider === provider
+                      }
+                      onClick={() => {
+                        onPickProvider(provider);
+                        setOpenMobile(false);
+                      }}
+                    >
+                      <span
+                        aria-hidden
+                        className={cn(
+                          "size-2 rounded-full",
+                          available
+                            ? "bg-foreground/70"
+                            : "border border-muted-foreground",
+                        )}
+                      />
+                      <span>{providerInfo[provider].name}</span>
+                    </SidebarMenuButton>
+                    {snapshot && (
+                      <SidebarMenuBadge>
+                        {available && toolTotals
+                          ? formatTokens(toolTotals[provider])
+                          : t("sem dados")}
+                      </SidebarMenuBadge>
+                    )}
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter>
+        <div className="flex gap-2 rounded-lg border p-3 text-xs text-muted-foreground">
+          <ShieldCheckIcon className="size-4 shrink-0 text-foreground" />
+          <div className="flex flex-col gap-1">
+            <p>
+              <span className="font-medium text-foreground">
+                {t("Fica nesta máquina.")}
+              </span>{" "}
+              {t("Só contadores e nomes de modelo; nenhuma conversa é lida.")}
+            </p>
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 self-start font-medium text-foreground underline-offset-4 hover:underline"
+              onClick={() => go("sources")}
+            >
+              {t("Sobre a coleta")}
+              <ArrowUpRightIcon className="size-3" />
+            </button>
+          </div>
+        </div>
+      </SidebarFooter>
+    </Sidebar>
   );
 }
