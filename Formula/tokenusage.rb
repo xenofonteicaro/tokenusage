@@ -1,9 +1,10 @@
 class Tokenusage < Formula
   desc "Dashboard local de uso de tokens de ferramentas de IA"
   homepage "https://github.com/xenofonteicaro/tokenusage"
-  url "git@github.com:xenofonteicaro/tokenusage.git",
+  url "https://github.com/xenofonteicaro/tokenusage.git",
       tag:      "v0.1.0",
-      revision: "899e9e74ed2ae5d7120d0a46be67c29297d78a48"
+      revision: "899e9e74ed2ae5d7120d0a46be67c29297d78a48",
+      using:    :git
   version "0.1.0"
 
   depends_on "node"
