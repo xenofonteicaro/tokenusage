@@ -3,7 +3,7 @@ class Tokenusage < Formula
   homepage "https://github.com/xenofonteicaro/homebrew-tokenusage"
   url "https://github.com/xenofonteicaro/homebrew-tokenusage/releases/download/v0.2.0/tokenusage-0.2.0.tar.gz"
   version "0.2.0"
-  sha256 "dba7ef4137c0c01368c383c155980cbc5414062f92f486b710f9ca4d785405a9"
+  sha256 "aaeca4e4d7931b631d3be78f45972a0fa1fa38c82ea08dd04d742d35254cc19c"
 
   depends_on "node"
 
