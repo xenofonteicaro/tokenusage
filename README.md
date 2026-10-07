@@ -1,0 +1,138 @@
+# Tokenusage
+
+Dashboard pessoal em português para acompanhar tokens de **Codex, Claude Code,
+Grok Build e Gemini CLI** usando o histórico do perfil local. Também permite
+importar logs de chamadas de API dos seus projetos, sem chaves administrativas.
+
+## Executar
+
+Requer Node.js 24 ou superior.
+
+```sh
+npm ci
+npm run dev
+```
+
+Abra **http://127.0.0.1:3000**. A primeira coleta lê o histórico; as seguintes
+reutilizam o cache dos arquivos inalterados. A página atualiza a cada minuto
+quando a aba está visível. Os scripts ligam o servidor apenas em `127.0.0.1`.
+
+Para executar a versão otimizada:
+
+```sh
+npm run build
+npm start
+```
+
+## O que aparece
+
+- Tokens de entrada, saída e cache por serviço, modelo, projeto e período.
+- Série diária e comparação com o período anterior, em horários de São Paulo.
+- Histórico de sessões pesquisável e exportação CSV dos registros filtrados,
+  agrupados por sessão, modelo, projeto e dia.
+- Custos **informados na fonte**, com cobertura explícita; ausência de preço
+  permanece desconhecida. O valor não representa uma fatura completa.
+- Mensalidades em BRL e meta mensal de tokens configuráveis, guardadas localmente.
+- Diagnóstico das fontes e de arquivos/registros que não puderam ser lidos.
+
+### Fontes automáticas
+
+| Serviço     | Fonte                                              | Normalização                                                                                                                     |
+| ----------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Codex       | `~/.codex/sessions` e `archived_sessions`          | Deltas dos contadores cumulativos; snapshots repetidos e históricos copiados deduplicados                                        |
+| Claude Code | `~/.claude/projects/**/*.jsonl`                    | Uso de mensagens de assistente; deduplicação por ID para streaming; cache somado à entrada                                       |
+| Grok Build  | `~/.grok/sessions/*/*/usage.json`                  | Uso por turno/modelo; cache já incluído na entrada; filhos conhecidos já incluídos no pai ficam fora da soma; USD = ticks / 10¹⁰ |
+| Gemini CLI  | `~/.gemini/tmp/*/chats/session-*.json` ou `.jsonl` | Tokens registrados na sessão; pensamentos integrados à saída; logs antigos de mensagens sem contadores não geram métricas        |
+
+Respeita `CODEX_HOME`, `CLAUDE_CONFIG_DIR` e `GROK_HOME` se as ferramentas
+estiverem em outro diretório. `GEMINI_HOME` é uma opção deste coletor para
+substituir a localização padrão. `TOKENUSAGE_PROFILE_DIR` substitui a raiz
+do perfil, principalmente para testes isolados.
+
+**Limites:** cobre sessões com contadores preservados nesta máquina, até 90
+dias. Conversas nos sites/apps, outros computadores, histórico removido e
+chamadas de API sem logs não podem ser recuperados pelo perfil local. Na
+validação inicial, Codex, Claude Code e Grok Build tinham dados reais; os
+arquivos antigos de Gemini encontrados não tinham contadores de tokens.
+
+Ferramentas e APIs têm visões separadas: um CLI autenticado por API pode aparecer
+nas duas fontes. Somar as duas visões poderia contar a mesma chamada duas vezes.
+O rótulo de modelo/projeto é o que está disponível nos metadados; um modelo não
+identificado aparece explicitamente, sem inferir qual foi usado.
+
+### Logs de API
+
+Em **Fontes de dados → Importar JSON ou JSONL**, envie até 4 MB e 10.000 registros
+por arquivo. Formato: objeto JSON, array de objetos ou um objeto por linha.
+
+```json
+{
+  "provider": "grok",
+  "id": "ID_REAL_DA_CHAMADA",
+  "timestamp": "2026-10-07T12:00:00Z",
+  "model": "MODELO_REAL",
+  "project": "meu-projeto",
+  "usage": {
+    "prompt_tokens": 1200,
+    "completion_tokens": 300,
+    "prompt_tokens_details": { "cached_tokens": 800 }
+  }
+}
+```
+
+O exemplo é apenas documentação; não há dados de demonstração no produto.
+`provider` aceita `codex`, `claude`, `grok` e `gemini`. Para a OpenAI, o rótulo
+Codex agrupa também chamadas gerais de API; o modelo continua identificado.
+
+`usage` aceita os contadores de Responses/Chat Completions (OpenAI/xAI) e Messages
+(Anthropic). Para Gemini, use `usageMetadata` com `promptTokenCount`,
+`candidatesTokenCount`, `cachedContentTokenCount` e `thoughtsTokenCount`.
+`costUSD` é opcional e significa valor **informado pelo arquivo**, não verificado
+com o provedor. Inclua o ID real da chamada: reimportações do mesmo ID atualizam
+o registro. Sem ID, registros idênticos recebem o mesmo identificador e são
+deduplicados, inclusive dentro do arquivo.
+
+## Privacidade e armazenamento
+
+Conteúdo de conversas, cookies e arquivos de autenticação não são usados como
+fontes de consumo. JSONL é lido em streaming para extrair métricas e metadados;
+apenas esses campos normalizados são persistidos e enviados ao navegador.
+
+Cache, preferências e importações ficam em `.local-data/`, ignorado pelo Git e
+excluído dos artefatos de build. Diretórios novos usam permissões `0700` e arquivos
+`0600`. `TOKENUSAGE_DATA_DIR` permite mudar esse local. Escritas são serializadas
+e feitas com troca atômica do arquivo. Não alteramos o histórico das ferramentas.
+
+Endpoints conferem Host/Origin e rejeitam chamadas de sites externos. Esta versão
+é para uso local. Publicação na nuvem precisa de uma etapa própria de coleta,
+autenticação e armazenamento; o servidor hospedado não acessa o perfil do Mac.
+
+## Validar
+
+```sh
+npm run lint
+npm run typecheck
+npm test
+npm run build
+npx playwright install chromium
+npm run test:e2e
+```
+
+Os testes de navegador usam um perfil sintético separado em `.test-profile`,
+dados em `.test-data` e porta 3101, sem modificar o perfil real. Screenshots
+de validação ficam em `artifacts/`, ignorados pelo Git.
+
+`npm audit --omit=dev` não identificou vulnerabilidades na validação inicial.
+A auditoria completa sinalizou a cadeia de `braces` usada por `eslint-config-next`
+(dependências de lint). Não há versão corrigida de `braces` disponível no registro
+consultado; não foi feito downgrade forçado do Next.js para contornar o alerta.
+
+## Referências de formato
+
+- [Gemini CLI — sessões e armazenamento](https://geminicli.com/docs/cli/session-management/)
+- [Gemini CLI — tipos de registros](https://github.com/google-gemini/gemini-cli/blob/main/packages/core/src/services/chatRecordingTypes.ts)
+- [Claude Code — métricas de consumo](https://code.claude.com/docs/en/monitoring-usage)
+- [Grok Build — execução e consumo](https://docs.x.ai/build/cli/headless-scripting)
+
+O desenho e os limites da entrega estão em
+[`docs/superpowers/specs/2026-10-07-tokenusage-design.md`](docs/superpowers/specs/2026-10-07-tokenusage-design.md).
