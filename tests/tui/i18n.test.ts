@@ -40,9 +40,12 @@ test("numbers follow the language and diagnostics reuse the web translations", (
   assert.equal(createTuiI18n("en").formatNumber(1234.5), "1,234.5");
   assert.equal(createTuiI18n("pt-BR").formatNumber(1234.5), "1.234,5");
   const diagnostic =
-    "Importe logs com os contadores retornados pela API. Não requer chave administrativa.";
-  assert.equal(createTuiI18n("en").t(diagnostic), messages.en[diagnostic]);
-  assert.equal(createTuiI18n("pt-BR").t(diagnostic), diagnostic);
+    "Import logs with counters returned by the API. No admin key required.";
+  assert.equal(
+    createTuiI18n("pt-BR").t(diagnostic),
+    messages["pt-BR"][diagnostic],
+  );
+  assert.equal(createTuiI18n("en").t(diagnostic), diagnostic);
 });
 
 test("percentages use the decimal separator of each language", () => {

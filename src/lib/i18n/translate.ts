@@ -4,8 +4,7 @@ import * as analytics from "../analytics";
 
 export function createI18n(value: unknown) {
   const language = resolveLanguage(value);
-  const dictionary: Readonly<Record<string, string>> =
-    language === "pt-BR" ? {} : messages[language];
+  const dictionary: Readonly<Record<string, string>> = messages[language];
   const templates = Object.keys(dictionary)
     .filter((key) => key.includes("{"))
     .map((key) => {
@@ -20,9 +19,9 @@ export function createI18n(value: unknown) {
   const t = (message: string, values: Record<string, string | number> = {}) => {
     const key = message.replace(/\s+/g, " ").trim();
     let translated = dictionary[key] ?? message;
-    // The local API returns Portuguese diagnostic text. Match its known
+    // The local API returns English diagnostic text. Match its known
     // message templates without altering user-provided project/model values.
-    if (!Object.hasOwn(dictionary, key) && language !== "pt-BR") {
+    if (!Object.hasOwn(dictionary, key)) {
       for (const template of templates) {
         const match = template.pattern.exec(key);
         if (!match) continue;

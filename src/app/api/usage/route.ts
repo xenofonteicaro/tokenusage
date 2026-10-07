@@ -4,7 +4,7 @@ import { isLocalRequest, privateHeaders } from "@/lib/local-security";
 export async function GET(request: Request) {
   if (!isLocalRequest(request))
     return Response.json(
-      { error: "Acesso permitido apenas pela dashboard local." },
+      { error: "Access is allowed only from the local dashboard." },
       { status: 403, headers: privateHeaders },
     );
   try {
@@ -15,7 +15,7 @@ export async function GET(request: Request) {
     return Response.json(
       {
         error:
-          error instanceof Error ? error.message : "Falha na coleta local.",
+          error instanceof Error ? error.message : "Local collection failed.",
       },
       { status: 500, headers: privateHeaders },
     );

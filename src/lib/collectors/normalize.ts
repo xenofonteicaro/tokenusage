@@ -23,7 +23,7 @@ export function date(value: unknown): string | null {
 }
 export function projectName(value: unknown): string {
   const name = path.basename(str(value).replaceAll("\\", "/"));
-  return name && name !== "." ? name.slice(0, 100) : "Sem projeto";
+  return name && name !== "." ? name.slice(0, 100) : "No project";
 }
 export function hash(value: string): string {
   return createHash("sha256").update(value).digest("hex").slice(0, 24);
@@ -42,8 +42,8 @@ export function event(
     id: hash(`${provider}:${fields.channel ?? "tool"}:${fields.id}`),
     timestamp: fields.timestamp,
     sessionId: hash(`${provider}:${fields.sessionId}`),
-    model: (fields.model || "Modelo não informado").slice(0, 120),
-    project: (fields.project || "Sem projeto").slice(0, 100),
+    model: (fields.model || "Model not provided").slice(0, 120),
+    project: (fields.project || "No project").slice(0, 100),
     inputTokens,
     outputTokens,
     cachedTokens: Math.min(inputTokens, count(fields.cachedTokens)),

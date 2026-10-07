@@ -29,10 +29,10 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 
 const statusLabels = {
-  connected: "Coletando",
-  empty: "Sem contadores",
-  missing: "Não encontrado",
-  error: "Requer atenção",
+  connected: "Collecting",
+  empty: "No counters",
+  missing: "Not found",
+  error: "Needs attention",
 };
 
 export function SourcesPanel({
@@ -54,7 +54,7 @@ export function SourcesPanel({
     setError(false);
     try {
       if (file.size > 4 * 1024 * 1024)
-        throw new Error(t("Selecione um arquivo de até 4 MB."));
+        throw new Error(t("Select a file up to 4 MB."));
       const response = await fetch("/api/import", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -64,7 +64,7 @@ export function SourcesPanel({
       if (!response.ok) throw new Error(result.error);
       setMessage(
         t(
-          "{added} novos registros; {processed} processados. Importações repetidas não duplicam consumo.",
+          "{added} new records; {processed} processed. Repeated imports do not duplicate usage.",
           {
             added: formatNumber(result.added),
             processed: formatNumber(result.processed),
@@ -75,9 +75,7 @@ export function SourcesPanel({
     } catch (error) {
       setError(true);
       setMessage(
-        error instanceof Error
-          ? error.message
-          : t("Não foi possível importar."),
+        error instanceof Error ? error.message : t("Could not import."),
       );
     } finally {
       setUploading(false);
@@ -90,11 +88,11 @@ export function SourcesPanel({
       <Card className="lg:col-span-2">
         <CardHeader>
           <CardTitle role="heading" aria-level={2}>
-            {t("Suas fontes de consumo")}
+            {t("Your usage sources")}
           </CardTitle>
           <CardDescription>
             {t(
-              "Leitura automática do histórico local deste computador. Nenhuma chave de API necessária.",
+              "Automatic reading of this computer’s local history. No API key required.",
             )}
           </CardDescription>
         </CardHeader>
@@ -136,29 +134,27 @@ export function SourcesPanel({
                   <span>
                     {formatNumber(source.files)}{" "}
                     {source.files === 1
-                      ? t("arquivo consultado")
-                      : t("arquivos consultados")}
+                      ? t("file checked")
+                      : t("files checked")}
                   </span>
                   <span>
                     {formatNumber(source.events)}{" "}
                     {source.events === 1
-                      ? t("registro de uso")
-                      : t("registros de uso")}
+                      ? t("usage record")
+                      : t("usage records")}
                   </span>
                   {source.latest && (
                     <span>
-                      {t("Último:")} {formatDate(source.latest)},{" "}
+                      {t("Latest:")} {formatDate(source.latest)},{" "}
                       {formatTime(source.latest)}
                     </span>
                   )}
                 </div>
                 {source.warnings > 0 && (
                   <p className="text-sm text-destructive">
-                    {source.warnings} {t("arquivo(s) ou registro(s) de")}{" "}
+                    {source.warnings} {t("files or records from")}{" "}
                     {providerInfo[source.provider].name}{" "}
-                    {t(
-                      "não puderam ser lidos. Os totais podem estar incompletos.",
-                    )}
+                    {t("could not be read. Totals may be incomplete.")}
                   </p>
                 )}
               </article>
@@ -170,11 +166,11 @@ export function SourcesPanel({
         <Card>
           <CardHeader>
             <CardTitle role="heading" aria-level={2}>
-              {t("Traga seus logs de API")}
+              {t("Bring your API logs")}
             </CardTitle>
             <CardDescription>
               {t(
-                "Importe os contadores retornados por Grok, OpenAI, Claude ou Gemini. O arquivo é processado neste computador.",
+                "Import counters returned by Grok, OpenAI, Claude or Gemini. The file is processed on this computer.",
               )}
             </CardDescription>
           </CardHeader>
@@ -184,7 +180,7 @@ export function SourcesPanel({
               ref={fileInput}
               type="file"
               accept=".json,.jsonl,application/json"
-              aria-label={t("Arquivo de consumo de API")}
+              aria-label={t("API usage file")}
               onChange={(event) => upload(event.target.files?.[0])}
             />
             <Button
@@ -192,10 +188,10 @@ export function SourcesPanel({
               onClick={() => fileInput.current?.click()}
             >
               <UploadIcon data-icon="inline-start" />
-              {uploading ? t("Importando…") : t("Importar JSON ou JSONL")}
+              {uploading ? t("Importing…") : t("Import JSON or JSONL")}
             </Button>
             <p className="text-xs text-muted-foreground">
-              {t("Até 4 MB · 10.000 registros por arquivo")}
+              {t("Up to 4 MB · 10,000 records per file")}
             </p>
             {message && (
               <p
@@ -210,22 +206,22 @@ export function SourcesPanel({
             <Collapsible className="rounded-lg border text-sm">
               <CollapsibleTrigger className="group flex w-full items-center gap-2 rounded-lg p-3 text-left font-medium outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
                 <ChevronRightIcon className="size-4 text-muted-foreground transition-transform group-data-panel-open:rotate-90" />
-                {t("Como preparar o arquivo")}
+                {t("How to prepare the file")}
               </CollapsibleTrigger>
               <CollapsibleContent className="flex flex-col gap-2 px-3 pb-3 text-muted-foreground">
                 <p>
                   {t(
-                    "Uma chamada por registro, com provider (codex, claude, grok ou gemini), timestamp, model, project opcional e usage. Para Gemini use usageMetadata. Inclua o ID da chamada para deduplicar.",
+                    "One request per record, with provider (codex, claude, grok or gemini), timestamp, model, optional project and usage. For Gemini use usageMetadata. Include the request ID to avoid duplicates.",
                   )}
                 </p>
                 <pre className="overflow-x-auto rounded-md bg-muted p-3 font-mono text-xs text-foreground">
                   {
-                    '{\n  "provider": "grok",\n  "timestamp": "DATA_ISO_DA_CHAMADA",\n  "id": "ID_DA_CHAMADA",\n  "model": "MODELO_UTILIZADO",\n  "usage": {\n    "prompt_tokens": 1200,\n    "completion_tokens": 300\n  }\n}'
+                    '{\n  "provider": "grok",\n  "timestamp": "CALL_TIMESTAMP_ISO",\n  "id": "CALL_ID",\n  "model": "MODEL_NAME",\n  "usage": {\n    "prompt_tokens": 1200,\n    "completion_tokens": 300\n  }\n}'
                   }
                 </pre>
                 <p className="text-xs">
                   {t(
-                    "Exemplo de formato. Esses valores não entram na dashboard.",
+                    "Format example. These values are not added to the dashboard.",
                   )}
                 </p>
               </CollapsibleContent>
@@ -236,7 +232,7 @@ export function SourcesPanel({
           <InfoIcon />
           <AlertDescription>
             {t(
-              "O histórico local cobre as sessões salvas nesta máquina. Uso nos sites, em outros computadores e chamadas sem logs não aparece automaticamente.",
+              "Local history covers sessions saved on this computer. Website usage, other computers and requests without logs do not appear automatically.",
             )}
           </AlertDescription>
         </Alert>

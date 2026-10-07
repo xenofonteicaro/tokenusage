@@ -9,9 +9,9 @@ const sans = Geist({ subsets: ["latin"], variable: "--font-sans" });
 const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "Tokenusage · Seu consumo de IA",
+  title: "Tokenusage · Your AI usage",
   description:
-    "Seu consumo de tokens de Codex, Claude, Grok e Gemini com dados do histórico local.",
+    "Your token usage from Codex, Claude, Grok and Gemini, using local history.",
   robots: { index: false, follow: false },
 };
 export default function RootLayout({

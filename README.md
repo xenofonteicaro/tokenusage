@@ -1,34 +1,36 @@
 # Tokenusage
 
-Dashboard pessoal em português para acompanhar tokens de **Codex, Claude Code,
-Grok Build e Gemini CLI** usando o histórico do perfil local. Também permite
-importar logs de chamadas de API dos seus projetos, sem chaves administrativas.
+A local dashboard for token usage from **Codex, Claude Code, Grok Build, and
+Gemini CLI**, using histories saved on your computer. You can also import API
+usage logs from your projects without administrative API keys.
 
-## Executar
+## Run locally
 
-Requer Node.js 24 ou superior.
+Requires Node.js 24 or later.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Abra **http://127.0.0.1:3000**. A primeira coleta lê o histórico; as seguintes
-reutilizam o cache dos arquivos inalterados. A página atualiza a cada minuto
-quando a aba está visível. Os scripts ligam o servidor apenas em `127.0.0.1`.
+Open **http://127.0.0.1:3000**. The first collection reads local history;
+subsequent collections reuse cached files that have not changed. The dashboard
+refreshes every minute while its tab is visible. The npm scripts bind to
+`127.0.0.1`.
 
-Para executar a versão otimizada:
+To run the production build:
 
 ```sh
 npm run build
 npm start
 ```
 
-## Instalar pelo Homebrew
+## Install with Homebrew
 
-Esta fórmula instala a versão de produção, registra um serviço do macOS e usa
-o perfil local para coletar os contadores. Código, fórmula e releases ficam
-neste mesmo repositório. Use a URL explícita porque o nome não começa com `homebrew-`:
+The formula builds the production app, registers a macOS service, and reads
+usage counters from the local profile. Code, formula, and releases live in this
+repository. Use the explicit URL because the repository name does not start
+with `homebrew-`:
 
 ```sh
 brew tap --custom-remote xenofonteicaro/tokenusage https://github.com/xenofonteicaro/tokenusage.git
@@ -36,149 +38,164 @@ brew install --build-from-source xenofonteicaro/tokenusage/tokenusage
 tokenusage start
 ```
 
-O comando `tokenusage start` inicia o serviço e abre a dashboard em
-**http://127.0.0.1:3000**. Use `tokenusage stop` para encerrá-lo,
-`tokenusage restart` para reiniciar ou `tokenusage logs` para acompanhar o log.
-O serviço inicia novamente quando você entrar no macOS. Preferências, tarifas
-e logs importados ficam em `~/Library/Application Support/tokenusage`; o
-histórico das ferramentas continua nas pastas originais.
+`tokenusage start` starts the service and opens **http://127.0.0.1:3000** in your
+browser. Use `tokenusage stop`, `tokenusage restart`, `tokenusage open`, or
+`tokenusage logs` to manage it. The service starts again when you log in to macOS.
+Preferences, prices, imports, and the collector cache are stored in
+`~/Library/Application Support/tokenusage`. Tool histories stay in their
+original directories.
 
-O comando de tap acima também migra instalações que usavam o repositório antigo
-`homebrew-tokenusage`. Depois da migração, `brew update` e `brew upgrade tokenusage`
-consultam este repositório.
+The tap command also migrates installations that used the archived
+`homebrew-tokenusage` repository. After migration, `brew update` and
+`brew upgrade tokenusage` use this repository.
 
-O pacote público contém somente os arquivos necessários para construir o app,
-sem histórico Git, documentos internos, screenshots ou dados do perfil. O
-script `python3 scripts/package-homebrew.py --ref HEAD --out /tmp/tokenusage.tar.gz`
-gera esse pacote a partir de uma revisão Git e normaliza os metadados do arquivo.
-
-Em **Preferências → Geral → Idioma da interface**, escolha Português (PT-BR),
-English, Español, Italiano, Français ou 简体中文 (chinês simplificado), e salve.
-A escolha fica no armazenamento local e altera textos, números e datas da
-interface. Moedas, fuso de São Paulo e agrupamento do consumo permanecem iguais.
-
-## Versão para terminal (TUI)
-
-Além da dashboard web, há uma versão para terminal com os mesmos números:
-visão geral, atividade pesquisável e diagnóstico das fontes. Ela lê o histórico
-local diretamente, sem precisar do serviço web nem da porta 3000.
+The release archive contains only the source and configuration needed to build
+the app. It excludes Git history, internal documentation, screenshots, tests,
+profile data, and prebuilt output. Generate a reproducible package from a Git
+revision with:
 
 ```sh
-npm run tui                          # a partir do repositório
-tokenusage tui --days 7 --channel api
-tokenusage tui --once                # imprime a visão geral uma vez e sai
+python3 scripts/package-homebrew.py --ref HEAD --out /tmp/tokenusage.tar.gz
 ```
 
-Requer um terminal de pelo menos 80×24. As opções `--days` (7, 30 ou 90) e
-`--channel` (`tool` ou `api`) definem os filtros iniciais; `--lang` escolhe o
-idioma da interface (`pt-BR` ou `en`).
+The script uses an explicit source allowlist and normalizes archive ownership
+and timestamps. The formula pins the archive's SHA-256 checksum.
 
-| Tecla                 | Ação                                                            |
-| --------------------- | --------------------------------------------------------------- |
-| `1` `2` `3` ou `Tab`  | Visão geral, Atividade e Fontes                                 |
-| `c` `d` `s` `p`       | Canal, período, serviço e projeto                               |
-| `/` e `g`             | Busca e agrupamento na Atividade (sessão, modelo, projeto, dia) |
-| `↑` `↓` `PgUp` `PgDn` | Rolagem das listas                                              |
-| `r`                   | Atualiza agora (automático a cada 60 s)                         |
-| `?` e `q`             | Ajuda e sair                                                    |
+## Terminal UI (TUI)
 
-Esta primeira fase é somente leitura: preferências, tarifas, importação de logs
-e exportação CSV continuam na dashboard web. Cores seguem `NO_COLOR`. O comando
-`npm run build:tui` gera o bundle único `dist/tui.mjs`; o subcomando
-`tokenusage tui` no Homebrew entra junto com o próximo release da fórmula.
-A TUI fala português (PT-BR) e inglês. Sem `--lang`, ela segue o idioma salvo em
-**Preferências → Geral → Idioma da interface** da dashboard; espanhol, italiano,
-francês e chinês ainda aparecem em português na TUI, nunca misturados.
+Besides the web dashboard, a terminal version shows the same numbers: an
+overview, a searchable activity list, and source diagnostics. It reads the local
+history directly, so it needs neither the web service nor port 3000.
 
-## Funcionalidades
+```sh
+npm run tui                          # from the repository
+tokenusage tui --days 7 --channel api
+tokenusage tui --once                # print the overview once and exit
+```
 
-| Recurso                       | O que você pode acompanhar                                                                                                 |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| **Quatro ferramentas**        | Histórico local de Codex, Claude Code, Grok Build e Gemini CLI com contadores disponíveis.                                 |
-| **Ferramentas e APIs**        | Visões separadas para sessões locais e logs importados em JSON ou JSONL, com deduplicação.                                 |
-| **Filtros e gráficos**        | Tokens de entrada, saída e cache por serviço, modelo, projeto e período; série diária e comparação com o período anterior. |
-| **Custos em USD e BRL**       | Valores informados pelos logs preservados, estimativas por modelo e cobertura explícita dos registros sem tarifa.          |
-| **Economia por cache**        | Valor estimado economizado em dólares e reais, aproveitamento de tokens e percentual em relação ao cenário sem cache.      |
-| **Tarifas editáveis**         | Edite entrada, saída e leitura de cache; adicione modelos personalizados, restaure padrões ou remova substituições.        |
-| **Preferências locais**       | Cotação USD/BRL, mensalidades em reais e meta mensal de tokens, com atualização dos custos após salvar.                    |
-| **Histórico e exportação**    | Busca por projeto ou modelo e CSV dos registros filtrados, agrupados por sessão, modelo, projeto e dia.                    |
-| **Temas e mobile**            | Temas Claro, Escuro e Sistema; interface responsiva e abas navegáveis pelo teclado.                                        |
-| **Diagnóstico e privacidade** | Estado das fontes e avisos de registros incompletos; execução local sem chaves administrativas ou conteúdo de conversas.   |
+It needs a terminal of at least 80×24. `--days` (7, 30, or 90) and `--channel`
+(`tool` or `api`) set the initial filters; `--lang` sets the interface language
+(`pt-BR` or `en`).
+
+| Key                   | Action                                                         |
+| --------------------- | -------------------------------------------------------------- |
+| `1` `2` `3` or `Tab`  | Overview, Activity, and Sources                                |
+| `c` `d` `s` `p`       | Channel, period, service, and project                          |
+| `/` and `g`           | Search and grouping in Activity (session, model, project, day) |
+| `↑` `↓` `PgUp` `PgDn` | Scroll lists                                                   |
+| `r`                   | Refresh now (automatic every 60 s)                             |
+| `?` and `q`           | Help and quit                                                  |
+
+This first phase is read-only: preferences, prices, log import, and CSV export
+stay in the web dashboard. Colors follow `NO_COLOR`. `npm run build:tui` builds
+the single bundle `dist/tui.mjs`; the `tokenusage tui` Homebrew subcommand ships
+with the next formula release.
+
+The TUI speaks Portuguese (Brazil) and English. Without `--lang` it follows the
+language saved under **Preferences → General → Interface language**. Spanish,
+Italian, French, and Chinese show the English text in the TUI, never a mix of
+languages on one screen.
+
+## Interface languages
+
+Under **Preferences → General → Interface language**, choose Portuguese
+(Brazil), English, Spanish, Italian, French, or Simplified Chinese, then save.
+The menu shows each language's native name. The choice is stored locally and
+changes interface text, numbers, and dates. Currency, the São Paulo time zone,
+and usage grouping keep their existing meaning.
+
+Project source, comments, documentation, and release/PR text are written in
+English. Localization resources and explicit localization test expectations
+contain the supported languages.
+
+## Features
+
+| Feature                     | What you can track                                                                                                                 |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **Four tools**              | Local histories with available token counters from Codex, Claude Code, Grok Build, and Gemini CLI.                                 |
+| **Tools and APIs**          | Separate views for local sessions and imported JSON/JSONL API logs, with deduplication.                                            |
+| **Filters and charts**      | Input, output, and cached tokens by service, model, project, and period; daily usage and previous-period comparisons.              |
+| **USD and BRL costs**       | Preserved reported costs, model-based estimates, and explicit coverage for records without prices.                                 |
+| **Cache savings**           | Estimated savings in USD/BRL, cache utilization, and savings relative to the modeled cost without cache.                           |
+| **Editable prices**         | Input, output, and cache-read rates; custom models, default restoration, and override removal.                                     |
+| **Local preferences**       | Language, USD/BRL exchange rate, subscription fees, and monthly token goal.                                                        |
+| **Activity and export**     | Search by project/model and filtered CSV export, grouped by session, model, project, and day.                                      |
+| **Themes and mobile**       | Light, Dark, and System themes; responsive layouts and keyboard navigation.                                                        |
+| **Diagnostics and privacy** | Source status, incomplete-record warnings, and local execution without administrative keys or conversation content in the browser. |
 
 ## Screenshots
 
-Capturas da aplicação com **dados sintéticos de teste**. Os nomes de projetos,
-contadores, custos e preferências abaixo são exemplos; não representam histórico
-ou métricas pessoais. As tarifas são referências históricas editáveis.
+These captures use **synthetic test data**. Project names, counters, costs, and
+preferences are examples, not personal usage. Prices are editable historical
+references. Screenshots may show the Portuguese interface.
 
-### Visão geral — tema claro
+### Overview — light theme
 
-Tokens, cache, custos informados e estimados, gráficos e filtros em uma única visão.
+Tokens, cache, reported/estimated costs, charts, and filters in one view.
 
-![Dashboard no tema claro com métricas e custos de chamadas sintéticas](docs/screenshots/dashboard-light.png)
+![Light dashboard with synthetic usage and costs](docs/screenshots/dashboard-light.png)
 
 <details>
-<summary>Visão geral no tema escuro</summary>
+<summary>Overview — dark theme</summary>
 
-![Dashboard no tema escuro com os mesmos dados sintéticos](docs/screenshots/dashboard-dark.png)
+![Dark dashboard with the same synthetic data](docs/screenshots/dashboard-dark.png)
 
 </details>
 
 <details>
-<summary>Preferências e tabela de preços</summary>
+<summary>Preferences and prices</summary>
 
-Tarifas por milhão de tokens, editáveis para cada modelo.
+Editable prices per million tokens for each model.
 
-![Tabela de preços por modelo no tema escuro](docs/screenshots/pricing.png)
+![Model prices in the dark theme](docs/screenshots/pricing.png)
 
 </details>
 
 <details>
-<summary>Interface mobile</summary>
+<summary>Mobile interface</summary>
 
-Menu compacto e tabela com rolagem horizontal dentro do painel.
+Compact navigation and horizontally scrollable tables within their panels.
 
-<img src="docs/screenshots/mobile.png" alt="Preferências e tabela de preços em uma tela mobile" width="390" />
+<img src="docs/screenshots/mobile.png" alt="Preferences and prices on a mobile screen" width="390" />
 
 </details>
 
-## Fontes e formatos
+## Sources and formats
 
-### Fontes automáticas
+### Automatic sources
 
-| Serviço     | Fonte                                              | Normalização                                                                                                                     |
-| ----------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Codex       | `~/.codex/sessions` e `archived_sessions`          | Deltas dos contadores cumulativos; snapshots repetidos e históricos copiados deduplicados                                        |
-| Claude Code | `~/.claude/projects/**/*.jsonl`                    | Uso de mensagens de assistente; deduplicação por ID para streaming; cache somado à entrada                                       |
-| Grok Build  | `~/.grok/sessions/*/*/usage.json`                  | Uso por turno/modelo; cache já incluído na entrada; filhos conhecidos já incluídos no pai ficam fora da soma; USD = ticks / 10¹⁰ |
-| Gemini CLI  | `~/.gemini/tmp/*/chats/session-*.json` ou `.jsonl` | Tokens registrados na sessão; pensamentos integrados à saída; logs antigos de mensagens sem contadores não geram métricas        |
+| Service     | Source                                             | Normalization                                                                                                                  |
+| ----------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Codex       | `~/.codex/sessions` and `archived_sessions`        | Cumulative counter deltas; repeated snapshots and copied histories are deduplicated.                                           |
+| Claude Code | `~/.claude/projects/**/*.jsonl`                    | Assistant usage; deduplicated message IDs for streaming; cache included in input.                                              |
+| Grok Build  | `~/.grok/sessions/*/*/usage.json`                  | Usage by turn/model; cache included in input; known children already counted by their parent are excluded; USD = ticks / 10¹⁰. |
+| Gemini CLI  | `~/.gemini/tmp/*/chats/session-*.json` or `.jsonl` | Recorded session counters; thoughts included in output; old message-only logs produce no usage metrics.                        |
 
-Respeita `CODEX_HOME`, `CLAUDE_CONFIG_DIR` e `GROK_HOME` se as ferramentas
-estiverem em outro diretório. `GEMINI_HOME` é uma opção deste coletor para
-substituir a localização padrão. `TOKENUSAGE_PROFILE_DIR` substitui a raiz
-do perfil, principalmente para testes isolados.
+Collectors respect `CODEX_HOME`, `CLAUDE_CONFIG_DIR`, and `GROK_HOME`.
+`GEMINI_HOME` is this collector's override for the default Gemini directory.
+`TOKENUSAGE_PROFILE_DIR` replaces the profile root, primarily for isolated tests.
 
-**Limites:** cobre sessões com contadores preservados nesta máquina, até 90
-dias. Conversas nos sites/apps, outros computadores, histórico removido e
-chamadas de API sem logs não podem ser recuperados pelo perfil local. Logs antigos de Gemini sem contadores não geram métricas de consumo.
+**Limits:** collection covers retained local sessions with counters, up to 90
+days. Website/app usage, other computers, deleted histories, and API requests
+without local logs cannot be recovered from this profile. Old Gemini logs
+without counters do not provide exact usage.
 
-Ferramentas e APIs têm visões separadas: um CLI autenticado por API pode aparecer
-nas duas fontes. Somar as duas visões poderia contar a mesma chamada duas vezes.
-O rótulo de modelo/projeto é o que está disponível nos metadados; um modelo não
-identificado aparece explicitamente, sem inferir qual foi usado.
+Tools and APIs are separate views because API-authenticated CLIs may appear in
+both. Adding the views could count the same request twice. Model/project labels
+come from available metadata; an unidentified model is shown explicitly.
 
-### Logs de API
+### API logs
 
-Em **Fontes de dados → Importar JSON ou JSONL**, envie até 4 MB e 10.000 registros
-por arquivo. Formato: objeto JSON, array de objetos ou um objeto por linha.
+Under **Data sources → Import JSON or JSONL**, upload an object, array of
+objects, or one object per line. Limits: 4 MiB and 10,000 records per file.
 
 ```json
 {
   "provider": "grok",
-  "id": "ID_REAL_DA_CHAMADA",
+  "id": "ACTUAL_REQUEST_ID",
   "timestamp": "2026-10-07T12:00:00Z",
-  "model": "MODELO_REAL",
-  "project": "meu-projeto",
+  "model": "ACTUAL_MODEL",
+  "project": "my-project",
   "usage": {
     "prompt_tokens": 1200,
     "completion_tokens": 300,
@@ -187,60 +204,67 @@ por arquivo. Formato: objeto JSON, array de objetos ou um objeto por linha.
 }
 ```
 
-O exemplo é apenas documentação; não há dados de demonstração no produto.
-`provider` aceita `codex`, `claude`, `grok` e `gemini`. Para a OpenAI, o rótulo
-Codex agrupa também chamadas gerais de API; o modelo continua identificado.
+This is a format example; it does not add demo data to the product. `provider`
+accepts `codex`, `claude`, `grok`, and `gemini`. The Codex label also groups general
+OpenAI API requests; the model remains identified.
 
-`usage` aceita os contadores de Responses/Chat Completions (OpenAI/xAI) e Messages
-(Anthropic). Para Gemini, use `usageMetadata` com `promptTokenCount`,
-`candidatesTokenCount`, `cachedContentTokenCount` e `thoughtsTokenCount`.
-`costUSD` é opcional e significa valor **informado pelo arquivo**, não verificado
-com o provedor. Inclua o ID real da chamada: reimportações do mesmo ID atualizam
-o registro. Sem ID, registros idênticos recebem o mesmo identificador e são
-deduplicados, inclusive dentro do arquivo.
+`usage` supports Responses/Chat Completions counters from OpenAI/xAI and Messages
+counters from Anthropic. For Gemini, use `usageMetadata` with
+`promptTokenCount`, `candidatesTokenCount`, `cachedContentTokenCount`, and
+`thoughtsTokenCount`.
 
-### Tarifas e estimativas
+Optional `costUSD` means **reported by the imported file**, without provider
+verification. Include the real request ID: importing that ID again updates its
+record. Without an ID, identical records receive the same identifier and are
+deduplicated within and across imports.
 
-Em **Preferências → Tabela de preços**, edite entrada, saída e leitura de cache
-em USD por milhão de tokens. Todos os modelos ficam visíveis; adicione um nome
-customizado quando o modelo do log não tiver tarifa. Restaurar um modelo padrão
-remove a substituição; remover um modelo customizado devolve seus eventos à
-cobertura sem estimativa. Salve as preferências para atualizar imediatamente os
-custos da visão geral e da atividade. A cotação fica na aba Geral.
+### Prices and estimates
 
-A tabela embutida contém presets históricos de texto da especificação da fase 1,
-sem atualização automática. Confira as tarifas aplicáveis em
+Under **Preferences → Price table**, edit input, output, and cache-read rates in
+USD per million tokens. Add a custom name for a model without a price. Restoring
+a default removes its override; removing a custom model makes its events
+uncovered again. Save to update overview/activity costs immediately. The
+exchange rate is under General.
+
+Built-in prices are historical text-model presets from the Phase 1 design, with
+no automatic updates. Check applicable provider rates:
 [Anthropic](https://platform.claude.com/docs/en/about-claude/pricing),
 [OpenAI](https://developers.openai.com/api/docs/pricing),
-[xAI](https://docs.x.ai/developers/pricing) e
+[xAI](https://docs.x.ai/developers/pricing), and
 [Google](https://ai.google.dev/gemini-api/docs/pricing).
-Modelos sem tarifa permanecem sem estimativa; não recebem o preço de outro modelo.
-Custos do log são preservados, inclusive quando misturados com chamadas sem custo
-na mesma sessão. A cobertura indica registros informados, estimados e sem estimativa.
 
-A economia por cache é uma estimativa: `tokens de cache × (entrada − cache) / 1.000.000`.
-Seu percentual compara o custo modelado com o cenário sem cache. A estimativa não
-reproduz preços de contexto longo, processamento em lote, escrita de cache,
-armazenamento, imagens, ferramentas, impostos ou descontos. Mensalidades ficam
-separadas e esses valores não substituem uma fatura. Cotação ausente ou inválida
-no arquivo local usa 5,75; a API rejeita atualizações inválidas.
+Models without prices stay unestimated; they do not inherit another model's
+rate. Reported costs are preserved, including sessions mixing reported and
+unreported costs. Coverage distinguishes reported, estimated, and uncovered
+records.
 
-## Privacidade e armazenamento
+Cache savings estimate `cached tokens × (input rate − cache-read rate) / 1,000,000`.
+The percentage compares modeled cost with the scenario without cache. It does
+not reproduce long-context, batch, cache-write, storage, image, tool, tax, or
+discount pricing. Subscription fees remain separate. These figures do not
+replace an invoice. Missing/invalid stored exchange rates fall back to 5.75;
+invalid API updates are rejected.
 
-Conteúdo de conversas, cookies e arquivos de autenticação não são usados como
-fontes de consumo. JSONL é lido em streaming para extrair métricas e metadados;
-apenas esses campos normalizados são persistidos e enviados ao navegador.
+## Privacy and storage
 
-Cache, preferências e importações ficam em `.local-data/`, ignorado pelo Git e
-excluído dos artefatos de build. Diretórios novos usam permissões `0700` e arquivos
-`0600`. `TOKENUSAGE_DATA_DIR` permite mudar esse local. Escritas são serializadas
-e feitas com troca atômica do arquivo. Não alteramos o histórico das ferramentas.
+Conversation content, cookies, and authentication files are not usage outputs.
+JSONL is streamed; selected Grok/Gemini JSON documents are parsed as whole files.
+Only normalized metrics and metadata are persisted and sent to the browser.
 
-Endpoints conferem Host/Origin e rejeitam chamadas de sites externos. Esta versão
-é para uso local. Publicação na nuvem precisa de uma etapa própria de coleta,
-autenticação e armazenamento; o servidor hospedado não acessa o perfil do Mac.
+With npm, local files default to `.local-data/`, ignored by Git and excluded from
+build artifacts. `TOKENUSAGE_DATA_DIR` overrides that location. New directories
+request `0700` permissions and new files `0600`; existing directory permissions
+are not changed. Writes use atomic replacement. Import/settings mutations are
+serialized within the process; collector scans have a separate concurrency
+gate. The app does not modify tool histories.
 
-## Validar
+Endpoints check Host/Origin and reject external website requests. The supported
+npm scripts and Homebrew service bind to loopback. Direct standalone invocation
+or operator overrides can change binding. This is a single-user local app;
+cloud deployment requires separate collection, authentication, and storage.
+A hosted server cannot directly read your Mac's profile.
+
+## Validate
 
 ```sh
 npm run lint
@@ -251,22 +275,21 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Os testes de navegador usam um perfil sintético separado em `.test-profile`,
-dados em `.test-data` e porta 3101, sem modificar o perfil real. Screenshots
-de validação ficam em `artifacts/`, ignorados pelo Git. As capturas sintéticas
-selecionadas para este README ficam em `docs/screenshots/` e são versionadas.
+Browser tests use `.test-profile`, `.test-data`, and port 3101 without modifying
+the real profile. Validation captures go to Git-ignored `artifacts/`.
+Selected synthetic README captures are versioned in `docs/screenshots/`.
 
-`npm audit --omit=dev` não identificou vulnerabilidades na validação inicial.
-A auditoria completa sinalizou a cadeia de `braces` usada por `eslint-config-next`
-(dependências de lint). Não há versão corrigida de `braces` disponível no registro
-consultado; não foi feito downgrade forçado do Next.js para contornar o alerta.
+Production dependencies had no reported vulnerabilities in the release
+validation (`npm audit --omit=dev`). The complete audit flagged the development
+`braces` dependency chain used by lint/CLI tools. No patched `braces` version was
+available at that check; no forced downgrade was applied.
 
-## Referências de formato
+## Format references
 
-- [Gemini CLI — sessões e armazenamento](https://geminicli.com/docs/cli/session-management/)
-- [Gemini CLI — tipos de registros](https://github.com/google-gemini/gemini-cli/blob/main/packages/core/src/services/chatRecordingTypes.ts)
-- [Claude Code — métricas de consumo](https://code.claude.com/docs/en/monitoring-usage)
-- [Grok Build — execução e consumo](https://docs.x.ai/build/cli/headless-scripting)
+- [Gemini CLI — sessions and storage](https://geminicli.com/docs/cli/session-management/)
+- [Gemini CLI — recording types](https://github.com/google-gemini/gemini-cli/blob/main/packages/core/src/services/chatRecordingTypes.ts)
+- [Claude Code — usage metrics](https://code.claude.com/docs/en/monitoring-usage)
+- [Grok Build — execution and usage](https://docs.x.ai/build/cli/headless-scripting)
 
-O desenho e os limites da entrega estão em
-[`docs/superpowers/specs/2026-10-07-tokenusage-design.md`](docs/superpowers/specs/2026-10-07-tokenusage-design.md).
+Delivery design and limits:
+[Tokenusage design](docs/superpowers/specs/2026-10-07-tokenusage-design.md).

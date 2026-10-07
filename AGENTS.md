@@ -1,7 +1,8 @@
-## Preferências de trabalho
+## Working preferences
 
-- Ao concluir uma feature ou correção, faça o commit das alterações relacionadas, envie a branch e abra um pull request automaticamente, sem pedir nova confirmação. A abertura do PR não autoriza o merge.
-- Nunca inclua históricos reais, métricas pessoais, credenciais ou arquivos de `.local-data` nos commits.
+- After completing a feature or fix, commit the related changes, push the branch, and open a pull request automatically. Opening a PR does not authorize merging it.
+- Write code identifiers, comments, documentation, README files, release notes, and PR text in English. Keep non-English text in localization resources and explicit localization test expectations only.
+- Never commit real histories, personal metrics, credentials, or `.local-data` files.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
