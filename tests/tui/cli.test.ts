@@ -9,13 +9,19 @@ import { promisify } from "node:util";
 const run = promisify(execFile);
 const root = resolve(import.meta.dirname, "../..");
 
-// Runs the real entry point through tsx, against a synthetic profile.
+// Runs the real entry point through tsx, against a synthetic profile. Without
+// an explicit data directory it uses an empty one, so a developer's saved
+// language never changes the result.
+const emptyData = join(tmpdir(), `tokenusage-cli-empty-${process.pid}`);
 async function tui(args: string[], env: Record<string, string> = {}) {
   try {
     const { stdout, stderr } = await run(
       process.execPath,
       ["--import", "tsx", "src/tui/main.tsx", ...args],
-      { cwd: root, env: { ...process.env, ...env } },
+      {
+        cwd: root,
+        env: { ...process.env, TOKENUSAGE_DATA_DIR: emptyData, ...env },
+      },
     );
     return { code: 0, stdout, stderr };
   } catch (error) {

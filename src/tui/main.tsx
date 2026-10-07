@@ -19,7 +19,7 @@ async function main() {
   } catch (error) {
     const { t } = createTuiI18n(languageFromArgs(argv) ?? saved);
     console.error(error instanceof Error ? error.message : String(error));
-    console.error(t("Use tokenusage tui --help para ver as opções."));
+    console.error(t("Use tokenusage tui --help to see the options."));
     process.exitCode = 2;
     return;
   }
@@ -46,7 +46,7 @@ async function main() {
   if (!process.stdin.isTTY || !process.stdout.isTTY) {
     console.error(
       i18n.t(
-        "A TUI precisa de um terminal interativo. Use --once para uma saída estática.",
+        "The TUI needs an interactive terminal. Use --once for static output.",
       ),
     );
     process.exitCode = 1;

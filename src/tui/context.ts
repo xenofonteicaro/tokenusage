@@ -25,7 +25,7 @@ export function buildContext(
   filters: Filters,
   search: string,
   group: GroupMode,
-  i18n: TuiI18n = createTuiI18n("pt-BR"),
+  i18n: TuiI18n = createTuiI18n("en"),
 ): ScreenContext {
   const events = selectEvents(
     snapshot.events,

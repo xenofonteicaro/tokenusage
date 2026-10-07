@@ -31,7 +31,7 @@ export function OnceView({
   return (
     <I18nContext.Provider value={i18n}>
       <Box flexDirection="column" width={columns}>
-        <Text bold>tokenusage · {i18n.t("Visão geral")}</Text>
+        <Text bold>tokenusage · {i18n.t("Overview")}</Text>
         <FilterLine filters={ctx.filters} status="" />
         <OverviewScreen
           ctx={ctx}

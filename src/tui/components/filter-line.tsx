@@ -5,19 +5,19 @@ import type { Translate } from "../i18n";
 import { useI18n } from "../i18n-context";
 
 export const channelLabel = (channel: Channel, t: Translate) =>
-  channel === "tool" ? t("Ferramentas") : "APIs";
+  channel === "tool" ? t("Tools") : "APIs";
 
 export function filterSummary(filters: Filters, t: Translate): string {
   return [
-    t("Canal: {value}", { value: channelLabel(filters.channel, t) }),
-    t("Período: {days} dias", { days: filters.days }),
-    t("Serviço: {value}", {
+    t("Channel: {value}", { value: channelLabel(filters.channel, t) }),
+    t("Period: {days} days", { days: filters.days }),
+    t("Service: {value}", {
       value:
         filters.provider === "all"
-          ? t("Todos")
+          ? t("All")
           : providerInfo[filters.provider].name,
     }),
-    t("Projeto: {value}", { value: filters.project || t("Todos") }),
+    t("Project: {value}", { value: filters.project || t("All") }),
   ].join(" · ");
 }
 

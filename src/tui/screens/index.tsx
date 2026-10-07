@@ -3,12 +3,12 @@ import { OverviewScreen } from "./overview";
 import { SourcesScreen, sourcesFor } from "./sources";
 import type { ScreenDef } from "./types";
 
-// Screens in tab order. Phase 2 adds Preferências here without touching the
+// Screens in tab order. Phase 2 adds Preferences here without touching the
 // navigation code.
 export const SCREENS: ScreenDef[] = [
   {
     id: "overview",
-    label: "Visão geral",
+    label: "Overview",
     itemHeight: 1,
     reserved: 0,
     count: () => 0,
@@ -16,7 +16,7 @@ export const SCREENS: ScreenDef[] = [
   },
   {
     id: "activity",
-    label: "Atividade",
+    label: "Activity",
     itemHeight: 1,
     reserved: 3,
     count: (ctx) => ctx.rows.length,
@@ -24,7 +24,7 @@ export const SCREENS: ScreenDef[] = [
   },
   {
     id: "sources",
-    label: "Fontes",
+    label: "Sources",
     itemHeight: 5,
     reserved: 2,
     count: (ctx) => sourcesFor(ctx).length,

@@ -1,14 +1,14 @@
 import { createI18n } from "../lib/i18n/translate";
 import { shortDate } from "./format";
-import { tuiMessagesEn } from "./messages";
+import { tuiMessagesPt } from "./messages";
 
-// The TUI ships complete dictionaries for Portuguese (the source language of
-// every message) and English. Any other web language falls back to Portuguese
-// as a whole instead of mixing languages on one screen.
+// English is the source language of every message and Portuguese (Brazil) has
+// a complete dictionary. Any other web language shows English as a whole
+// instead of mixing languages on one screen.
 export type TuiLanguage = "pt-BR" | "en";
 
 export function resolveTuiLanguage(value: unknown): TuiLanguage {
-  return value === "en" ? "en" : "pt-BR";
+  return value === "pt-BR" ? "pt-BR" : "en";
 }
 
 export type Translate = (
@@ -27,8 +27,8 @@ export function createTuiI18n(value: unknown) {
   // src/lib collectors write in Portuguese.
   const web = createI18n(language);
   const t: Translate = (message, values = {}) =>
-    language === "en" && Object.hasOwn(tuiMessagesEn, message)
-      ? interpolate(tuiMessagesEn[message], values)
+    language === "pt-BR" && Object.hasOwn(tuiMessagesPt, message)
+      ? interpolate(tuiMessagesPt[message], values)
       : web.t(message, values);
   return {
     language,

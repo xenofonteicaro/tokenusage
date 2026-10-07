@@ -23,11 +23,11 @@ test("parses flags with spaces and equals signs", () => {
   assert.equal(parseArgs(["--days=90"]).days, 90);
 });
 
-test("rejects invalid input in Portuguese", () => {
-  assert.throws(() => parseArgs(["--days", "15"]), /7, 30 ou 90/);
-  assert.throws(() => parseArgs(["--days"]), /precisa de um valor/);
-  assert.throws(() => parseArgs(["--channel", "web"]), /tool ou api/);
-  assert.throws(() => parseArgs(["--nope"]), /Opção desconhecida: --nope/);
+test("rejects invalid input with English messages by default", () => {
+  assert.throws(() => parseArgs(["--days", "15"]), /7, 30 or 90/);
+  assert.throws(() => parseArgs(["--days"]), /needs a value/);
+  assert.throws(() => parseArgs(["--channel", "web"]), /tool or api/);
+  assert.throws(() => parseArgs(["--nope"]), /Unknown option: --nope/);
 });
 
 test("--lang selects the interface language and rejects unknown codes", () => {
@@ -38,12 +38,12 @@ test("--lang selects the interface language and rejects unknown codes", () => {
 });
 
 test("messages and help follow the chosen language", () => {
-  const { t } = createTuiI18n("en");
+  const { t } = createTuiI18n("pt-BR");
   assert.throws(
     () => parseArgs(["--days", "15"], t),
-    /Use --days with 7, 30 or 90/,
+    /Use --days com 7, 30 ou 90/,
   );
-  assert.throws(() => parseArgs(["--nope"], t), /Unknown option: --nope/);
-  assert.match(helpText(t), /Usage: tokenusage tui/);
-  assert.match(helpText(createTuiI18n("pt-BR").t), /Uso: tokenusage tui/);
+  assert.throws(() => parseArgs(["--nope"], t), /Opção desconhecida: --nope/);
+  assert.match(helpText(t), /Uso: tokenusage tui/);
+  assert.match(helpText(createTuiI18n("en").t), /Usage: tokenusage tui/);
 });

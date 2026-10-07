@@ -6,13 +6,13 @@ import { createTuiI18n, type TuiI18n, type Translate } from "./i18n";
 export type GroupMode = "session" | "model" | "project" | "day";
 export const GROUP_MODES: GroupMode[] = ["session", "model", "project", "day"];
 export function groupLabel(mode: GroupMode, t: Translate): string {
-  if (mode === "session") return t("Sessão");
-  if (mode === "model") return t("Modelo");
-  if (mode === "project") return t("Projeto");
-  return t("Dia");
+  if (mode === "session") return t("Session");
+  if (mode === "model") return t("Model");
+  if (mode === "project") return t("Project");
+  return t("Day");
 }
 
-export type CostKind = "real" | "est." | "misto";
+export type CostKind = "actual" | "est." | "mixed";
 
 export interface ActivityRow {
   key: string;
@@ -39,9 +39,9 @@ function summary(metrics: Totals) {
       ? null
       : metrics.estimatedRecords
         ? metrics.costsKnown
-          ? "misto"
+          ? "mixed"
           : "est."
-        : "real") as CostKind | null,
+        : "actual") as CostKind | null,
     uncovered: Math.max(0, metrics.records - known),
   };
 }
@@ -64,7 +64,7 @@ export function activityRows(
   mode: GroupMode,
   search: string,
   pricing?: PricingConfig,
-  i18n: Pick<TuiI18n, "tn" | "shortDate"> = createTuiI18n("pt-BR"),
+  i18n: Pick<TuiI18n, "tn" | "shortDate"> = createTuiI18n("en"),
 ): ActivityRow[] {
   let rows: ActivityRow[];
   if (mode === "session") {
@@ -90,7 +90,7 @@ export function activityRows(
           key: day,
           providers: [...new Set(group.map((row) => row.provider))],
           label: i18n.shortDate(day),
-          detail: i18n.tn(metrics.sessions, "sessão", "sessões"),
+          detail: i18n.tn(metrics.sessions, "session", "sessions"),
           timestamp: group
             .map((row) => row.timestamp)
             .sort()

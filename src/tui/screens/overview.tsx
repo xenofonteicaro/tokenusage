@@ -34,17 +34,17 @@ function cards(data: Metrics, channel: "tool" | "api", i18n: TuiI18n) {
   } = data;
   const costKind = metrics.estimatedRecords
     ? metrics.costsKnown
-      ? t("Misto")
-      : t("Estimado")
-    : t("Real");
+      ? t("Mixed")
+      : t("Estimated")
+    : t("Actual");
   const list: CardData[] = [
     {
       label: "TOKENS",
       value: formatTokens(metrics.tokens),
       caption:
         change !== null
-          ? `${change >= 0 ? "▲" : "▼"} ${t("{change} vs. anterior", { change: percent(Math.abs(change)) })}`
-          : t("{input} ent. + {output} saí.", {
+          ? `${change >= 0 ? "▲" : "▼"} ${t("{change} vs. previous", { change: percent(Math.abs(change)) })}`
+          : t("{input} in + {output} out", {
               input: formatTokens(metrics.input),
               output: formatTokens(metrics.output),
             }),
@@ -52,28 +52,28 @@ function cards(data: Metrics, channel: "tool" | "api", i18n: TuiI18n) {
     {
       label: "CACHE",
       value: percent(metrics.cacheRate),
-      caption: t("{count} reutilizados", {
+      caption: t("{count} reused", {
         count: formatTokens(metrics.cache),
       }),
     },
     {
-      label: t("ECONOMIA POR CACHE"),
+      label: t("CACHE SAVINGS"),
       value: hasSavings ? formatUSD(metrics.cacheSavingsUSD) : "—",
       caption: hasSavings
-        ? `${formatBRL(metrics.cacheSavingsBRL)} · ${percent(savingsShare)} ${unpricedCache > 0 ? t("parcial") : t("s/ cache")}`
-        : t("Cache sem tarifa"),
+        ? `${formatBRL(metrics.cacheSavingsBRL)} · ${percent(savingsShare)} ${unpricedCache > 0 ? t("partial") : t("vs. no cache")}`
+        : t("Cache without tariff"),
     },
     {
-      label: channel === "tool" ? t("SESSÕES") : t("CHAMADAS"),
+      label: channel === "tool" ? t("SESSIONS") : t("CALLS"),
       value: formatNumber(metrics.sessions),
-      caption: `${tn(models.length, "modelo", "modelos")} · ${tn(projects.length, "projeto", "projetos")}`,
+      caption: `${tn(models.length, "model", "models")} · ${tn(projects.length, "project", "projects")}`,
     },
     {
-      label: t("CUSTO"),
+      label: t("COST"),
       value: hasCost ? formatUSD(metrics.totalCostUSD) : "—",
       caption: hasCost
         ? `${formatBRL(metrics.totalCostBRL)} · ${costKind}`
-        : t("Sem tarifa cadastrada"),
+        : t("No tariff set"),
     },
   ];
   return list;
@@ -145,9 +145,9 @@ function Chart({
   return (
     <Box flexDirection="column">
       <Text wrap="truncate-end" bold>
-        {t("Consumo diário")}{" "}
+        {t("Daily usage")}{" "}
         <Text dimColor>
-          · {t("pico {peak} por coluna", { peak: i18n.formatTokens(peak) })}
+          · {t("peak {peak} per column", { peak: i18n.formatTokens(peak) })}
         </Text>
       </Text>
       {grid.map((row, index) => (
@@ -191,7 +191,7 @@ function Services({
   const barWidth = Math.max(6, Math.min(24, width - 8 - 8 - 8));
   return (
     <Box flexDirection="column" width={width} flexShrink={0}>
-      <Text bold>{t("Por serviço")}</Text>
+      <Text bold>{t("By service")}</Text>
       {PROVIDERS.map((provider) => {
         const share = total ? values[provider] / total : 0;
         return (
@@ -238,7 +238,7 @@ function Ranking({
       <Text bold>{title}</Text>
       <Box>
         <Cell width={name + 2} dimColor>
-          {t("Nome")}
+          {t("Name")}
         </Cell>
         <Cell width={8} align="right" dimColor>
           Tokens
@@ -249,7 +249,7 @@ function Ranking({
           </Cell>
         )}
         <Cell width={7} align="right" dimColor>
-          {t("Part.")}
+          {t("Share")}
         </Cell>
       </Box>
       {rows.slice(0, limit).map((row, index) => (
@@ -281,18 +281,18 @@ function Empty({ channel, filtered }: { channel: string; filtered: boolean }) {
     <Box flexDirection="column" paddingTop={1}>
       <Text bold>
         {filtered
-          ? t("Sem consumo nesta seleção")
+          ? t("No usage for this selection")
           : channel === "api"
-            ? t("Nenhuma chamada de API importada")
-            : t("Seu histórico começa aqui")}
+            ? t("No API calls imported")
+            : t("Your history starts here")}
       </Text>
       <Text dimColor>
         {channel === "api"
           ? t(
-              "Importe logs de API pela dashboard web (tokenusage open). Sem registros locais, não há consumo remoto para consultar.",
+              "Import API logs from the web dashboard (tokenusage open). Without local records there is no remote usage to look up.",
             )
           : t(
-              "Esta seleção não tem registros de tokens. Veja a tela Fontes ou mude os filtros.",
+              "This selection has no token records. Check the Sources screen or change the filters.",
             )}
       </Text>
     </Box>
@@ -342,23 +342,23 @@ export function OverviewScreen({ ctx, width, height }: ScreenProps) {
       />
       {goal ? (
         <Text wrap="truncate-end">
-          <Text dimColor>{t("Meta mensal")} </Text>
+          <Text dimColor>{t("Monthly goal")} </Text>
           {bar(monthTokens / goal, 20)}
           <Text> {percent(monthTokens / goal, 0)} </Text>
           <Text dimColor>
             ·{" "}
-            {t("{used} de {goal}", {
+            {t("{used} of {goal}", {
               used: formatTokens(monthTokens),
               goal: formatTokens(goal),
             })}{" "}
-            · {filters.channel === "tool" ? t("ferramentas") : "APIs"}
+            · {filters.channel === "tool" ? t("tools") : "APIs"}
           </Text>
         </Text>
       ) : null}
       {unestimatedRecords > 0 ? (
         <Text wrap="truncate-end" dimColor>
           {t(
-            "{missing} de {total} registros sem estimativa de custo (modelo sem tarifa).",
+            "{missing} of {total} records without a cost estimate (model without tariff).",
             {
               missing: formatNumber(unestimatedRecords),
               total: formatNumber(metrics.records),
@@ -388,7 +388,7 @@ export function OverviewScreen({ ctx, width, height }: ScreenProps) {
       <Box>
         {layout.modelRows > 0 && (
           <Ranking
-            title={t("Modelos mais usados")}
+            title={t("Most used models")}
             rows={models}
             limit={layout.modelRows}
             total={metrics.tokens}
@@ -399,7 +399,7 @@ export function OverviewScreen({ ctx, width, height }: ScreenProps) {
         {layout.wide && layout.projectRows > 0 && (
           <Box marginLeft={2}>
             <Ranking
-              title={t("Projetos")}
+              title={t("Projects")}
               rows={projects}
               limit={layout.projectRows}
               total={metrics.tokens}
@@ -411,7 +411,7 @@ export function OverviewScreen({ ctx, width, height }: ScreenProps) {
       </Box>
       {!layout.wide && layout.projectRows > 0 && (
         <Ranking
-          title={t("Projetos")}
+          title={t("Projects")}
           rows={projects}
           limit={layout.projectRows}
           total={metrics.tokens}

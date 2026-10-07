@@ -4,7 +4,7 @@ import { events, payload } from "./fixtures";
 import { KEYS, mount } from "./harness";
 
 test("shows a progress message, then the overview", async () => {
-  const app = mount();
+  const app = mount({ initialLanguage: "pt-BR" });
   try {
     assert.match(app.frame(), /Coletando/);
     await app.seen("Consumo diário");
@@ -57,16 +57,16 @@ test("activity search narrows rows and Esc clears it", async () => {
   try {
     await app.seen("Consumo diário");
     await app.press("2");
-    assert.match(app.frame(), /projeto-beta/);
+    assert.match(app.frame(), /project-beta/);
     await app.press("/");
     for (const letter of "beta") await app.press(letter);
     assert.match(app.frame(), /Busca: beta/);
-    assert.doesNotMatch(app.frame(), /grok-sintetico/);
+    assert.doesNotMatch(app.frame(), /grok-synthetic/);
     await app.press(KEYS.enter);
     assert.match(app.frame(), /Busca: beta/);
     await app.press("/");
     await app.press(KEYS.escape);
-    assert.match(app.frame(), /projeto-alfa/);
+    assert.match(app.frame(), /project-alpha/);
     assert.match(app.frame(), /\/ buscar/);
   } finally {
     app.unmount();
@@ -80,7 +80,7 @@ test("g cycles the activity grouping", async () => {
     await app.press("2");
     await app.press("g");
     assert.match(app.frame(), /Agrupado por Modelo/);
-    assert.match(app.frame(), /modelo-sem-tarifa/);
+    assert.match(app.frame(), /unpriced-model/);
     await app.press("g");
     await app.press("g");
     assert.match(app.frame(), /Agrupado por Dia/);
@@ -98,7 +98,7 @@ test("project picker applies the chosen project", async () => {
     assert.match(app.frame(), /Todos os projetos/);
     await app.press(KEYS.down);
     await app.press(KEYS.enter);
-    assert.match(app.frame(), /Projeto: projeto-alfa/);
+    assert.match(app.frame(), /Projeto: project-alpha/);
     assert.doesNotMatch(app.frame(), /Todos os projetos/);
   } finally {
     app.unmount();
@@ -132,13 +132,13 @@ test("first load failure shows the error and r retries", async () => {
   const app = mount({
     load: async () => {
       calls++;
-      if (calls === 1) throw new Error("disco indisponível");
+      if (calls === 1) throw new Error("disk unavailable");
       return payload();
     },
   });
   try {
-    await app.seen("Não foi possível consultar seu histórico.");
-    assert.match(app.frame(), /disco indisponível/);
+    await app.seen("Could not read your history.");
+    assert.match(app.frame(), /disk unavailable/);
     await app.press("r");
     await app.seen("Consumo diário");
   } finally {
@@ -170,7 +170,7 @@ test("cursor scrolls through long activity lists", async () => {
     ...events[0],
     id: `bulk-${index}`,
     sessionId: `bulk-${index}`,
-    project: `bulk-projeto-${String(index).padStart(2, "0")}`,
+    project: `bulk-project-${String(index).padStart(2, "0")}`,
     timestamp: `2026-10-07T${String(10 + (index % 5)).padStart(2, "0")}:${String(index).padStart(2, "0")}:00Z`,
   }));
   const app = mount({

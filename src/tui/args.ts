@@ -16,22 +16,22 @@ export function helpText(t: Translate): string {
   const option = (flag: string, description: string) =>
     `  ${flag.padEnd(22)}${description}`;
   return [
-    t("Uso: tokenusage tui [opções]"),
+    t("Usage: tokenusage tui [options]"),
     "",
-    t("Dashboard de consumo de tokens no terminal."),
+    t("Token usage dashboard in the terminal."),
     "",
-    t("Opções:"),
-    option("--days <7|30|90>", t("Período inicial (padrão: 30)")),
+    t("Options:"),
+    option("--days <7|30|90>", t("Initial period (default: 30)")),
     option(
       "--channel <tool|api>",
-      t("Canal inicial: ferramentas ou API (padrão: tool)"),
+      t("Initial channel: tools or API (default: tool)"),
     ),
     option(
       "--lang <pt-BR|en>",
-      t("Idioma da interface (padrão: o das preferências da dashboard)"),
+      t("Interface language (default: the dashboard preference)"),
     ),
-    option("--once", t("Imprime a visão geral uma vez e sai")),
-    option("-h, --help", t("Mostra esta ajuda")),
+    option("--once", t("Print the overview once and exit")),
+    option("-h, --help", t("Show this help")),
   ].join("\n");
 }
 
@@ -60,7 +60,7 @@ export function parseArgs(
   const value = (flag: string, inline: string | undefined, next?: string) => {
     const result = inline ?? next;
     if (result === undefined || result.startsWith("--"))
-      throw new Error(t("A opção {flag} precisa de um valor.", { flag }));
+      throw new Error(t("The {flag} option needs a value.", { flag }));
     return result;
   };
   for (let index = 0; index < argv.length; index++) {
@@ -75,25 +75,23 @@ export function parseArgs(
       if (flag === "--days") {
         const days = Number(raw);
         if (!(PERIODS as readonly number[]).includes(days))
-          throw new Error(t("Use --days com 7, 30 ou 90."));
+          throw new Error(t("Use --days with 7, 30 or 90."));
         options.days = days;
       } else if (flag === "--channel") {
         if (raw !== "tool" && raw !== "api")
-          throw new Error(t("Use --channel com tool ou api."));
+          throw new Error(t("Use --channel with tool or api."));
         options.channel = raw;
       } else {
         if (!(LANGUAGE_CODES as readonly string[]).includes(raw))
           throw new Error(
-            t("Use --lang com um destes códigos: {codes}.", {
+            t("Use --lang with one of: {codes}.", {
               codes: LANGUAGE_CODES.join(", "),
             }),
           );
         options.lang = raw as Language;
       }
     } else
-      throw new Error(
-        t("Opção desconhecida: {option}", { option: argv[index] }),
-      );
+      throw new Error(t("Unknown option: {option}", { option: argv[index] }));
   }
   return options;
 }

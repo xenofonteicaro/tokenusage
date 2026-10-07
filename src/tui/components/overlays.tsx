@@ -5,21 +5,21 @@ import { useI18n } from "../i18n-context";
 export function HelpOverlay() {
   const { t } = useI18n();
   const keys: [string, string][] = [
-    ["1 2 3 · Tab", t("Troca de tela")],
-    ["c", t("Alterna Ferramentas e APIs")],
-    ["d", t("Alterna o período (7, 30 e 90 dias)")],
-    ["s", t("Alterna o serviço")],
-    ["p", t("Escolhe o projeto")],
-    ["/", t("Busca na Atividade")],
-    ["g", t("Agrupa a Atividade por sessão, modelo, projeto ou dia")],
-    ["↑ ↓ PgUp PgDn", t("Rola as listas")],
-    ["r", t("Atualiza agora (automático a cada 60 s)")],
-    ["?", t("Abre ou fecha esta ajuda")],
-    ["q", t("Sai")],
+    ["1 2 3 · Tab", t("Switch screen")],
+    ["c", t("Switch between Tools and APIs")],
+    ["d", t("Cycle the period (7, 30 and 90 days)")],
+    ["s", t("Cycle the service")],
+    ["p", t("Choose the project")],
+    ["/", t("Search in Activity")],
+    ["g", t("Group Activity by session, model, project or day")],
+    ["↑ ↓ PgUp PgDn", t("Scroll the lists")],
+    ["r", t("Refresh now (automatic every 60 s)")],
+    ["?", t("Open or close this help")],
+    ["q", t("Quit")],
   ];
   return (
     <Box flexDirection="column">
-      <Text bold>{t("Atalhos")}</Text>
+      <Text bold>{t("Shortcuts")}</Text>
       {keys.map(([key, description]) => (
         <Box key={key}>
           <Box width={16} flexShrink={0}>
@@ -30,7 +30,7 @@ export function HelpOverlay() {
       ))}
       <Text dimColor>
         {t(
-          "Janelas mais altas mostram mais rankings na Visão geral. Pressione qualquer tecla para voltar.",
+          "Taller windows show more rankings in the Overview. Press any key to go back.",
         )}
       </Text>
     </Box>
@@ -56,10 +56,10 @@ export function ProjectPicker({
   );
   return (
     <Box flexDirection="column">
-      <Text bold>{t("Projeto")}</Text>
+      <Text bold>{t("Project")}</Text>
       {options.slice(start, end).map((option, offset) => {
         const index = start + offset;
-        const label = option || t("Todos os projetos");
+        const label = option || t("All projects");
         return (
           <Text key={label} wrap="truncate-end" bold={index === cursor}>
             {index === cursor ? "› " : "  "}
@@ -68,7 +68,7 @@ export function ProjectPicker({
           </Text>
         );
       })}
-      <Text dimColor>{t("↑↓ escolhe · Enter confirma · Esc cancela")}</Text>
+      <Text dimColor>{t("↑↓ choose · Enter confirm · Esc cancel")}</Text>
     </Box>
   );
 }

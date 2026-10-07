@@ -168,10 +168,10 @@ export function App({
 
   const status = loading
     ? snapshot
-      ? t("Atualizando…")
-      : t("Coletando…")
+      ? t("Refreshing…")
+      : t("Collecting…")
     : snapshot
-      ? t("Atualizado {time}", { time: i18n.formatTime(snapshot.generatedAt) })
+      ? t("Updated {time}", { time: i18n.formatTime(snapshot.generatedAt) })
       : "";
 
   let body;
@@ -179,7 +179,7 @@ export function App({
     body = (
       <Text>
         {t(
-          "Janela pequena ({columns}×{rows}). Use pelo menos {minColumns}×{minRows} ou pressione q para sair.",
+          "Window too small ({columns}×{rows}). Use at least {minColumns}×{minRows} or press q to quit.",
           { columns, rows, minColumns: MIN_COLUMNS, minRows: MIN_ROWS },
         )}
       </Text>
@@ -188,14 +188,14 @@ export function App({
     body = error ? (
       <Box flexDirection="column">
         <Text bold color="red">
-          {t("Não foi possível consultar seu histórico.")}
+          {t("Could not read your history.")}
         </Text>
         <Text>{error}</Text>
-        <Text dimColor>{t("r tenta novamente · q sai")}</Text>
+        <Text dimColor>{t("r retries · q quits")}</Text>
       </Box>
     ) : (
       <Text dimColor>
-        {t("Coletando o histórico local… a primeira leitura pode demorar.")}
+        {t("Collecting your local history… the first read can take a while.")}
       </Text>
     );
   else if (help) body = <HelpOverlay />;
@@ -227,7 +227,7 @@ export function App({
         <FilterLine filters={filters} status={status} />
         {errorRows ? (
           <Text color="red" wrap="truncate-end">
-            {t("⚠ Falha ao atualizar: {error} (mostrando os últimos dados)", {
+            {t("⚠ Refresh failed: {error} (showing the last data)", {
               error: error ?? "",
             })}
           </Text>
@@ -237,9 +237,9 @@ export function App({
         </Box>
         <Text dimColor wrap="truncate-end">
           {searching
-            ? t("Digite para buscar · Enter confirma · Esc limpa")
+            ? t("Type to search · Enter confirms · Esc clears")
             : t(
-                "Tab telas  c canal  d período  s serviço  p projeto  r atualizar  ? ajuda  q sair",
+                "Tab screens  c channel  d period  s service  p project  r refresh  ? help  q quit",
               )}
         </Text>
       </Box>

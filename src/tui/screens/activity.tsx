@@ -17,16 +17,16 @@ import type { ScreenProps } from "./types";
 const LAST_WIDTH = 15;
 
 function columnTitles(mode: GroupMode, t: TuiI18n["t"]): [string, string] {
-  if (mode === "session") return [t("Projeto"), t("Modelos")];
-  if (mode === "model") return [t("Modelo"), t("Serviço")];
-  if (mode === "project") return [t("Projeto"), t("Serviços")];
-  return [t("Dia"), t("Sessões")];
+  if (mode === "session") return [t("Project"), t("Models")];
+  if (mode === "model") return [t("Model"), t("Service")];
+  if (mode === "project") return [t("Project"), t("Services")];
+  return [t("Day"), t("Sessions")];
 }
 
 function costKindLabel(kind: CostKind | null, t: TuiI18n["t"]): string {
-  if (kind === "real") return t("real");
+  if (kind === "actual") return t("actual");
   if (kind === "est.") return t("est.");
-  return t("misto");
+  return t("mixed");
 }
 
 function costText(row: ActivityRow, i18n: TuiI18n): string {
@@ -59,19 +59,19 @@ export function ActivityScreen({
     <Box flexDirection="column">
       <Box justifyContent="space-between">
         <Text wrap="truncate-end">
-          <Text dimColor>{t("Agrupado por")} </Text>
+          <Text dimColor>{t("Grouped by")} </Text>
           <Text bold>{groupLabel(group, t)}</Text>
-          <Text dimColor> (g) · {i18n.tn(rows.length, "item", "itens")}</Text>
+          <Text dimColor> (g) · {i18n.tn(rows.length, "item", "items")}</Text>
         </Text>
         <Box flexShrink={0} marginLeft={2}>
           {search || searching ? (
             <Text>
-              <Text dimColor>{t("Busca:")} </Text>
+              <Text dimColor>{t("Search:")} </Text>
               {shownSearch}
               {searching ? "▌" : ""}
             </Text>
           ) : (
-            <Text dimColor>{t("/ buscar")}</Text>
+            <Text dimColor>{t("/ search")}</Text>
           )}
         </Box>
       </Box>
@@ -84,7 +84,7 @@ export function ActivityScreen({
           {detailTitle}
         </Cell>
         <Cell width={LAST_WIDTH} dimColor>
-          {t("Última")}
+          {t("Last")}
         </Cell>
         <Cell width={8} align="right" dimColor>
           Tokens
@@ -93,7 +93,7 @@ export function ActivityScreen({
           Cache
         </Cell>
         <Cell width={20} align="right" dimColor>
-          {t("Custo")}
+          {t("Cost")}
         </Cell>
       </Box>
       {rows.slice(start, end).map((row, offset) => {
@@ -135,20 +135,16 @@ export function ActivityScreen({
       })}
       {rows.length ? (
         <Text dimColor wrap="truncate-end">
-          {t("{from}–{to} de {total}", {
+          {t("{from}–{to} of {total}", {
             from: start + 1,
             to: end,
             total: rows.length,
           })}
-          {partial
-            ? ` · ${t("* parte dos registros sem estimativa de custo")}`
-            : ""}
+          {partial ? ` · ${t("* some records have no cost estimate")}` : ""}
         </Text>
       ) : (
         <Text dimColor>
-          {t(
-            "Nenhum registro encontrado. Experimente outro período, serviço ou busca.",
-          )}
+          {t("No records found. Try another period, service or search.")}
         </Text>
       )}
     </Box>

@@ -12,10 +12,10 @@ function stateStyle(
   state: SourceStatus["state"],
   t: Translate,
 ): { label: string; color?: string } {
-  if (state === "connected") return { label: t("Coletando"), color: "green" };
-  if (state === "empty") return { label: t("Sem contadores"), color: "yellow" };
-  if (state === "missing") return { label: t("Não encontrado") };
-  return { label: t("Requer atenção"), color: "red" };
+  if (state === "connected") return { label: t("Collecting"), color: "green" };
+  if (state === "empty") return { label: t("No counters"), color: "yellow" };
+  if (state === "missing") return { label: t("Not found") };
+  return { label: t("Needs attention"), color: "red" };
 }
 
 export function sourcesFor(ctx: ScreenContext): SourceStatus[] {
@@ -31,11 +31,11 @@ export function SourcesScreen({ ctx, cursor, pageSize }: ScreenProps) {
   return (
     <Box flexDirection="column">
       <Text>
-        <Text bold>{t("Fontes de dados")}</Text>
+        <Text bold>{t("Data sources")}</Text>
         <Text dimColor>
           {" "}
           · {channelLabel(ctx.filters.channel, t)} ·{" "}
-          {t("leitura local, sem chaves de API")}
+          {t("local read, no API keys")}
         </Text>
       </Text>
       {sources.slice(start, end).map((source, offset) => {
@@ -71,16 +71,16 @@ export function SourcesScreen({ ctx, cursor, pageSize }: ScreenProps) {
             </Text>
             <Text wrap="truncate-end" dimColor>
               {"  "}
-              {tn(source.files, "arquivo", "arquivos", formatNumber)} ·{" "}
-              {tn(source.events, "registro", "registros", formatNumber)}
+              {tn(source.files, "file", "files", formatNumber)} ·{" "}
+              {tn(source.events, "record", "records", formatNumber)}
               {source.latest
-                ? ` · ${t("último {date}", { date: `${shortDate(dayKey(source.latest))} ${formatTime(source.latest)}` })}`
+                ? ` · ${t("last {date}", { date: `${shortDate(dayKey(source.latest))} ${formatTime(source.latest)}` })}`
                 : ""}
               {source.warnings > 0 ? (
                 <Text color={tint("red")}>
                   {" "}
                   ·{" "}
-                  {t("⚠ {count} com falha, totais podem estar incompletos", {
+                  {t("⚠ {count} failed, totals may be incomplete", {
                     count: source.warnings,
                   })}
                 </Text>
@@ -90,11 +90,11 @@ export function SourcesScreen({ ctx, cursor, pageSize }: ScreenProps) {
         );
       })}
       {sources.length === 0 && (
-        <Text dimColor>{t("Nenhuma fonte neste canal.")}</Text>
+        <Text dimColor>{t("No sources on this channel.")}</Text>
       )}
       {sources.length > 0 && (
         <Text dimColor>
-          {t("{from}–{to} de {total}", {
+          {t("{from}–{to} of {total}", {
             from: start + 1,
             to: end,
             total: sources.length,
