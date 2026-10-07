@@ -24,8 +24,16 @@ interface CardData {
 }
 
 function cards(data: Metrics, channel: "tool" | "api") {
-  const { metrics, models, projects, change, savingsPercentage } = data;
-  const known = metrics.costsKnown + metrics.estimatedRecords > 0;
+  const {
+    metrics,
+    models,
+    projects,
+    change,
+    hasCost,
+    hasSavings,
+    savingsShare,
+    unpricedCache,
+  } = data;
   const costKind = metrics.estimatedRecords
     ? metrics.costsKnown
       ? "Misto"
@@ -47,8 +55,10 @@ function cards(data: Metrics, channel: "tool" | "api") {
     },
     {
       label: "ECONOMIA POR CACHE",
-      value: formatUSD(metrics.cacheSavingsUSD),
-      caption: `${formatBRL(metrics.cacheSavingsBRL)} · ${percent(savingsPercentage / 100)} s/ cache`,
+      value: hasSavings ? formatUSD(metrics.cacheSavingsUSD) : "—",
+      caption: hasSavings
+        ? `${formatBRL(metrics.cacheSavingsBRL)} · ${percent(savingsShare)}${unpricedCache > 0 ? " parcial" : " s/ cache"}`
+        : "Cache sem tarifa",
     },
     {
       label: channel === "tool" ? "SESSÕES" : "CHAMADAS",
@@ -57,8 +67,8 @@ function cards(data: Metrics, channel: "tool" | "api") {
     },
     {
       label: "CUSTO",
-      value: known ? formatUSD(metrics.totalCostUSD) : "—",
-      caption: known
+      value: hasCost ? formatUSD(metrics.totalCostUSD) : "—",
+      caption: hasCost
         ? `${formatBRL(metrics.totalCostBRL)} · ${costKind}`
         : "Sem tarifa cadastrada",
     },

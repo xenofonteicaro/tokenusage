@@ -236,3 +236,27 @@ test("a long pasted search keeps the activity header and frame size intact", asy
     app.unmount();
   }
 });
+
+test("cache savings are marked partial when some cache has no tariff", async () => {
+  const app = mount();
+  try {
+    await app.seen("Consumo diário");
+    assert.match(app.frame(), /30,8% parcial/);
+  } finally {
+    app.unmount();
+  }
+});
+
+test("cache savings and cost show a dash, not zero, without any tariff", async () => {
+  const app = mount({
+    load: async () => payload({ events: [events[1]] }),
+  });
+  try {
+    await app.seen("Consumo diário");
+    assert.match(app.frame(), /Cache sem tarifa/);
+    assert.match(app.frame(), /Sem tarifa cadastrada/);
+    assert.doesNotMatch(app.frame(), /US\$ 0,00/);
+  } finally {
+    app.unmount();
+  }
+});

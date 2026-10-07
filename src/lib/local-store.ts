@@ -3,6 +3,7 @@ import path from "node:path";
 import { z } from "zod";
 import { defaultSettings, type Settings } from "./types";
 import { DEFAULT_USD_TO_BRL_RATE } from "./pricing/defaults";
+import { LANGUAGE_CODES } from "./i18n/languages";
 
 // Runtime user data must never be bundled into a build artifact.
 export const dataDirectory = () =>
@@ -18,6 +19,7 @@ const modelPriceSchema = z.object({
 });
 
 export const settingsSchema = z.object({
+  language: z.enum(LANGUAGE_CODES).optional().default("pt-BR"),
   monthlyTokenGoal: z.number().int().positive().max(1e12).nullable(),
   subscriptions: z.object({
     codex: nullableAmount,

@@ -1,166 +1,89 @@
 "use client";
-import { useState } from "react";
+import { useI18n } from "./language-provider";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { dailySeries } from "@/lib/analytics";
 import {
-  dailySeries,
-  formatDate,
-  formatNumber,
-  formatTokens,
-} from "@/lib/analytics";
-import { PROVIDERS, providerInfo, type Provider } from "@/lib/types";
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@/components/ui/chart";
+
+const chartConfig = {
+  total: { label: "Tokens", color: "var(--primary)" },
+} satisfies ChartConfig;
 
 export function UsageChart({
   series,
 }: {
   series: ReturnType<typeof dailySeries>;
 }) {
-  const [active, setActive] = useState<number | null>(null);
-  const max = Math.max(...series.map((day) => day.total), 1);
-  const tick = Math.pow(10, Math.floor(Math.log10(max))) / 5,
-    ceiling = Math.ceil(max / tick) * tick;
-  const selected = active === null ? null : series[active];
+  const { t, formatTokens, formatDate } = useI18n();
+  const label = (date: string) => formatDate(`${date}T12:00:00Z`);
   return (
-    <div className="usage-chart">
-      <div className="chart-plot">
-        <div className="chart-axis" aria-hidden="true">
-          {[1, 0.75, 0.5, 0.25, 0].map((fraction) => (
-            <span key={fraction}>{formatTokens(ceiling * fraction)}</span>
-          ))}
-        </div>
-        <div className="chart-body">
-          <div className="chart-grid" aria-hidden="true">
-            {[0, 1, 2, 3, 4].map((i) => (
-              <i key={i} />
-            ))}
-          </div>
-          <div className="chart-bars" onMouseLeave={() => setActive(null)}>
-            {series.map((day, index) => (
-              <button
-                key={day.date}
-                className={`chart-day ${active === index ? "is-active" : ""}`}
-                aria-label={`${formatDate(`${day.date}T12:00:00Z`)}: ${formatNumber(day.total)} tokens`}
-                onFocus={() => setActive(index)}
-                onBlur={() => setActive(null)}
-                onMouseEnter={() => setActive(index)}
-                onClick={() => setActive(active === index ? null : index)}
-              >
-                <span
-                  className="bar-stack"
-                  style={{
-                    height: `${Math.max((day.total / ceiling) * 100, day.total ? 1 : 0)}%`,
-                  }}
-                >
-                  {PROVIDERS.map(
-                    (provider) =>
-                      day[provider] > 0 && (
-                        <span
-                          key={provider}
-                          style={{
-                            height: `${(day[provider] / day.total) * 100}%`,
-                            background: providerInfo[provider].color,
-                          }}
-                        />
-                      ),
-                  )}
-                </span>
-              </button>
-            ))}
-          </div>
-          {selected && (
-            <div className="chart-tooltip" role="status">
-              <strong>
-                {formatDate(`${selected.date}T12:00:00Z`)}
-                <span>{formatTokens(selected.total)} tokens</span>
-              </strong>
-              {PROVIDERS.filter((provider) => selected[provider] > 0).map(
-                (provider) => (
-                  <div key={provider}>
-                    <i style={{ background: providerInfo[provider].color }} />
-                    {providerInfo[provider].name}
-                    <b>{formatTokens(selected[provider])}</b>
-                  </div>
-                ),
+    <ChartContainer
+      config={{
+        ...chartConfig,
+        total: { ...chartConfig.total, label: t("Tokens") },
+      }}
+      className="aspect-auto h-64 w-full"
+    >
+      <AreaChart data={series} margin={{ left: 0, right: 8 }}>
+        <defs>
+          <linearGradient id="fillTotal" x1="0" y1="0" x2="0" y2="1">
+            <stop
+              offset="5%"
+              stopColor="var(--color-total)"
+              stopOpacity={0.25}
+            />
+            <stop
+              offset="95%"
+              stopColor="var(--color-total)"
+              stopOpacity={0.02}
+            />
+          </linearGradient>
+        </defs>
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="date"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+          minTickGap={32}
+          tickFormatter={label}
+        />
+        <YAxis
+          tickLine={false}
+          axisLine={false}
+          width={60}
+          tickFormatter={(value: number) => formatTokens(value)}
+        />
+        <ChartTooltip
+          cursor={false}
+          content={
+            <ChartTooltipContent
+              indicator="dot"
+              labelFormatter={(value) => label(String(value))}
+              formatter={(value) => (
+                <div className="flex w-full justify-between gap-4">
+                  <span className="text-muted-foreground">{t("Tokens")}</span>
+                  <span className="font-mono font-medium tabular-nums">
+                    {formatTokens(Number(value))}
+                  </span>
+                </div>
               )}
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="chart-dates" aria-hidden="true">
-        {series
-          .filter(
-            (_, i) =>
-              i === 0 ||
-              i === series.length - 1 ||
-              i % Math.ceil(series.length / 5) === 0,
-          )
-          .map((day) => (
-            <span key={day.date}>{formatDate(`${day.date}T12:00:00Z`)}</span>
-          ))}
-      </div>
-      <div className="chart-legend">
-        {PROVIDERS.map((provider) => (
-          <span key={provider}>
-            <i style={{ background: providerInfo[provider].color }} />
-            {providerInfo[provider].name}
-          </span>
-        ))}
-        <span className="chart-legend-note">
-          Entrada + saída · inclui cache
-        </span>
-      </div>
-    </div>
-  );
-}
-
-export function ProviderDonut({
-  values,
-  available,
-}: {
-  values: Record<Provider, number>;
-  available: Provider[];
-}) {
-  const total = PROVIDERS.reduce((sum, provider) => sum + values[provider], 0);
-  let position = 0;
-  const stops = PROVIDERS.map((provider) => {
-    const start = position;
-    position += total ? (values[provider] / total) * 100 : 0;
-    return `${providerInfo[provider].color} ${start}% ${position}%`;
-  });
-  return (
-    <div className="distribution">
-      <div
-        className="donut"
-        role="img"
-        aria-label={`Distribuição de ${formatNumber(total)} tokens por serviço`}
-        style={{
-          background: total
-            ? `conic-gradient(${stops.join(",")})`
-            : "var(--line)",
-        }}
-      >
-        <div>
-          <span>
-            {total
-              ? PROVIDERS.filter((provider) => values[provider] > 0).length
-              : "—"}
-          </span>
-          <small>serviços usados</small>
-        </div>
-      </div>
-      <div className="distribution-list">
-        {PROVIDERS.map((provider) => (
-          <div key={provider}>
-            <span>
-              <i style={{ background: providerInfo[provider].color }} />
-              {providerInfo[provider].name}
-            </span>
-            <b>
-              {total && available.includes(provider)
-                ? `${((values[provider] / total) * 100).toFixed(1).replace(".", ",")}%`
-                : "—"}
-            </b>
-          </div>
-        ))}
-      </div>
-    </div>
+            />
+          }
+        />
+        <Area
+          dataKey="total"
+          type="monotone"
+          fill="url(#fillTotal)"
+          stroke="var(--color-total)"
+          strokeWidth={1.5}
+          isAnimationActive={false}
+        />
+      </AreaChart>
+    </ChartContainer>
   );
 }

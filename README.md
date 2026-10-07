@@ -27,11 +27,11 @@ npm start
 ## Instalar pelo Homebrew
 
 Esta fórmula instala a versão de produção, registra um serviço do macOS e usa
-o perfil local para coletar os contadores. Como este repositório é privado, o
-Git e o SSH do GitHub precisam estar configurados na máquina:
+o perfil local para coletar os contadores. Código, fórmula e releases ficam
+neste mesmo repositório. Use a URL explícita porque o nome não começa com `homebrew-`:
 
 ```sh
-brew tap xenofonteicaro/tokenusage git@github.com:xenofonteicaro/tokenusage.git
+brew tap --custom-remote xenofonteicaro/tokenusage https://github.com/xenofonteicaro/tokenusage.git
 brew install --build-from-source xenofonteicaro/tokenusage/tokenusage
 tokenusage start
 ```
@@ -43,6 +43,20 @@ O serviço inicia novamente quando você entrar no macOS. Preferências, tarifas
 e logs importados ficam em `~/Library/Application Support/tokenusage`; o
 histórico das ferramentas continua nas pastas originais.
 
+O comando de tap acima também migra instalações que usavam o repositório antigo
+`homebrew-tokenusage`. Depois da migração, `brew update` e `brew upgrade tokenusage`
+consultam este repositório.
+
+O pacote público contém somente os arquivos necessários para construir o app,
+sem histórico Git, documentos internos, screenshots ou dados do perfil. O
+script `python3 scripts/package-homebrew.py --ref HEAD --out /tmp/tokenusage.tar.gz`
+gera esse pacote a partir de uma revisão Git e normaliza os metadados do arquivo.
+
+Em **Preferências → Geral → Idioma da interface**, escolha Português (PT-BR),
+English, Español, Italiano, Français ou 简体中文 (chinês simplificado), e salve.
+A escolha fica no armazenamento local e altera textos, números e datas da
+interface. Moedas, fuso de São Paulo e agrupamento do consumo permanecem iguais.
+
 ## Versão para terminal (TUI)
 
 Além da dashboard web, há uma versão para terminal com os mesmos números:
@@ -51,7 +65,6 @@ local diretamente, sem precisar do serviço web nem da porta 3000.
 
 ```sh
 npm run tui                          # a partir do repositório
-tokenusage tui                       # instalado pelo Homebrew
 tokenusage tui --days 7 --channel api
 tokenusage tui --once                # imprime a visão geral uma vez e sai
 ```
@@ -70,7 +83,9 @@ Requer um terminal de pelo menos 80×24. As opções `--days` (7, 30 ou 90) e
 
 Esta primeira fase é somente leitura: preferências, tarifas, importação de logs
 e exportação CSV continuam na dashboard web. Cores seguem `NO_COLOR`. O comando
-`npm run build:tui` gera o bundle único `dist/tui.mjs` usado pelo Homebrew.
+`npm run build:tui` gera o bundle único `dist/tui.mjs`; o subcomando
+`tokenusage tui` no Homebrew entra junto com o próximo release da fórmula.
+A interface da TUI está em português (PT-BR); os demais idiomas valem só para a web.
 
 ## Funcionalidades
 

@@ -8,7 +8,7 @@
 
 **Tech Stack:** Next.js 16 (App Router), React 19, Tailwind CSS v4, `next-themes`, `class-variance-authority`, `clsx`, `tailwind-merge`, `lucide-react`, `zod`, Node.js test runner (`tsx --test`), Playwright.
 
-**Spec:** [`docs/superpowers/specs/2026-10-07-fase1-custos-shadcn-design.md`](file:///Users/icaroxenofonte/Documents/tokenusage/docs/superpowers/specs/2026-10-07-fase1-custos-shadcn-design.md)
+**Spec:** [Design da fase 1](../specs/2026-10-07-fase1-custos-shadcn-design.md)
 
 ## Status da entrega (2026-10-07)
 

@@ -1,21 +1,17 @@
 class Tokenusage < Formula
   desc "Dashboard local de uso de tokens de ferramentas de IA"
   homepage "https://github.com/xenofonteicaro/tokenusage"
-  url "file://#{__dir__}/tokenusage-0.1.0.tar.gz"
-  version "0.1.0"
-  sha256 "ce75d5b9657b15622d28975b42eeb95c5ed54c237605310be56c5f90502dd4d8"
+  url "https://github.com/xenofonteicaro/tokenusage/releases/download/v0.2.0/tokenusage-0.2.0.tar.gz"
+  version "0.2.0"
+  sha256 "aaeca4e4d7931b631d3be78f45972a0fa1fa38c82ea08dd04d742d35254cc19c"
 
   depends_on "node"
 
-  def fetch
+  def install
     system "npm", "ci"
     system "npm", "run", "build"
-    system "npm", "run", "build:tui"
-  end
 
-  def install
     libexec.install ".next/standalone" => "app"
-    libexec.install "dist/tui.mjs"
     (libexec/"app/.next").install buildpath/".next/static" => "static"
     (libexec/"app/public").install buildpath/"public" if (buildpath/"public").directory?
 
@@ -57,10 +53,6 @@ class Tokenusage < Formula
         logs)
           exec tail -f "$(brew --prefix)/var/log/tokenusage.log"
           ;;
-        tui)
-          shift
-          exec "#{node}" "#{opt_libexec}/tui.mjs" "$@"
-          ;;
         help|--help|-h)
           cat <<'HELP'
       tokenusage start    Inicia o serviço local e abre a dashboard
@@ -68,7 +60,6 @@ class Tokenusage < Formula
       tokenusage restart  Reinicia o serviço
       tokenusage open     Abre a dashboard no navegador
       tokenusage logs     Acompanha o log local
-      tokenusage tui      Abre a dashboard no terminal (tokenusage tui --help)
       HELP
           ;;
         *)
@@ -96,16 +87,11 @@ class Tokenusage < Formula
       Para encerrar o serviço:
         tokenusage stop
 
-      Para ver os números no terminal, sem o serviço web:
-        tokenusage tui
-
-      A configuração do Homebrew requer acesso SSH ao repositório privado no GitHub.
+      Altere o idioma em Preferências → Geral → Idioma da interface.
     EOS
   end
 
   test do
     assert_match "tokenusage start", shell_output("#{bin}/tokenusage --help")
-    assert_match "tokenusage tui", shell_output("#{bin}/tokenusage --help")
-    assert_match "Uso: tokenusage tui", shell_output("#{bin}/tokenusage tui --help")
   end
 end

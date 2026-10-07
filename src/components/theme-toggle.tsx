@@ -1,12 +1,15 @@
 "use client";
+import { useI18n } from "./language-provider";
 
 import * as React from "react";
 import { useTheme } from "next-themes";
-import { Sun, Moon, Laptop } from "lucide-react";
+import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const emptySubscribe = () => () => {};
 
 export function ThemeToggle() {
+  const { t } = useI18n();
   const { theme, setTheme } = useTheme();
   const mounted = React.useSyncExternalStore(
     emptySubscribe,
@@ -14,57 +17,26 @@ export function ThemeToggle() {
     () => false,
   );
 
-  if (!mounted) {
-    return (
-      <div className="flex items-center gap-1 p-1 rounded-lg border border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] text-xs h-8 w-[98px]" />
-    );
-  }
-
   return (
-    <div
-      role="group"
-      aria-label="Selecionar tema"
-      className="flex items-center gap-0.5 p-0.5 rounded-lg border border-[var(--line)] bg-[var(--surface)] text-xs text-[var(--ink)]"
+    <ToggleGroup
+      variant="outline"
+      size="sm"
+      spacing={0}
+      aria-label={t("Selecionar tema")}
+      value={mounted && theme ? [theme] : []}
+      onValueChange={(value) => {
+        if (value[0]) setTheme(value[0]);
+      }}
     >
-      <button
-        type="button"
-        onClick={() => setTheme("light")}
-        aria-label="Tema claro"
-        aria-pressed={theme === "light"}
-        className={`p-1.5 rounded-md transition-colors flex items-center justify-center ${
-          theme === "light"
-            ? "bg-[var(--primary)] text-white shadow-xs font-semibold"
-            : "text-[var(--muted)] hover:text-[var(--ink)]"
-        }`}
-      >
-        <Sun className="h-3.5 w-3.5" />
-      </button>
-      <button
-        type="button"
-        onClick={() => setTheme("dark")}
-        aria-label="Tema escuro"
-        aria-pressed={theme === "dark"}
-        className={`p-1.5 rounded-md transition-colors flex items-center justify-center ${
-          theme === "dark"
-            ? "bg-[var(--primary)] text-white shadow-xs font-semibold"
-            : "text-[var(--muted)] hover:text-[var(--ink)]"
-        }`}
-      >
-        <Moon className="h-3.5 w-3.5" />
-      </button>
-      <button
-        type="button"
-        onClick={() => setTheme("system")}
-        aria-label="Tema do sistema"
-        aria-pressed={theme === "system"}
-        className={`p-1.5 rounded-md transition-colors flex items-center justify-center ${
-          theme === "system"
-            ? "bg-[var(--primary)] text-white shadow-xs font-semibold"
-            : "text-[var(--muted)] hover:text-[var(--ink)]"
-        }`}
-      >
-        <Laptop className="h-3.5 w-3.5" />
-      </button>
-    </div>
+      <ToggleGroupItem value="light" aria-label={t("Tema claro")}>
+        <SunIcon />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="dark" aria-label={t("Tema escuro")}>
+        <MoonIcon />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="system" aria-label={t("Tema do sistema")}>
+        <MonitorIcon />
+      </ToggleGroupItem>
+    </ToggleGroup>
   );
 }
