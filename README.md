@@ -31,7 +31,8 @@ o perfil local para coletar os contadores. Como este repositório é privado, o
 Git e o SSH do GitHub precisam estar configurados na máquina:
 
 ```sh
-brew install --build-from-source ./Formula/tokenusage.rb
+brew tap xenofonteicaro/tokenusage git@github.com:xenofonteicaro/tokenusage.git
+brew install --build-from-source xenofonteicaro/tokenusage/tokenusage
 tokenusage start
 ```
 
