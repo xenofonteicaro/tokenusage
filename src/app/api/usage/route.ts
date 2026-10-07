@@ -1,5 +1,6 @@
 import { collectLocal, HISTORY_DAYS } from "@/lib/collectors/local";
 import { compactEvents, totals } from "@/lib/analytics";
+import { upgradeLegacyLabels } from "@/lib/import-usage";
 import { readJson, readSettings } from "@/lib/local-store";
 import { isLocalRequest, privateHeaders } from "@/lib/local-security";
 import { PROVIDERS, type SourceStatus, type UsageEvent } from "@/lib/types";
@@ -16,7 +17,7 @@ export async function GET(request: Request) {
       readSettings(),
       readJson<UsageEvent[]>("api-usage.json"),
     ]);
-    const events = imported ?? [];
+    const events = upgradeLegacyLabels(imported ?? []);
     const sources: SourceStatus[] = PROVIDERS.map((provider) => {
       const matching = events.filter((row) => row.provider === provider);
       return {

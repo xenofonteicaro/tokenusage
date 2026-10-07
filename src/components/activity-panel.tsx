@@ -44,6 +44,7 @@ export function ActivityPanel({
 }) {
   const {
     t,
+    label,
     language,
     formatTokens,
     formatNumber,
@@ -56,11 +57,11 @@ export function ActivityPanel({
   const sessions = useMemo(
     () =>
       sessionGroups(events, pricingConfig).filter((row) =>
-        `${row.project} ${row.models.join(" ")} ${providerInfo[row.provider].name}`
+        `${label(row.project)} ${row.models.map(label).join(" ")} ${providerInfo[row.provider].name}`
           .toLocaleLowerCase(language)
           .includes(search.toLocaleLowerCase(language)),
       ),
-    [events, search, pricingConfig, language],
+    [events, search, pricingConfig, language, label],
   );
   return (
     <Card>
@@ -107,7 +108,9 @@ export function ActivityPanel({
                 const missing = row.records - covered;
                 return (
                   <TableRow key={row.id}>
-                    <TableCell className="font-medium">{row.project}</TableCell>
+                    <TableCell className="font-medium">
+                      {label(row.project)}
+                    </TableCell>
                     <TableCell>
                       <Badge variant="outline">
                         {providerInfo[row.provider].name}
@@ -115,9 +118,9 @@ export function ActivityPanel({
                     </TableCell>
                     <TableCell
                       className="max-w-56 truncate text-muted-foreground"
-                      title={row.models.join(", ")}
+                      title={row.models.map(label).join(", ")}
                     >
-                      {row.models.join(", ")}
+                      {row.models.map(label).join(", ")}
                     </TableCell>
                     <TableCell className="tabular-nums">
                       {formatDate(row.timestamp)}{" "}

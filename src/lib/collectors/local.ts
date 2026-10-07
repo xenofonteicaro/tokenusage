@@ -15,6 +15,8 @@ import {
 } from "./parsers";
 
 export const HISTORY_DAYS = 90;
+// Bump when parsed event fields change so cached files are parsed again.
+const CACHE_VERSION = 4;
 interface CachedFile {
   stamp: string;
   events: UsageEvent[];
@@ -271,7 +273,9 @@ export async function collectLocal(): Promise<Collection> {
   currentScan = (async () => {
     const saved = await readJson<FileCache>("collector-cache.json");
     const cache: FileCache =
-      saved?.version === 3 ? saved : { version: 3, files: {} };
+      saved?.version === CACHE_VERSION
+        ? saved
+        : { version: CACHE_VERSION, files: {} };
     const cutoff = Date.now() - (HISTORY_DAYS + 1) * 86400000;
     const codex = homePath("CODEX_HOME", ".codex");
     const roots: Record<Provider, string[]> = {
@@ -295,7 +299,7 @@ export async function collectLocal(): Promise<Collection> {
       ),
     );
     await writeJson("collector-cache.json", {
-      version: 3,
+      version: CACHE_VERSION,
       files: Object.assign({}, ...results.map((result) => result.cache)),
     });
     const collection = {

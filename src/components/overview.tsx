@@ -69,8 +69,15 @@ export function Overview({
   onFilter: (filters: Filters) => void;
   navigate: (view: "activity" | "settings" | "sources") => void;
 }) {
-  const { t, formatDecimal, formatTokens, formatNumber, formatUSD, formatBRL } =
-    useI18n();
+  const {
+    t,
+    label,
+    formatDecimal,
+    formatTokens,
+    formatNumber,
+    formatUSD,
+    formatBRL,
+  } = useI18n();
   const percent = (value: number, digits = 1) =>
     `${formatDecimal(value * 100, digits)}%`;
   const pricingConfig = {
@@ -455,8 +462,11 @@ export function Overview({
                     )}
                   >
                     <span className="flex items-baseline justify-between gap-2 text-sm">
-                      <span className="truncate font-medium" title={row.name}>
-                        {row.name}
+                      <span
+                        className="truncate font-medium"
+                        title={label(row.name)}
+                      >
+                        {label(row.name)}
                       </span>
                       <span className="tabular-nums">
                         {formatTokens(row.tokens)}
@@ -464,7 +474,7 @@ export function Overview({
                     </span>
                     <Progress
                       value={share * 100}
-                      aria-label={`${row.name}: ${percent(share, 0)}`}
+                      aria-label={`${label(row.name)}: ${percent(share, 0)}`}
                     />
                   </button>
                 );
@@ -571,7 +581,7 @@ export function Overview({
                 <AlertDescription>
                   {uncoveredModels
                     .slice(0, 3)
-                    .map((row) => row.name)
+                    .map((row) => label(row.name))
                     .join(", ")}
                   {uncoveredModels.length > 3 &&
                     t("and {count} more", {
@@ -612,9 +622,9 @@ export function Overview({
                     <TableRow key={`${row.provider}:${row.name}`}>
                       <TableCell
                         className="max-w-64 truncate font-medium"
-                        title={row.name}
+                        title={label(row.name)}
                       >
-                        {row.name}
+                        {label(row.name)}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
                         <Badge variant="outline">

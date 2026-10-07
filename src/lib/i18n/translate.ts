@@ -2,6 +2,13 @@ import { messages } from "./messages";
 import { resolveLanguage } from "./languages";
 import * as analytics from "../analytics";
 
+const FALLBACK_LABELS = new Set([
+  "No project",
+  "Model not provided",
+  "Imported API",
+]);
+const GENERATED_PROJECT = /^Project (\w{8})$/;
+
 export function createI18n(value: unknown) {
   const language = resolveLanguage(value);
   const dictionary: Readonly<Record<string, string>> = messages[language];
@@ -39,9 +46,17 @@ export function createI18n(value: unknown) {
       Object.hasOwn(values, name) ? String(values[name]) : token,
     );
   };
+  // Translate only the reserved fallback labels stored in usage rows, never
+  // user-provided project or model names.
+  const label = (value: string) => {
+    if (FALLBACK_LABELS.has(value)) return t(value);
+    const generated = GENERATED_PROJECT.exec(value);
+    return generated ? t("Project {hash}", { hash: generated[1] }) : value;
+  };
   return {
     language,
     t,
+    label,
     formatTokens: (value: number) => analytics.formatTokens(value, language),
     formatNumber: (value: number) => analytics.formatNumber(value, language),
     formatUSD: (value: number) => analytics.formatUSD(value, language),

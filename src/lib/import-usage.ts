@@ -1,7 +1,10 @@
 import { z } from "zod";
 import { PROVIDERS, type UsageEvent } from "./types";
 import { count, date, event, hash, object } from "./collectors/normalize";
-import { LEGACY_IMPORTED_API_PROJECT } from "./i18n/legacy-identifiers";
+import {
+  currentFallbackLabel,
+  LEGACY_IMPORTED_API_PROJECT,
+} from "./i18n/legacy-identifiers";
 
 const envelope = z.object({
   provider: z.enum(PROVIDERS),
@@ -144,6 +147,18 @@ export function parseImport(text: string): UsageEvent[] {
     unique.set(normalized.id, normalized);
   });
   return [...unique.values()];
+}
+
+// Rows saved by earlier releases carry Portuguese fallback labels. Event IDs are
+// unchanged, so relabeling never duplicates a record.
+export function upgradeLegacyLabels(rows: UsageEvent[]): UsageEvent[] {
+  return rows.map((row) => {
+    const project = currentFallbackLabel(row.project);
+    const model = currentFallbackLabel(row.model);
+    return project === row.project && model === row.model
+      ? row
+      : { ...row, project, model };
+  });
 }
 
 export function mergeImports(

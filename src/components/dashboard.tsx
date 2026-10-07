@@ -80,7 +80,7 @@ export default function Dashboard() {
 }
 
 function DashboardContent() {
-  const { t, setLanguage, formatTime } = useI18n();
+  const { t, label, setLanguage, formatTime } = useI18n();
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null),
     [busy, setBusy] = useState(true),
     [error, setError] = useState("");
@@ -248,7 +248,7 @@ function DashboardContent() {
           {error && (
             <Alert variant="destructive">
               <TriangleAlertIcon />
-              <AlertTitle>{error}</AlertTitle>
+              <AlertTitle>{t(error)}</AlertTitle>
               <AlertDescription>
                 {snapshot
                   ? t(
@@ -331,7 +331,7 @@ function DashboardContent() {
                         </NativeSelectOption>
                         {projects.map((project) => (
                           <NativeSelectOption key={project} value={project}>
-                            {project}
+                            {label(project)}
                           </NativeSelectOption>
                         ))}
                       </NativeSelect>
