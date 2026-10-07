@@ -2,6 +2,7 @@
 
 # dependencies
 .local-data/
+.superpowers/
 test-results/
 playwright-report/
 artifacts/
