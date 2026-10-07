@@ -1,18 +1,16 @@
 class Tokenusage < Formula
   desc "Dashboard local de uso de tokens de ferramentas de IA"
-  homepage "https://github.com/xenofonteicaro/tokenusage"
-  url "file://#{__dir__}/tokenusage-0.1.0.tar.gz"
-  version "0.1.0"
-  sha256 "60ca4c02d060d747c52089a8f92fe41500d0632d7d09c332b82d36f6e118d405"
+  homepage "https://github.com/xenofonteicaro/homebrew-tokenusage"
+  url "https://github.com/xenofonteicaro/homebrew-tokenusage/releases/download/v0.2.0/tokenusage-0.2.0.tar.gz"
+  version "0.2.0"
+  sha256 "dba7ef4137c0c01368c383c155980cbc5414062f92f486b710f9ca4d785405a9"
 
   depends_on "node"
 
-  def fetch
+  def install
     system "npm", "ci"
     system "npm", "run", "build"
-  end
 
-  def install
     libexec.install ".next/standalone" => "app"
     (libexec/"app/.next").install buildpath/".next/static" => "static"
     (libexec/"app/public").install buildpath/"public" if (buildpath/"public").directory?
@@ -89,7 +87,7 @@ class Tokenusage < Formula
       Para encerrar o serviço:
         tokenusage stop
 
-      A configuração do Homebrew requer acesso SSH ao repositório privado no GitHub.
+      Altere o idioma em Preferências → Geral → Idioma da interface.
     EOS
   end
 
