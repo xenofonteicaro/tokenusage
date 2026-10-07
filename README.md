@@ -43,6 +43,35 @@ O serviço inicia novamente quando você entrar no macOS. Preferências, tarifas
 e logs importados ficam em `~/Library/Application Support/tokenusage`; o
 histórico das ferramentas continua nas pastas originais.
 
+## Versão para terminal (TUI)
+
+Além da dashboard web, há uma versão para terminal com os mesmos números:
+visão geral, atividade pesquisável e diagnóstico das fontes. Ela lê o histórico
+local diretamente, sem precisar do serviço web nem da porta 3000.
+
+```sh
+npm run tui                          # a partir do repositório
+tokenusage tui                       # instalado pelo Homebrew
+tokenusage tui --days 7 --channel api
+tokenusage tui --once                # imprime a visão geral uma vez e sai
+```
+
+Requer um terminal de pelo menos 80×24. As opções `--days` (7, 30 ou 90) e
+`--channel` (`tool` ou `api`) definem os filtros iniciais.
+
+| Tecla                 | Ação                                                            |
+| --------------------- | --------------------------------------------------------------- |
+| `1` `2` `3` ou `Tab`  | Visão geral, Atividade e Fontes                                 |
+| `c` `d` `s` `p`       | Canal, período, serviço e projeto                               |
+| `/` e `g`             | Busca e agrupamento na Atividade (sessão, modelo, projeto, dia) |
+| `↑` `↓` `PgUp` `PgDn` | Rolagem das listas                                              |
+| `r`                   | Atualiza agora (automático a cada 60 s)                         |
+| `?` e `q`             | Ajuda e sair                                                    |
+
+Esta primeira fase é somente leitura: preferências, tarifas, importação de logs
+e exportação CSV continuam na dashboard web. Cores seguem `NO_COLOR`. O comando
+`npm run build:tui` gera o bundle único `dist/tui.mjs` usado pelo Homebrew.
+
 ## Funcionalidades
 
 | Recurso                       | O que você pode acompanhar                                                                                                 |
