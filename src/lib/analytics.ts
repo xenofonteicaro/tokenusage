@@ -1,3 +1,5 @@
+import { calculateEventCost } from "./pricing/calculator";
+import type { PricingConfig } from "./pricing/types";
 import {
   PROVIDERS,
   type Channel,
@@ -45,7 +47,30 @@ export function selectEvents(
       dayKey(row.timestamp) <= today,
   );
 }
-export function totals(events: UsageEvent[]) {
+
+export function totals(events: UsageEvent[], pricingConfig?: PricingConfig) {
+  let estimatedCostUSD = 0;
+  let estimatedCostBRL = 0;
+  let realCostUSD = 0;
+  let realCostBRL = 0;
+  let cacheSavingsUSD = 0;
+  let cacheSavingsBRL = 0;
+  let estimatedRecords = 0;
+
+  for (const row of events) {
+    const cost = calculateEventCost(row, pricingConfig);
+    if (cost.isEstimated && cost.costUSD !== null) {
+      estimatedCostUSD += cost.costUSD;
+      estimatedCostBRL += cost.costBRL ?? 0;
+      estimatedRecords += row.records ?? 1;
+    } else if (cost.costUSD !== null) {
+      realCostUSD += cost.costUSD;
+      realCostBRL += cost.costBRL ?? 0;
+    }
+    cacheSavingsUSD += cost.cacheSavingsUSD;
+    cacheSavingsBRL += cost.cacheSavingsBRL;
+  }
+
   const sum = events.reduce(
     (result, row) => ({
       input: result.input + row.inputTokens,
@@ -75,6 +100,15 @@ export function totals(events: UsageEvent[]) {
     ...sum,
     cacheRate: sum.input ? sum.cache / sum.input : 0,
     sessions: new Set(events.map((row) => row.sessionId)).size,
+    realCostUSD: Number(realCostUSD.toFixed(4)),
+    realCostBRL: Number(realCostBRL.toFixed(4)),
+    estimatedCostUSD: Number(estimatedCostUSD.toFixed(4)),
+    estimatedCostBRL: Number(estimatedCostBRL.toFixed(4)),
+    totalCostUSD: Number((realCostUSD + estimatedCostUSD).toFixed(4)),
+    totalCostBRL: Number((realCostBRL + estimatedCostBRL).toFixed(4)),
+    cacheSavingsUSD: Number(cacheSavingsUSD.toFixed(4)),
+    cacheSavingsBRL: Number(cacheSavingsBRL.toFixed(4)),
+    estimatedRecords,
   };
 }
 export function dailySeries(
@@ -101,7 +135,11 @@ export function dailySeries(
     total: PROVIDERS.reduce((sum, provider) => sum + values[provider], 0),
   }));
 }
-export function groupEvents(events: UsageEvent[], by: "model" | "project") {
+export function groupEvents(
+  events: UsageEvent[],
+  by: "model" | "project",
+  pricingConfig?: PricingConfig,
+) {
   const groups = new Map<string, UsageEvent[]>();
   for (const row of events) {
     const key = by === "model" ? `${row.provider}:${row.model}` : row.project;
@@ -114,11 +152,14 @@ export function groupEvents(events: UsageEvent[], by: "model" | "project") {
       name: group[0][by],
       provider: group[0].provider,
       providers: [...new Set(group.map((row) => row.provider))],
-      ...totals(group),
+      ...totals(group, pricingConfig),
     }))
     .sort((a, b) => b.tokens - a.tokens);
 }
-export function sessionGroups(events: UsageEvent[]) {
+export function sessionGroups(
+  events: UsageEvent[],
+  pricingConfig?: PricingConfig,
+) {
   const groups = new Map<string, UsageEvent[]>();
   for (const row of events) {
     const group = groups.get(row.sessionId) ?? [];
@@ -135,7 +176,7 @@ export function sessionGroups(events: UsageEvent[]) {
         .map((row) => row.timestamp)
         .sort()
         .at(-1)!,
-      ...totals(group),
+      ...totals(group, pricingConfig),
     }))
     .sort((a, b) => b.timestamp.localeCompare(a.timestamp));
 }
