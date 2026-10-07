@@ -1,4 +1,5 @@
 "use client";
+import { useI18n } from "./language-provider";
 import { useState } from "react";
 import {
   CheckIcon,
@@ -8,7 +9,6 @@ import {
   Trash2Icon,
 } from "lucide-react";
 import { PROVIDERS, providerInfo, type Settings } from "@/lib/types";
-import { formatBRL } from "@/lib/analytics";
 import type { ModelPrice } from "@/lib/pricing/types";
 import { DEFAULT_MODEL_PRICES } from "@/lib/pricing/defaults";
 import { Badge } from "@/components/ui/badge";
@@ -29,6 +29,11 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/ui/native-select";
+import { LANGUAGES, type Language } from "@/lib/i18n/languages";
 import { Separator } from "@/components/ui/separator";
 import {
   Table,
@@ -52,6 +57,7 @@ export function SettingsPanel({
   settings: Settings;
   onSave: (settings: Settings) => void;
 }) {
+  const { t, formatBRL } = useI18n();
   const [values, setValues] = useState(settings),
     [state, setState] = useState<"idle" | "saving" | "saved">("idle"),
     [error, setError] = useState("");
@@ -78,7 +84,9 @@ export function SettingsPanel({
     const model = modelName.trim().toLowerCase();
     if (!model || Object.hasOwn(prices, model)) {
       setError(
-        model ? "Este modelo já está na tabela." : "Informe o nome do modelo.",
+        model
+          ? t("Este modelo já está na tabela.")
+          : t("Informe o nome do modelo."),
       );
       return;
     }
@@ -113,7 +121,7 @@ export function SettingsPanel({
       setState("saved");
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : "Não foi possível salvar.",
+        error instanceof Error ? error.message : t("Não foi possível salvar."),
       );
       setState("idle");
     }
@@ -124,23 +132,53 @@ export function SettingsPanel({
         <Card>
           <CardHeader>
             <CardTitle role="heading" aria-level={2}>
-              Preferências de acompanhamento
+              {t("Preferências de acompanhamento")}
             </CardTitle>
             <CardDescription>
-              Mensalidades, meta de tokens, cotação e tarifas por modelo.
+              {t("Mensalidades, meta de tokens, cotação e tarifas por modelo.")}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="general">
-              <TabsList aria-label="Preferências" activateOnFocus>
-                <TabsTrigger value="general">Geral</TabsTrigger>
-                <TabsTrigger value="pricing">Tabela de preços</TabsTrigger>
+              <TabsList aria-label={t("Preferências")} activateOnFocus>
+                <TabsTrigger value="general">{t("Geral")}</TabsTrigger>
+                <TabsTrigger value="pricing">
+                  {t("Tabela de preços")}
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="general" className="pt-4">
                 <FieldGroup>
+                  <Field className="language-field">
+                    <FieldLabel htmlFor="interface-language">
+                      {t("Idioma da interface")}
+                    </FieldLabel>
+                    <NativeSelect
+                      id="interface-language"
+                      aria-describedby="language-hint"
+                      value={values.language ?? "pt-BR"}
+                      onChange={(event) => {
+                        setState("idle");
+                        setValues({
+                          ...values,
+                          language: event.target.value as Language,
+                        });
+                      }}
+                    >
+                      {LANGUAGES.map(({ code, name }) => (
+                        <NativeSelectOption key={code} value={code} lang={code}>
+                          {name}
+                        </NativeSelectOption>
+                      ))}
+                    </NativeSelect>
+                    <FieldDescription id="language-hint">
+                      {t("A escolha será aplicada ao salvar as preferências.")}
+                    </FieldDescription>
+                  </Field>
+                  <Separator />
                   <p className="text-sm text-muted-foreground">
-                    Informe o que você paga nas assinaturas. Esses valores ficam
-                    separados dos custos registrados pelas ferramentas.
+                    {t(
+                      "Informe o que você paga nas assinaturas. Esses valores ficam separados dos custos registrados pelas ferramentas.",
+                    )}
                   </p>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {PROVIDERS.map((provider) => (
@@ -148,7 +186,7 @@ export function SettingsPanel({
                         <FieldLabel htmlFor={`subscription-${provider}`}>
                           {providerInfo[provider].name}
                           <span className="font-normal text-muted-foreground">
-                            R$ / mês
+                            {t("R$ / mês")}
                           </span>
                         </FieldLabel>
                         <Input
@@ -158,7 +196,7 @@ export function SettingsPanel({
                           max="1000000"
                           step="0.01"
                           inputMode="decimal"
-                          placeholder="Não informado"
+                          placeholder={t("Não informado")}
                           value={values.subscriptions[provider] ?? ""}
                           onChange={(event) => {
                             setState("idle");
@@ -179,7 +217,7 @@ export function SettingsPanel({
                   </div>
                   <div className="flex items-baseline justify-between text-sm">
                     <span className="text-muted-foreground">
-                      Total mensal informado
+                      {t("Total mensal informado")}
                     </span>
                     <span className="font-medium tabular-nums">
                       {formatBRL(monthly)}
@@ -188,7 +226,7 @@ export function SettingsPanel({
                   <Separator />
                   <Field>
                     <FieldLabel htmlFor="monthly-goal">
-                      Meta mensal de tokens
+                      {t("Meta mensal de tokens")}
                     </FieldLabel>
                     <Input
                       id="monthly-goal"
@@ -197,7 +235,7 @@ export function SettingsPanel({
                       max="1000000000000"
                       step="1"
                       inputMode="numeric"
-                      placeholder="Ex.: 100000000"
+                      placeholder={t("Ex.: 100000000")}
                       value={values.monthlyTokenGoal ?? ""}
                       onChange={(event) => {
                         setState("idle");
@@ -211,13 +249,14 @@ export function SettingsPanel({
                       }}
                     />
                     <FieldDescription>
-                      Opcional. Acompanhamento de consumo, sem bloquear suas
-                      ferramentas.
+                      {t(
+                        "Opcional. Acompanhamento de consumo, sem bloquear suas ferramentas.",
+                      )}
                     </FieldDescription>
                   </Field>
                   <Field>
                     <FieldLabel htmlFor="usd-brl">
-                      Cotação do Dólar (USD / BRL)
+                      {t("Cotação do Dólar (USD / BRL)")}
                     </FieldLabel>
                     <Input
                       id="usd-brl"
@@ -240,8 +279,9 @@ export function SettingsPanel({
                       }}
                     />
                     <FieldDescription>
-                      Usada para estimar custos e economia em reais. Padrão: R$
-                      5,75.
+                      {t(
+                        "Usada para estimar custos e economia em reais. Padrão: R$ 5,75.",
+                      )}
                     </FieldDescription>
                   </Field>
                 </FieldGroup>
@@ -250,40 +290,42 @@ export function SettingsPanel({
                 <FieldGroup>
                   <div className="flex flex-col gap-1">
                     <p className="text-sm font-medium">
-                      Tabela de Preços por Modelo (USD por 1M tokens)
+                      {t("Tabela de Preços por Modelo (USD por 1M tokens)")}
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      Preços de referência históricos, sem atualização
-                      automática. Personalize para estimar ferramentas sem custo
-                      informado.
+                      {t(
+                        "Preços de referência históricos, sem atualização automática. Personalize para estimar ferramentas sem custo informado.",
+                      )}
                     </p>
                   </div>
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
                     <Field className="sm:flex-1">
                       <FieldLabel htmlFor="model-name">
-                        Nome do modelo
+                        {t("Nome do modelo")}
                       </FieldLabel>
                       <Input
                         id="model-name"
                         value={modelName}
                         maxLength={100}
-                        placeholder="Ex.: meu-modelo"
+                        placeholder={t("Ex.: meu-modelo")}
                         onChange={(event) => setModelName(event.target.value)}
                       />
                     </Field>
                     <Button variant="outline" type="button" onClick={addModel}>
-                      Adicionar modelo
+                      {t("Adicionar modelo")}
                     </Button>
                   </div>
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Modelo</TableHead>
-                        <TableHead>Entrada ($)</TableHead>
-                        <TableHead>Saída ($)</TableHead>
-                        <TableHead>Cache ($)</TableHead>
+                        <TableHead>{t("Modelo")}</TableHead>
+                        <TableHead>{t("Entrada ($)")}</TableHead>
+                        <TableHead>{t("Saída ($)")}</TableHead>
+                        <TableHead>{t("Cache ($)")}</TableHead>
                         {hasCustom && (
-                          <TableHead className="text-right">Ações</TableHead>
+                          <TableHead className="text-right">
+                            {t("Ações")}
+                          </TableHead>
                         )}
                       </TableRow>
                     </TableHeader>
@@ -294,15 +336,17 @@ export function SettingsPanel({
                             <span className="inline-flex items-center gap-2">
                               {model}
                               {values.customPricing?.[model] && (
-                                <Badge variant="secondary">Personalizado</Badge>
+                                <Badge variant="secondary">
+                                  {t("Personalizado")}
+                                </Badge>
                               )}
                             </span>
                           </TableCell>
                           {(
                             [
-                              ["inputPer1M", "Entrada"],
-                              ["outputPer1M", "Saída"],
-                              ["cacheReadPer1M", "Cache"],
+                              ["inputPer1M", t("Entrada")],
+                              ["outputPer1M", t("Saída")],
+                              ["cacheReadPer1M", t("Cache")],
                             ] as const
                           ).map(([field, label]) => (
                             <TableCell key={field}>
@@ -314,7 +358,10 @@ export function SettingsPanel({
                                 step="any"
                                 required
                                 inputMode="decimal"
-                                aria-label={`${label} de ${model}`}
+                                aria-label={t("{label} de {model}", {
+                                  label: t(label),
+                                  model,
+                                })}
                                 value={price[field]}
                                 onChange={(event) =>
                                   updatePrice(
@@ -336,7 +383,12 @@ export function SettingsPanel({
                                         type="button"
                                         variant="ghost"
                                         size="icon-sm"
-                                        aria-label={`${DEFAULT_MODEL_PRICES[model] ? "Restaurar padrão" : "Remover modelo"} de ${model}`}
+                                        aria-label={t("{label} de {model}", {
+                                          label: DEFAULT_MODEL_PRICES[model]
+                                            ? t("Restaurar padrão")
+                                            : t("Remover modelo"),
+                                          model,
+                                        })}
                                         onClick={() => removePrice(model)}
                                       />
                                     }
@@ -349,8 +401,8 @@ export function SettingsPanel({
                                   </TooltipTrigger>
                                   <TooltipContent>
                                     {DEFAULT_MODEL_PRICES[model]
-                                      ? "Restaurar padrão"
-                                      : "Remover modelo"}
+                                      ? t("Restaurar padrão")
+                                      : t("Remover modelo")}
                                   </TooltipContent>
                                 </Tooltip>
                               )}
@@ -372,36 +424,38 @@ export function SettingsPanel({
                 <SaveIcon data-icon="inline-start" />
               )}
               {state === "saving"
-                ? "Salvando…"
+                ? t("Salvando…")
                 : state === "saved"
-                  ? "Preferências salvas"
-                  : "Salvar preferências"}
+                  ? t("Preferências salvas")
+                  : t("Salvar preferências")}
             </Button>
-            {error && <FieldError role="alert">{error}</FieldError>}
+            {error && <FieldError role="alert">{t(error)}</FieldError>}
           </CardFooter>
         </Card>
       </form>
       <Card>
         <CardHeader>
           <CardTitle role="heading" aria-level={2}>
-            Seu histórico fica aqui
+            {t("Seu histórico fica aqui")}
           </CardTitle>
-          <CardDescription>Execução local, sem login.</CardDescription>
+          <CardDescription>{t("Execução local, sem login.")}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-3 text-sm text-muted-foreground">
           <p>
-            Os coletores leem contadores de tokens e metadados de sessão. O
-            conteúdo das conversas não é enviado ao navegador.
+            {t(
+              "Os coletores leem contadores de tokens e metadados de sessão. O conteúdo das conversas não é enviado ao navegador.",
+            )}
           </p>
           <p>
-            Preferências e métricas são guardadas localmente neste computador. A
-            dashboard não usa cookies de login nem chaves das suas ferramentas.
+            {t(
+              "Preferências e métricas são guardadas localmente neste computador. A dashboard não usa cookies de login nem chaves das suas ferramentas.",
+            )}
           </p>
         </CardContent>
         <CardFooter>
           <Badge variant="outline">
             <ShieldCheckIcon data-icon="inline-start" />
-            Execução local
+            {t("Execução local")}
           </Badge>
         </CardFooter>
       </Card>

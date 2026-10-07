@@ -194,8 +194,8 @@ export function previousChange(
   const current = totals(selectEvents(events, filters, now)).tokens;
   return previous ? (current - previous) / previous : null;
 }
-export function formatTokens(value: number): string {
-  return new Intl.NumberFormat("pt-BR", {
+export function formatTokens(value: number, locale = "pt-BR"): string {
+  return new Intl.NumberFormat(locale, {
     notation: "compact",
     maximumFractionDigits: 1,
   }).format(value);
@@ -240,31 +240,31 @@ export function compactEvents(events: UsageEvent[]): UsageEvent[] {
   }
   return [...groups.values()];
 }
-export function formatNumber(value: number): string {
-  return new Intl.NumberFormat("pt-BR").format(value);
+export function formatNumber(value: number, locale = "pt-BR"): string {
+  return new Intl.NumberFormat(locale).format(value);
 }
-export function formatUSD(value: number): string {
-  return new Intl.NumberFormat("pt-BR", {
+export function formatUSD(value: number, locale = "pt-BR"): string {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: "USD",
     maximumFractionDigits: 2,
   }).format(value);
 }
-export function formatBRL(value: number): string {
-  return new Intl.NumberFormat("pt-BR", {
+export function formatBRL(value: number, locale = "pt-BR"): string {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: "BRL",
   }).format(value);
 }
-export function formatDate(value: string): string {
-  return new Intl.DateTimeFormat("pt-BR", {
+export function formatDate(value: string, locale = "pt-BR"): string {
+  return new Intl.DateTimeFormat(locale, {
     timeZone: TIMEZONE,
     day: "2-digit",
     month: "short",
   }).format(new Date(value));
 }
-export function formatTime(value: string): string {
-  return new Intl.DateTimeFormat("pt-BR", {
+export function formatTime(value: string, locale = "pt-BR"): string {
+  return new Intl.DateTimeFormat(locale, {
     timeZone: TIMEZONE,
     hour: "2-digit",
     minute: "2-digit",

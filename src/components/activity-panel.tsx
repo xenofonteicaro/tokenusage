@@ -1,14 +1,8 @@
 "use client";
+import { useI18n } from "./language-provider";
 import { useMemo, useState } from "react";
 import { ChevronDownIcon, SearchIcon } from "lucide-react";
-import {
-  formatDate,
-  formatNumber,
-  formatTime,
-  formatTokens,
-  formatUSD,
-  sessionGroups,
-} from "@/lib/analytics";
+import { sessionGroups } from "@/lib/analytics";
 import { providerInfo, type Channel, type UsageEvent } from "@/lib/types";
 import type { PricingConfig } from "@/lib/pricing/types";
 import { Badge } from "@/components/ui/badge";
@@ -48,35 +42,45 @@ export function ActivityPanel({
   channel: Channel;
   pricingConfig?: PricingConfig;
 }) {
+  const {
+    t,
+    language,
+    formatTokens,
+    formatNumber,
+    formatUSD,
+    formatDate,
+    formatTime,
+  } = useI18n();
   const [search, setSearch] = useState(""),
     [limit, setLimit] = useState(20);
   const sessions = useMemo(
     () =>
       sessionGroups(events, pricingConfig).filter((row) =>
         `${row.project} ${row.models.join(" ")} ${providerInfo[row.provider].name}`
-          .toLocaleLowerCase("pt-BR")
-          .includes(search.toLocaleLowerCase("pt-BR")),
+          .toLocaleLowerCase(language)
+          .includes(search.toLocaleLowerCase(language)),
       ),
-    [events, search, pricingConfig],
+    [events, search, pricingConfig, language],
   );
   return (
     <Card>
       <CardHeader>
         <CardTitle>
           {channel === "tool"
-            ? "Histórico de sessões"
-            : "Histórico de chamadas"}
+            ? t("Histórico de sessões")
+            : t("Histórico de chamadas")}
         </CardTitle>
         <CardDescription>
           {formatNumber(sessions.length)}{" "}
-          {channel === "tool" ? "sessões" : "chamadas"} no período selecionado
+          {channel === "tool" ? t("sessões") : t("chamadas")}{" "}
+          {t("no período selecionado")}
         </CardDescription>
         <CardAction>
           <Input
             type="search"
             className="w-48 sm:w-64"
-            aria-label="Buscar atividade"
-            placeholder="Buscar projeto ou modelo"
+            aria-label={t("Buscar atividade")}
+            placeholder={t("Buscar projeto ou modelo")}
             value={search}
             onChange={(event) => {
               setSearch(event.target.value);
@@ -90,13 +94,13 @@ export function ActivityPanel({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Projeto</TableHead>
-                <TableHead>Serviço</TableHead>
-                <TableHead>Modelos</TableHead>
-                <TableHead>Última atividade</TableHead>
-                <TableHead className="text-right">Tokens</TableHead>
-                <TableHead className="text-right">Cache</TableHead>
-                <TableHead className="text-right">Custo</TableHead>
+                <TableHead>{t("Projeto")}</TableHead>
+                <TableHead>{t("Serviço")}</TableHead>
+                <TableHead>{t("Modelos")}</TableHead>
+                <TableHead>{t("Última atividade")}</TableHead>
+                <TableHead className="text-right">{t("Tokens")}</TableHead>
+                <TableHead className="text-right">{t("Cache")}</TableHead>
+                <TableHead className="text-right">{t("Custo")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -136,9 +140,9 @@ export function ActivityPanel({
                           <Badge variant="secondary">
                             {row.estimatedRecords
                               ? row.costsKnown
-                                ? "Misto"
-                                : "Estimado"
-                              : "Real"}
+                                ? t("Misto")
+                                : t("Estimado")
+                              : t("Real")}
                           </Badge>
                         </div>
                       ) : (
@@ -146,7 +150,7 @@ export function ActivityPanel({
                       )}
                       {missing > 0 && (
                         <div className="text-xs text-muted-foreground">
-                          {formatNumber(missing)} sem estimativa
+                          {formatNumber(missing)} {t("sem estimativa")}
                         </div>
                       )}
                     </TableCell>
@@ -162,10 +166,10 @@ export function ActivityPanel({
                 <SearchIcon />
               </EmptyMedia>
               <EmptyTitle role="heading" aria-level={3}>
-                Nenhum registro encontrado
+                {t("Nenhum registro encontrado")}
               </EmptyTitle>
               <EmptyDescription>
-                Experimente outro período, serviço ou busca.
+                {t("Experimente outro período, serviço ou busca.")}
               </EmptyDescription>
             </EmptyHeader>
           </Empty>
@@ -174,7 +178,7 @@ export function ActivityPanel({
       {sessions.length > limit && (
         <CardFooter className="justify-center">
           <Button variant="ghost" onClick={() => setLimit(limit + 20)}>
-            Mostrar mais 20
+            {t("Mostrar mais 20")}
             <ChevronDownIcon data-icon="inline-end" />
           </Button>
         </CardFooter>
