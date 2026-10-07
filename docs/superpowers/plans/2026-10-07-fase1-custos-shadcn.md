@@ -31,6 +31,7 @@
 ### Task 1: Setup do Tailwind CSS v4, Utilitários Shadcn e next-themes
 
 **Files:**
+
 - Modify: `package.json`
 - Modify: `src/app/globals.css`
 - Create: `src/lib/utils.ts`
@@ -39,12 +40,14 @@
 - Modify: `src/app/layout.tsx`
 
 **Interfaces:**
+
 - Produces: `cn(...inputs: ClassValue[]): string` em `src/lib/utils.ts`
 - Produces: `<ThemeProvider>` e `<ThemeToggle>` para troca de tema Dark/Light/System
 
 - [ ] **Step 1: Instalar dependências necessárias**
 
 Execute:
+
 ```sh
 npm install tailwindcss @tailwindcss/postcss next-themes clsx tailwind-merge class-variance-authority
 ```
@@ -83,6 +86,7 @@ git commit -m "feat(ui): setup tailwind v4, next-themes and shadcn utils"
 ### Task 2: Componentes Base do Shadcn UI
 
 **Files:**
+
 - Create: `src/components/ui/button.tsx`
 - Create: `src/components/ui/card.tsx`
 - Create: `src/components/ui/badge.tsx`
@@ -91,6 +95,7 @@ git commit -m "feat(ui): setup tailwind v4, next-themes and shadcn utils"
 - Create: `src/components/ui/tabs.tsx`
 
 **Interfaces:**
+
 - Produces: Componentes atômicos com variantes CVA, acessibilidade e suporte completo aos tokens de tema Dark/Light.
 
 - [ ] **Step 1: Criar `src/components/ui/button.tsx`**
@@ -130,12 +135,14 @@ git commit -m "feat(ui): add core shadcn primitives (button, card, badge, input,
 ### Task 3: Motor de Precificação, Fallbacks e Economia de Cache
 
 **Files:**
+
 - Create: `src/lib/pricing/types.ts`
 - Create: `src/lib/pricing/defaults.ts`
 - Create: `src/lib/pricing/calculator.ts`
 - Create: `tests/pricing.test.ts`
 
 **Interfaces:**
+
 - Produces: `findModelPrice(model: string, customPrices?: Record<string, ModelPrice>): ModelPrice | null`
 - Produces: `calculateEventCost(event: NormalizedEvent, pricing: PricingConfig): CalculatedEventCost`
 - Produces: `calculateCacheSavings(events: NormalizedEvent[], pricing: PricingConfig): CacheSavings`
@@ -143,6 +150,7 @@ git commit -m "feat(ui): add core shadcn primitives (button, card, badge, input,
 - [ ] **Step 1: Escrever teste de unidade que falha em `tests/pricing.test.ts`**
 
 Cobrir:
+
 - Resolução de modelo exato e por prefixo (`claude-3-7-sonnet-20250219` -> `claude-3-7-sonnet`).
 - Cálculo de custo estimado quando evento não tem custo nativo.
 - Preservação do custo nativo quando o evento já tem custo (ex.: Grok ou logs importados).
@@ -181,17 +189,20 @@ git commit -m "feat(pricing): implement model pricing engine, cache savings and 
 ### Task 4: Persistência de Configurações de Preços e Câmbio
 
 **Files:**
+
 - Modify: `src/lib/types.ts`
 - Modify: `src/lib/local-store.ts`
 - Modify: `src/app/api/settings/route.ts`
 
 **Interfaces:**
+
 - Consumes: `PricingConfig`, `ModelPrice` de `src/lib/pricing/types.ts`
 - Produces: Suporte a `usdToBrlRate` e `customPricing` no schema do Zod e persistência em `.local-data/settings.json`.
 
 - [ ] **Step 1: Atualizar schema e tipos em `src/lib/types.ts` e `src/lib/local-store.ts`**
 
 Adicionar campos opcionais:
+
 - `usdToBrlRate`: número positivo (padrão 5.75).
 - `customPricing`: objeto chave-valor mapeando nome do modelo para tarifas por 1M tokens.
 
@@ -216,10 +227,12 @@ git commit -m "feat(settings): support custom model prices and usd/brl rate in l
 ### Task 5: Integração com Analytics e Agregações do Dashboard
 
 **Files:**
+
 - Modify: `src/lib/analytics.ts`
 - Modify: `src/app/api/usage/route.ts`
 
 **Interfaces:**
+
 - Consumes: Calculadora de `src/lib/pricing/calculator.ts`
 - Produces: Métricas estendidas no payload de `/api/usage`: `costEstimatedUSD`, `costRealUSD`, `costTotalEstimatedUSD`, `cacheSavingsUSD`, `cacheSavingsBRL`, `totalCostBRL`.
 
@@ -248,6 +261,7 @@ git commit -m "feat(analytics): integrate estimated cost and cache savings in us
 ### Task 6: Atualização da UI (Header, Overview, Settings e Componentes com Shadcn)
 
 **Files:**
+
 - Modify: `src/components/dashboard.tsx`
 - Modify: `src/components/overview.tsx`
 - Modify: `src/components/settings-panel.tsx`
@@ -255,6 +269,7 @@ git commit -m "feat(analytics): integrate estimated cost and cache savings in us
 - Modify: `src/components/sources-panel.tsx`
 
 **Interfaces:**
+
 - Consumes: Novos componentes do shadcn em `src/components/ui/` e `ThemeToggle`.
 - Produces: Interface moderna com alternância Dark/Light, Card de Economia de Cache, Breakdown de Custo Real vs Estimado em USD e BRL, e aba de Tabela de Preços nas Configurações.
 
@@ -293,11 +308,13 @@ git commit -m "feat(ui): modernize dashboard with shadcn components, theme toggl
 ### Task 7: Testes End-to-End (Playwright) e Validação Visual
 
 **Files:**
+
 - Modify: `tests/browser/dashboard.spec.ts`
 
 - [ ] **Step 1: Atualizar testes do Playwright**
 
 Adicionar casos de teste para:
+
 1. Alternar temas (Claro -> Escuro -> Sistema) e verificar se a classe `dark` é aplicada ao elemento `html`.
 2. Verificar exibição do card de Economia de Cache e breakdown de custos estimados.
 3. Testar alteração da cotação USD/BRL nas preferências e refletir nos valores exibidos.
@@ -319,6 +336,7 @@ git commit -m "test(e2e): add browser tests for dark mode, cache savings and pri
 ### Task 8: Documentação e Pull Request
 
 **Files:**
+
 - Modify: `README.md`
 
 - [ ] **Step 1: Atualizar `README.md`**

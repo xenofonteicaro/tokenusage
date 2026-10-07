@@ -8,7 +8,9 @@ interface TabsContextValue {
   onValueChange: (val: string) => void;
 }
 
-const TabsContext = React.createContext<TabsContextValue | undefined>(undefined);
+const TabsContext = React.createContext<TabsContextValue | undefined>(
+  undefined,
+);
 
 export function Tabs({
   value,
@@ -33,11 +35,13 @@ export function Tabs({
       }
       onValueChange?.(newVal);
     },
-    [value, onValueChange]
+    [value, onValueChange],
   );
 
   return (
-    <TabsContext.Provider value={{ value: currentTab, onValueChange: handleTabChange }}>
+    <TabsContext.Provider
+      value={{ value: currentTab, onValueChange: handleTabChange }}
+    >
       <div className={cn("w-full", className)}>{children}</div>
     </TabsContext.Provider>
   );
@@ -53,7 +57,7 @@ export function TabsList({
       role="tablist"
       className={cn(
         "inline-flex h-9 items-center justify-center rounded-lg bg-[var(--secondary)] p-1 text-[var(--muted-foreground)]",
-        className
+        className,
       )}
       {...props}
     >
@@ -84,7 +88,7 @@ export function TabsTrigger({
         isSelected
           ? "bg-[var(--card)] text-[var(--foreground)] shadow-xs font-semibold"
           : "hover:text-[var(--foreground)]",
-        className
+        className,
       )}
       {...props}
     >
@@ -109,7 +113,7 @@ export function TabsContent({
       role="tabpanel"
       className={cn(
         "mt-2 ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-        className
+        className,
       )}
       {...props}
     >

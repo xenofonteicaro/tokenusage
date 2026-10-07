@@ -9,7 +9,7 @@ import type {
 
 export function findModelPrice(
   rawModel: string,
-  customPrices?: Record<string, ModelPrice>
+  customPrices?: Record<string, ModelPrice>,
 ): ModelPrice | null {
   if (!rawModel) return null;
   const normalized = rawModel.trim().toLowerCase();
@@ -18,7 +18,7 @@ export function findModelPrice(
   if (customPrices) {
     if (customPrices[normalized]) return customPrices[normalized];
     const customSorted = Object.keys(customPrices).sort(
-      (a, b) => b.length - a.length
+      (a, b) => b.length - a.length,
     );
     for (const key of customSorted) {
       if (normalized.startsWith(key.toLowerCase())) {
@@ -34,7 +34,7 @@ export function findModelPrice(
 
   // 3. Prefix match with longest key first (e.g. gpt-4o-mini before gpt-4o)
   const defaultSorted = Object.keys(DEFAULT_MODEL_PRICES).sort(
-    (a, b) => b.length - a.length
+    (a, b) => b.length - a.length,
   );
   for (const key of defaultSorted) {
     if (normalized.startsWith(key)) {
@@ -47,7 +47,7 @@ export function findModelPrice(
 
 export function calculateEventCost(
   event: UsageEvent,
-  config: PricingConfig = {}
+  config: PricingConfig = {},
 ): CalculatedEventCost {
   const rate = config.usdToBrlRate ?? DEFAULT_USD_TO_BRL_RATE;
   const price = findModelPrice(event.model, config.customPrices);
@@ -58,7 +58,7 @@ export function calculateEventCost(
           (event.cachedTokens *
             Math.max(0, price.inputPer1M - price.cacheReadPer1M)) /
           1_000_000
-        ).toFixed(4)
+        ).toFixed(4),
       )
     : 0;
   const cacheSavingsBRL = Number((cacheSavingsUSD * rate).toFixed(4));
@@ -92,9 +92,7 @@ export function calculateEventCost(
   const cacheCost = (event.cachedTokens * price.cacheReadPer1M) / 1_000_000;
   const outputCost = (event.outputTokens * price.outputPer1M) / 1_000_000;
 
-  const costUSD = Number(
-    (freshInputCost + cacheCost + outputCost).toFixed(4)
-  );
+  const costUSD = Number((freshInputCost + cacheCost + outputCost).toFixed(4));
   const costBRL = Number((costUSD * rate).toFixed(4));
 
   return {
@@ -108,7 +106,7 @@ export function calculateEventCost(
 
 export function calculateCacheSavings(
   events: UsageEvent[],
-  config: PricingConfig = {}
+  config: PricingConfig = {},
 ): CacheSavings {
   const rate = config.usdToBrlRate ?? DEFAULT_USD_TO_BRL_RATE;
   let tokensSaved = 0;

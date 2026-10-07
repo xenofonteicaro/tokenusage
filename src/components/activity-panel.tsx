@@ -104,7 +104,10 @@ export function ActivityPanel({
                         <span className="flex items-center gap-1">
                           {formatUSD(row.totalCostUSD)}
                           {row.estimatedRecords > 0 && !row.costsKnown && (
-                            <Badge variant="outline" className="text-[9px] px-1 py-0">
+                            <Badge
+                              variant="outline"
+                              className="text-[9px] px-1 py-0"
+                            >
                               Est.
                             </Badge>
                           )}

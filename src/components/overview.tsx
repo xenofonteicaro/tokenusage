@@ -58,8 +58,10 @@ export function Overview({
   const values = Object.fromEntries(
     PROVIDERS.map((provider) => [
       provider,
-      totals(events.filter((row) => row.provider === provider), pricingConfig)
-        .tokens,
+      totals(
+        events.filter((row) => row.provider === provider),
+        pricingConfig,
+      ).tokens,
     ]),
   ) as Record<Provider, number>;
   const now = new Date(snapshot.generatedAt);
@@ -144,7 +146,10 @@ export function Overview({
           <span>
             {hasData && metrics.cacheSavingsUSD > 0 ? (
               <>
-                <Badge variant="success" className="mr-1 text-[10px] px-1.5 py-0">
+                <Badge
+                  variant="success"
+                  className="mr-1 text-[10px] px-1.5 py-0"
+                >
                   Economizado
                 </Badge>
                 {formatBRL(metrics.cacheSavingsBRL)}

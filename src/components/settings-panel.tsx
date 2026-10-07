@@ -145,9 +145,12 @@ export function SettingsPanel({
         <div className="pricing-section pt-2">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <strong className="block text-sm font-semibold">Tabela de Preços por Modelo (USD por 1M tokens)</strong>
+              <strong className="block text-sm font-semibold">
+                Tabela de Preços por Modelo (USD por 1M tokens)
+              </strong>
               <small className="text-[var(--muted-foreground)]">
-                Utilizada para estimar custos de ferramentas sem valor informado.
+                Utilizada para estimar custos de ferramentas sem valor
+                informado.
               </small>
             </div>
           </div>
@@ -166,19 +169,38 @@ export function SettingsPanel({
                 {Object.entries({
                   ...DEFAULT_MODEL_PRICES,
                   ...(values.customPricing || {}),
-                }).slice(0, 10).map(([model, price]) => {
-                  const isCustom = Boolean(values.customPricing?.[model]);
-                  return (
-                    <tr key={model} className="border-b border-[var(--border)]/40 hover:bg-[var(--secondary)]/40">
-                      <td className="py-1.5 px-2 font-mono">
-                        {model} {isCustom && <Badge variant="outline" className="ml-1 text-[9px] py-0 px-1">Personalizado</Badge>}
-                      </td>
-                      <td className="py-1.5 px-2 font-mono">${price.inputPer1M.toFixed(2)}</td>
-                      <td className="py-1.5 px-2 font-mono">${price.outputPer1M.toFixed(2)}</td>
-                      <td className="py-1.5 px-2 font-mono">${price.cacheReadPer1M.toFixed(3)}</td>
-                    </tr>
-                  );
-                })}
+                })
+                  .slice(0, 10)
+                  .map(([model, price]) => {
+                    const isCustom = Boolean(values.customPricing?.[model]);
+                    return (
+                      <tr
+                        key={model}
+                        className="border-b border-[var(--border)]/40 hover:bg-[var(--secondary)]/40"
+                      >
+                        <td className="py-1.5 px-2 font-mono">
+                          {model}{" "}
+                          {isCustom && (
+                            <Badge
+                              variant="outline"
+                              className="ml-1 text-[9px] py-0 px-1"
+                            >
+                              Personalizado
+                            </Badge>
+                          )}
+                        </td>
+                        <td className="py-1.5 px-2 font-mono">
+                          ${price.inputPer1M.toFixed(2)}
+                        </td>
+                        <td className="py-1.5 px-2 font-mono">
+                          ${price.outputPer1M.toFixed(2)}
+                        </td>
+                        <td className="py-1.5 px-2 font-mono">
+                          ${price.cacheReadPer1M.toFixed(3)}
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>

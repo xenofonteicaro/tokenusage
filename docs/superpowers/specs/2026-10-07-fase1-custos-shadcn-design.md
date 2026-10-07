@@ -5,6 +5,7 @@
 O projeto Tokenusage lê métricas reais do perfil local do usuário (Codex, Claude Code, Grok Build e Gemini CLI) e logs de API importados. Na entrega inicial, os custos só eram exibidos quando a ferramenta fornecia o valor explicitamente (ex.: Grok em ticks e logs com `costUSD`). Ferramentas como Claude Code e Codex não fornecem custos em dólares nos arquivos locais, deixando o campo como desconhecido.
 
 Esta Fase 1 adiciona:
+
 1. **Design System com Shadcn UI e Suporte a Temas (Light / Dark / System)** usando Tailwind CSS e `next-themes`.
 2. **Motor de Precificação por Modelo**: cálculo de custo estimado quando o custo nativo não é informado.
 3. **Métrica de Economia por Cache**: cálculo da economia obtida graças ao reaproveitamento de tokens em cache.
@@ -13,12 +14,14 @@ Esta Fase 1 adiciona:
 ## 2. Decisões Arquiteturais
 
 ### 2.1 UI e Temas (Tailwind v4 + Shadcn + next-themes)
+
 - Utilização de Tailwind v4 com `@tailwindcss/postcss` ou imports nativos CSS e variáveis CSS para cores (HSL/OKLCH).
 - `next-themes` para persistência e detecção de tema do sistema operacional sem flash de tema incorreto (FOUC).
 - Criação dos componentes atômicos em `src/components/ui/`: `button.tsx`, `card.tsx`, `badge.tsx`, `input.tsx`, `select.tsx`, `tabs.tsx`, `table.tsx`, `switch.tsx`, `dropdown-menu.tsx`.
 - Refatoração dos componentes existentes (`overview.tsx`, `dashboard.tsx`, `activity-panel.tsx`, `sources-panel.tsx`, `settings-panel.tsx`, `usage-chart.tsx`) para utilizar a biblioteca de componentes e os tokens de design.
 
 ### 2.2 Motor de Custos (`src/lib/pricing/`)
+
 - Mapeamento padrão embutido em `src/lib/pricing/defaults.ts` com tarifas por 1 milhão de tokens (input, output, cache-read):
   - **Anthropic**:
     - `claude-3-7-sonnet`: Input $3.00, Output $15.00, Cache Read $0.30
@@ -42,6 +45,7 @@ Esta Fase 1 adiciona:
 - Usuário pode sobrescrever ou adicionar preços em `Preferências` (persistido em `.local-data/settings.json`).
 
 ### 2.3 Regras de Exibição de Custos e Economia
+
 - **Custo Real**: Sempre preservado se informado pelo log da ferramenta (ex.: Grok ou logs de API).
 - **Custo Estimado**: Calculado para eventos sem custo nativo multiplicando tokens por tarifário do modelo. Se o modelo não for reconhecido, o custo daquele evento permanece não-estimado (cobertura explícita).
 - **Economia por Cache**:
@@ -51,11 +55,13 @@ Esta Fase 1 adiciona:
   - Padrão 5.75, customizável em Preferências.
 
 ### 2.4 Armazenamento e Segurança
+
 - Customizações de preços e câmbio são salvas no arquivo existente `.local-data/settings.json`.
 - Nenhum histórico real, token ou credencial é versionado no Git.
 - Validação estrita via Zod para as novas configurações de preço.
 
 ## 3. Plano de Testes
+
 - **Testes Unitários**:
   - Verificação de casamento de nomes de modelos (exatos e por prefixo).
   - Cálculo de custo exato com e sem cache.

@@ -26,13 +26,17 @@ npm start
 
 ## O que aparece
 
+- **Design System Shadcn & Temas**: alternância suave entre temas Claro, Escuro e Automático (Sistema).
 - Tokens de entrada, saída e cache por serviço, modelo, projeto e período.
+- **Economia por Cache**: cálculo do valor poupado em dólares e reais graças ao prompt caching.
+- **Motor de Precificação & Custos Híbridos**:
+  - Custos reais preservados quando informados pela ferramenta (ex.: Grok ou logs importados).
+  - Custos estimados calculados automaticamente com base na tabela de preços por modelo (Anthropic, OpenAI, xAI, Google) quando a ferramenta não informa o valor (ex.: Codex, Claude Code).
+  - Cotação USD/BRL configurável para conversão financeira unificada.
 - Série diária e comparação com o período anterior, em horários de São Paulo.
 - Histórico de sessões pesquisável e exportação CSV dos registros filtrados,
   agrupados por sessão, modelo, projeto e dia.
-- Custos **informados na fonte**, com cobertura explícita; ausência de preço
-  permanece desconhecida. O valor não representa uma fatura completa.
-- Mensalidades em BRL e meta mensal de tokens configuráveis, guardadas localmente.
+- Mensalidades em BRL, meta mensal de tokens e tabela de tarifas customizáveis, guardadas localmente.
 - Diagnóstico das fontes e de arquivos/registros que não puderam ser lidos.
 
 ### Fontes automáticas

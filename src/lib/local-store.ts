@@ -24,7 +24,13 @@ export const settingsSchema = z.object({
     grok: nullableAmount,
     gemini: nullableAmount,
   }),
-  usdToBrlRate: z.number().finite().positive().max(100).optional().default(5.75),
+  usdToBrlRate: z
+    .number()
+    .finite()
+    .positive()
+    .max(100)
+    .optional()
+    .default(5.75),
   customPricing: z
     .record(z.string().min(1).max(100), modelPriceSchema)
     .optional()
