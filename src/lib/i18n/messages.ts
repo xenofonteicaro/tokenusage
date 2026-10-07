@@ -1,1829 +1,2177 @@
 export const messages = {
+  "pt-BR": {
+    Language: "Idioma",
+    "Interface language": "Idioma da interface",
+    "Your choice takes effect when you save preferences.":
+      "A escolha será aplicada ao salvar as preferências.",
+    Overview: "Visão geral",
+    Activity: "Atividade",
+    "Data sources": "Fontes de dados",
+    Preferences: "Preferências",
+    "Skip to content": "Ir para o conteúdo",
+    "Close navigation": "Fechar navegação",
+    "Tokenusage home": "Tokenusage início",
+    "My workspace": "Meu workspace",
+    "Personal · local": "Pessoal · local",
+    TRACKING: "ACOMPANHAMENTO",
+    "Main navigation": "Navegação principal",
+    "YOUR TOOLS": "SUAS FERRAMENTAS",
+    "History available": "Histórico disponível",
+    "No token history": "Sem histórico de tokens",
+    "Your data. Your computer.": "Seus dados. Sua máquina.",
+    "Local metrics, without sending your conversations to the cloud.":
+      "Métricas locais, sem enviar suas conversas para a nuvem.",
+    "About collection": "Sobre a coleta",
+    "This computer": "Este computador",
+    "Close menu": "Fechar menu",
+    "Open menu": "Abrir menu",
+    "Local data": "Dados locais",
+    "How collection works": "Como funciona a coleta",
+    ME: "EU",
+    "INSIGHTS INTO YOUR AI USAGE": "INTELIGÊNCIA SOBRE SEU USO DE IA",
+    "All your tokens. A clearer perspective.":
+      "Todos os seus tokens. Uma perspectiva mais clara.",
+    "Explore your session usage, without conversation content.":
+      "Explore o consumo das suas sessões, sem o conteúdo das conversas.",
+    "See where the numbers come from and which data is available.":
+      "Saiba de onde vêm os números e quais dados estão disponíveis.",
+    "Tracking that fits your routine.":
+      "Um acompanhamento que faz sentido para a sua rotina.",
+    Refreshing: "Atualizando",
+    Refresh: "Atualizar",
+    "Export CSV": "Exportar CSV",
+    "The numbers below are from the last successful collection.":
+      "Os números abaixo são da última coleta bem-sucedida.",
+    "Try again": "Tentar novamente",
+    "Reading your local history": "Lendo seu histórico local",
+    "The first collection may take a moment. Unchanged files are cached afterward.":
+      "A primeira coleta pode levar alguns instantes. Depois, os arquivos inalterados ficam em cache.",
+    "Usage source": "Origem do consumo",
+    Tools: "Ferramentas",
+    tools: "ferramentas",
+    Service: "Serviço",
+    Project: "Projeto",
+    "All services": "Todos os serviços",
+    "All projects": "Todos os projetos",
+    Period: "Período",
+    "Last 7 days": "Últimos 7 dias",
+    "Last 30 days": "Últimos 30 dias",
+    "Last 90 days": "Últimos 90 dias",
+    "São Paulo time": "Horários de São Paulo",
+    "Up to 90 days of history": "Histórico de até 90 dias",
+    "TOKENS USED": "TOKENS CONSUMIDOS",
+    "vs. previous period": "vs. período anterior",
+    "No records in this period": "Sem registros no período",
+    "CACHE UTILIZATION": "APROVEITAMENTO DE CACHE",
+    "Waiting for token counters": "Aguardando contadores de tokens",
+    "CACHE SAVINGS": "ECONOMIA POR CACHE",
+    "Estimated savings": "Estimada",
+    "% of the cost without cache": "% do custo sem cache",
+    "No cached tokens in this period": "Sem tokens de cache no período",
+    "SESSIONS WITH USAGE": "SESSÕES COM CONSUMO",
+    "IMPORTED REQUESTS": "CHAMADAS IMPORTADAS",
+    "No history for this selection": "Nenhum histórico nesta seleção",
+    "ESTIMATED / ACTUAL COST": "CUSTO ESTIMADO / REAL",
+    Mixed: "Misto",
+    Estimated: "Estimado",
+    Actual: "Real",
+    "Actual:": "Real:",
+    "· Estimated:": "· Estimado:",
+    "No price set for this model": "Preço por modelo não cadastrado",
+    of: "de",
+    "records without an estimate": "registros sem estimativa",
+    "without an estimate": "sem estimativa",
+    "Values calculated from model prices in USD/BRL and costs reported by the tools.":
+      "Valores calculados com base na tabela de preços por modelo em USD/BRL e nos custos nativos informados pelas ferramentas.",
+    Local: "Local",
+    Imported: "Importado",
+    "No data": "Sem dados",
+    tokens: "tokens",
+    Tokens: "Tokens",
+    "No usage for this selection": "Sem consumo nesta seleção",
+    "Your API requests in one place": "Suas chamadas de API, em um só lugar",
+    "Your history starts here": "Seu histórico começa aqui",
+    "Import logs with the counters returned by APIs. Without local records, remote usage cannot be retrieved.":
+      "Importe logs com os contadores retornados pelas APIs. Sem registros locais, não há consumo remoto disponível para consultar.",
+    "This selection has no token records. Check source diagnostics or try other filters.":
+      "Esta seleção não tem registros de tokens. Consulte o diagnóstico das fontes ou experimente outros filtros.",
+    "Import API usage": "Importar consumo de API",
+    "View data sources": "Ver fontes de dados",
+    "Usage over time": "Consumo ao longo do tempo",
+    "A daily view of each service’s usage.":
+      "Um olhar diário sobre o uso de cada serviço.",
+    Daily: "Diário",
+    "By service": "Por serviço",
+    "Share of usage": "Participação no consumo",
+    "Your most used models": "Seus modelos mais usados",
+    "Where your tokens are being used.":
+      "Onde os seus tokens estão sendo consumidos.",
+    models: "modelos",
+    Model: "Modelo",
+    Models: "Modelos",
+    Cache: "Cache",
+    Share: "Participação",
+    "Explore activity": "Explorar atividade",
+    "By project": "Por projeto",
+    "Your focus in this period": "Seu foco no período",
+    "accounts for": "representa",
+    "% of your usage in this period.": "% do seu consumo neste período.",
+    "Monthly subscriptions": "Assinaturas por mês",
+    "Values provided by you, separate from token costs.":
+      "Valores informados por você, separados do custo de tokens.",
+    "Add subscription fees to track your spending on AI.":
+      "Adicione as mensalidades para acompanhar seu investimento em IA.",
+    "Not provided": "Não informado",
+    Configure: "Configurar",
+    "Monthly token goal": "Meta mensal de tokens",
+    "· current selection": "· seleção atual",
+    "Session history": "Histórico de sessões",
+    "Request history": "Histórico de chamadas",
+    sessions: "sessões",
+    requests: "chamadas",
+    "in the selected period": "no período selecionado",
+    "Search activity": "Buscar atividade",
+    "Search project or model": "Buscar projeto ou modelo",
+    "Service / project": "Serviço / projeto",
+    "Last activity": "Última atividade",
+    "Cost / coverage": "Custo / cobertura",
+    "Show 20 more": "Mostrar mais 20",
+    "No records found": "Nenhum registro encontrado",
+    "Try another period, service or search.":
+      "Experimente outro período, serviço ou busca.",
+    "YOUR WAY": "DO SEU JEITO",
+    "Tracking preferences": "Preferências de acompanhamento",
+    General: "Geral",
+    "Price table": "Tabela de preços",
+    "Enter what you pay for subscriptions. These amounts are separate from costs recorded by the tools.":
+      "Informe o que você paga nas assinaturas. Esses valores ficam separados dos custos registrados pelas ferramentas.",
+    "R$ / month": "R$ / mês",
+    "Reported monthly total": "Total mensal informado",
+    "Optional. Track usage without blocking your tools.":
+      "Opcional. Acompanhamento de consumo, sem bloquear suas ferramentas.",
+    "E.g. 100000000": "Ex.: 100000000",
+    "Dollar exchange rate (USD / BRL)": "Cotação do Dólar (USD / BRL)",
+    "Used to estimate costs and savings in BRL. Default: R$ 5.75.":
+      "Usada para estimar custos e economia em reais. Padrão: R$ 5,75.",
+    "Model price table (USD per 1M tokens)":
+      "Tabela de Preços por Modelo (USD por 1M tokens)",
+    "Historical reference prices, without automatic updates. Customize to estimate tools with no reported costs.":
+      "Preços de referência históricos, sem atualização automática. Personalize para estimar ferramentas sem custo informado.",
+    "Model name": "Nome do modelo",
+    "E.g. my-model": "Ex.: meu-modelo",
+    "Add model": "Adicionar modelo",
+    "Input ($)": "Entrada ($)",
+    "Output ($)": "Saída ($)",
+    "Cache ($)": "Cache ($)",
+    Actions: "Ações",
+    Custom: "Personalizado",
+    Input: "Entrada",
+    Output: "Saída",
+    "Restore default": "Restaurar padrão",
+    "Remove model": "Remover modelo",
+    "Saving…": "Salvando…",
+    "Preferences saved": "Preferências salvas",
+    "Save preferences": "Salvar preferências",
+    "Your history stays here.": "Seu histórico fica aqui.",
+    "Collectors read token counters and session metadata. Conversation content is not sent to the browser.":
+      "Os coletores leem contadores de tokens e metadados de sessão. O conteúdo das conversas não é enviado ao navegador.",
+    "Preferences and metrics are stored locally on this computer. The dashboard uses no login cookies or tool keys.":
+      "Preferências e métricas são guardadas localmente neste computador. A dashboard não usa cookies de login nem chaves das suas ferramentas.",
+    "Local execution": "Execução local",
+    "This model is already in the table.": "Este modelo já está na tabela.",
+    "Enter the model name.": "Informe o nome do modelo.",
+    "Could not save.": "Não foi possível salvar.",
+    "THIS COMPUTER’S PROFILE": "PERFIL DESTE COMPUTADOR",
+    "Your usage sources": "Suas fontes de consumo",
+    "Automatic reading of local history. No API key required.":
+      "Leitura automática do histórico local. Nenhuma chave de API necessária.",
+    Collecting: "Coletando",
+    "No counters": "Sem contadores",
+    "Not found": "Não encontrado",
+    "Needs attention": "Requer atenção",
+    "files checked": "arquivos consultados",
+    "usage records": "registros de uso",
+    "Latest:": "Último:",
+    "files or records could not be read. Totals may be incomplete.":
+      "arquivo(s) ou registro(s) não puderam ser lidos. Os totais podem estar incompletos.",
+    "YOUR PROJECT REQUESTS": "CHAMADAS DOS SEUS PROJETOS",
+    "Bring your API logs": "Traga seus logs de API",
+    "Import counters returned by Grok, OpenAI, Claude or Gemini. The file is processed on this computer.":
+      "Importe os contadores retornados por Grok, OpenAI, Claude ou Gemini. O arquivo é processado neste computador.",
+    "API usage file": "Arquivo de consumo de API",
+    "Importing…": "Importando…",
+    "Import JSON or JSONL": "Importar JSON ou JSONL",
+    "Up to 4 MB · 10,000 records per file":
+      "Até 4 MB · 10.000 registros por arquivo",
+    "How to prepare the file": "Como preparar o arquivo",
+    "One request per record, with provider (codex, claude, grok or gemini), timestamp, model, optional project and usage. For Gemini use usageMetadata. Include the request ID to avoid duplicates.":
+      "Uma chamada por registro, com provider (codex, claude, grok ou gemini), timestamp, model, project opcional e usage. Para Gemini use usageMetadata. Inclua o ID da chamada para deduplicar.",
+    "Format example. These values are not added to the dashboard.":
+      "Exemplo de formato. Esses valores não entram na dashboard.",
+    "Local history covers sessions saved on this computer. Website usage, other computers and requests without logs do not appear automatically.":
+      "O histórico local cobre as sessões salvas nesta máquina. Uso nos sites, em outros computadores e chamadas sem logs não aparece automaticamente.",
+    "Select a file up to 4 MB.": "Selecione um arquivo de até 4 MB.",
+    "Could not import.": "Não foi possível importar.",
+    "Select theme": "Selecionar tema",
+    "Light theme": "Tema claro",
+    "Dark theme": "Tema escuro",
+    "System theme": "Tema do sistema",
+    "Input + output · includes cache": "Entrada + saída · inclui cache",
+    "services used": "serviços usados",
+    "Could not read your history.": "Não foi possível consultar seu histórico.",
+    "Collection failed.": "Falha na coleta.",
+    "{input} input + {output} output": "{input} entrada + {output} saída",
+    "{count} reused tokens": "{count} tokens reutilizados",
+    "{models} models · {projects} projects":
+      "{models} modelos · {projects} projetos",
+    "Distribution of {count} tokens by service":
+      "Distribuição de {count} tokens por serviço",
+    "{added} new records; {processed} processed. Repeated imports do not duplicate usage.":
+      "{added} novos registros; {processed} processados. Importações repetidas não duplicam consumo.",
+    "{count} records or files could not be read. View diagnostics":
+      "{count} registros ou arquivos não puderam ser lidos. Ver diagnóstico",
+    "{count} of 4 {kind} sources with history":
+      "{count} de 4 fontes {kind} com histórico",
+    "local sources": "locais",
+    "imported sources": "importadas",
+    "Updated at {time}": "Atualizado às {time}",
+    "{label} for {model}": "{label} de {model}",
+    "Codex · local history": "Codex · histórico local",
+    "Claude Code · local history": "Claude Code · histórico local",
+    "Grok Build · local history": "Grok Build · histórico local",
+    "Gemini CLI · local history": "Gemini CLI · histórico local",
+    "Local history was not found for this user.":
+      "Histórico local não encontrado neste usuário.",
+    "Could not read part of the history. Check permissions.":
+      "Não foi possível ler parte do histórico. Verifique as permissões.",
+    "Tokens per turn and model. Tool-reported costs when available.":
+      "Tokens por turno e modelo. Custos informados pela ferramenta quando disponíveis.",
+    "Actual token counts from sessions saved on this computer.":
+      "Tokens reais extraídos das sessões salvas neste computador.",
+    "History exists, but some files could not be parsed.":
+      "O histórico existe, mas alguns arquivos não puderam ser interpretados.",
+    "Gemini found, but no sessions have token counters. Older message logs do not report usage.":
+      "Gemini encontrado, mas sem sessões com contadores de tokens. Logs antigos de mensagens não informam consumo.",
+    "No token records available in the last 90 days.":
+      "Nenhum registro de tokens disponível nos últimos 90 dias.",
+    "Usage imported from your projects. No remote queries are made.":
+      "Consumo importado dos seus projetos. Nenhuma consulta remota é feita.",
+    "Import JSON or JSONL logs returned by APIs.":
+      "Importe logs JSON ou JSONL retornados pelas APIs.",
+    "Origin not allowed.": "Origem não permitida.",
+    "Could not save local preferences.":
+      "Não foi possível salvar as preferências locais.",
+    "Invalid values. Enter positive numbers or leave the fields blank.":
+      "Valores inválidos. Informe números positivos ou deixe os campos vazios.",
+    "Tokenusage · Your AI usage": "Tokenusage · Seu consumo de IA",
+    "Local JSON / JSONL import": "Importação local JSON / JSONL",
+    "Usage extracted from imported files. Reported costs are preserved; others are estimated when a price is configured.":
+      "Consumo extraído dos arquivos importados. Custos informados são preservados; os demais são estimados quando há preço configurado.",
+    "Import logs with counters returned by the API. No admin key required.":
+      "Importe logs com os contadores retornados pela API. Não requer chave administrativa.",
+    "Select a usage file.": "Selecione um arquivo de consumo.",
+    "The file must be no larger than 4 MB.": "O arquivo deve ter até 4 MB.",
+    "The limit of 100,000 local records has been reached.":
+      "Limite de 100.000 registros locais atingido.",
+    "Import failed.": "Falha ao importar.",
+    "Invalid file. Use JSON or JSONL with one usage record per request.":
+      "Arquivo inválido. Use JSON ou JSONL com um registro de consumo por chamada.",
+    "Import between 1 and 10,000 records per file.":
+      "Importe entre 1 e 10.000 registros por arquivo.",
+    "Record {index}: provide provider, timestamp, model and usage (or usageMetadata).":
+      "Registro {index}: informe provider, timestamp, model e usage (ou usageMetadata).",
+    "Record {index}: counters must be nonnegative integers.":
+      "Registro {index}: contadores devem ser inteiros não negativos.",
+    "Record {index}: no recognized token counter for {provider}.":
+      "Registro {index}: nenhum contador de tokens reconhecido para {provider}.",
+    "Could not read local data. Check the file and permissions.":
+      "Não foi possível ler os dados locais. Verifique o arquivo e as permissões.",
+    "Could not read local preferences.":
+      "Não foi possível ler as preferências locais.",
+    "Access is allowed only from the local dashboard.":
+      "Acesso permitido apenas pela dashboard local.",
+    Cost: "Custo",
+    "Toggle sidebar": "Alternar menu lateral",
+    "No data has been loaded yet.": "Nenhum dado foi carregado ainda.",
+    "Reading your local history. The first collection may take a moment; unchanged files are cached afterward.":
+      "Lendo seu histórico local. A primeira coleta pode levar alguns instantes; depois, os arquivos inalterados ficam em cache.",
+    "Totals may be incomplete.": "Os totais podem estar incompletos.",
+    "View diagnostics": "Ver diagnóstico",
+    "São Paulo time · Up to 90 days of history":
+      "Horários de São Paulo · Histórico de até 90 dias",
+    "Local AI usage": "Uso local de IA",
+    Tracking: "Acompanhamento",
+    "no data": "sem dados",
+    "Stays on this computer.": "Fica nesta máquina.",
+    "Only counters and model names; no conversations are read.":
+      "Só contadores e nomes de modelo; nenhuma conversa é lida.",
+    "Tokens used": "Tokens consumidos",
+    "Above the previous period": "Acima do período anterior",
+    "Below the previous period": "Abaixo do período anterior",
+    "No previous period to compare": "Sem período anterior para comparar",
+    "input ·": "entrada ·",
+    output: "saída",
+    "Cost in this period": "Custo no período",
+    Partial: "Parcial",
+    "Cache savings": "Economia por cache",
+    "No rate to estimate": "Sem tarifa para estimar",
+    "of the cost without cache": "do custo sem cache",
+    "cached records without a rate": "registros com cache sem tarifa",
+    "Cache utilization": "Aproveitamento de cache",
+    "input tokens": "tokens de entrada",
+    "Daily usage": "Consumo por dia",
+    "Input + output, including cache · last":
+      "Entrada + saída, com cache · últimos",
+    days: "dias",
+    "No usage": "Sem consumo",
+    "No counters in the history": "Nenhum contador no histórico",
+    local: "local",
+    imported: "importado",
+    ", current month": ", mês atual",
+    "No goal set. The goal tracks usage without blocking your tools.":
+      "Nenhuma meta definida. A meta acompanha o consumo sem bloquear suas ferramentas.",
+    "Subscription fees": "Mensalidades",
+    "Most used models": "Modelos mais usados",
+    model: "modelo",
+    in: "em",
+    session: "sessão",
+    request: "chamada",
+    "View activity": "Ver atividade",
+    "Partial cost": "Custo parcial",
+    "without a configured rate; these records are excluded from cost.":
+      "sem tarifa cadastrada; esses registros ficam fora do custo.",
+    "Set rate": "Definir tarifa",
+    "no rate": "sem tarifa",
+    "Subscription fees, token goal, exchange rate and model prices.":
+      "Mensalidades, meta de tokens, cotação e tarifas por modelo.",
+    "Your history stays here": "Seu histórico fica aqui",
+    "Local execution, no login.": "Execução local, sem login.",
+    "Automatic reading of this computer’s local history. No API key required.":
+      "Leitura automática do histórico local deste computador. Nenhuma chave de API necessária.",
+    "file checked": "arquivo consultado",
+    "usage record": "registro de uso",
+    "files or records from": "arquivo(s) ou registro(s) de",
+    "could not be read. Totals may be incomplete.":
+      "não puderam ser lidos. Os totais podem estar incompletos.",
+    "{count} records or files could not be read":
+      "{count} registros ou arquivos não puderam ser lidos",
+    "{amount} · exchange rate {rate}": "{amount} · cotação {rate}",
+    "Reported {amount}": "Informado {amount}",
+    "estimated {amount}": "estimado {amount}",
+    "{amount} saved": "{amount} economizados",
+    "{amount}/month": "{amount}/mês",
+    "Monthly goal: {percent}": "Meta mensal: {percent}",
+    "and {count} more": "e mais {count}",
+  },
   en: {
-    Idioma: "Language",
-    "Idioma da interface": "Interface language",
-    "A escolha será aplicada ao salvar as preferências.":
+    Language: "Language",
+    "Interface language": "Interface language",
+    "Your choice takes effect when you save preferences.":
       "Your choice takes effect when you save preferences.",
-    "Visão geral": "Overview",
-    Atividade: "Activity",
-    "Fontes de dados": "Data sources",
-    Preferências: "Preferences",
-    "Ir para o conteúdo": "Skip to content",
-    "Fechar navegação": "Close navigation",
-    "Tokenusage início": "Tokenusage home",
-    "Meu workspace": "My workspace",
-    "Pessoal · local": "Personal · local",
-    ACOMPANHAMENTO: "TRACKING",
-    "Navegação principal": "Main navigation",
-    "SUAS FERRAMENTAS": "YOUR TOOLS",
-    "Histórico disponível": "History available",
-    "Sem histórico de tokens": "No token history",
-    "Seus dados. Sua máquina.": "Your data. Your computer.",
-    "Métricas locais, sem enviar suas conversas para a nuvem.":
+    Overview: "Overview",
+    Activity: "Activity",
+    "Data sources": "Data sources",
+    Preferences: "Preferences",
+    "Skip to content": "Skip to content",
+    "Close navigation": "Close navigation",
+    "Tokenusage home": "Tokenusage home",
+    "My workspace": "My workspace",
+    "Personal · local": "Personal · local",
+    TRACKING: "TRACKING",
+    "Main navigation": "Main navigation",
+    "YOUR TOOLS": "YOUR TOOLS",
+    "History available": "History available",
+    "No token history": "No token history",
+    "Your data. Your computer.": "Your data. Your computer.",
+    "Local metrics, without sending your conversations to the cloud.":
       "Local metrics, without sending your conversations to the cloud.",
-    "Sobre a coleta": "About collection",
-    "Este computador": "This computer",
-    "Fechar menu": "Close menu",
-    "Abrir menu": "Open menu",
-    "Dados locais": "Local data",
-    "Como funciona a coleta": "How collection works",
-    EU: "ME",
-    "INTELIGÊNCIA SOBRE SEU USO DE IA": "INSIGHTS INTO YOUR AI USAGE",
-    "Todos os seus tokens. Uma perspectiva mais clara.":
+    "About collection": "About collection",
+    "This computer": "This computer",
+    "Close menu": "Close menu",
+    "Open menu": "Open menu",
+    "Local data": "Local data",
+    "How collection works": "How collection works",
+    ME: "ME",
+    "INSIGHTS INTO YOUR AI USAGE": "INSIGHTS INTO YOUR AI USAGE",
+    "All your tokens. A clearer perspective.":
       "All your tokens. A clearer perspective.",
-    "Explore o consumo das suas sessões, sem o conteúdo das conversas.":
+    "Explore your session usage, without conversation content.":
       "Explore your session usage, without conversation content.",
-    "Saiba de onde vêm os números e quais dados estão disponíveis.":
+    "See where the numbers come from and which data is available.":
       "See where the numbers come from and which data is available.",
-    "Um acompanhamento que faz sentido para a sua rotina.":
-      "Tracking that fits your routine.",
-    Atualizando: "Refreshing",
-    Atualizar: "Refresh",
-    "Exportar CSV": "Export CSV",
-    "Os números abaixo são da última coleta bem-sucedida.":
+    "Tracking that fits your routine.": "Tracking that fits your routine.",
+    Refreshing: "Refreshing",
+    Refresh: "Refresh",
+    "Export CSV": "Export CSV",
+    "The numbers below are from the last successful collection.":
       "The numbers below are from the last successful collection.",
-    "Tentar novamente": "Try again",
-    "Lendo seu histórico local": "Reading your local history",
-    "A primeira coleta pode levar alguns instantes. Depois, os arquivos inalterados ficam em cache.":
+    "Try again": "Try again",
+    "Reading your local history": "Reading your local history",
+    "The first collection may take a moment. Unchanged files are cached afterward.":
       "The first collection may take a moment. Unchanged files are cached afterward.",
-    "Origem do consumo": "Usage source",
-    Ferramentas: "Tools",
-    ferramentas: "tools",
-    Serviço: "Service",
-    Projeto: "Project",
-    "Todos os serviços": "All services",
-    "Todos os projetos": "All projects",
-    Período: "Period",
-    "Últimos 7 dias": "Last 7 days",
-    "Últimos 30 dias": "Last 30 days",
-    "Últimos 90 dias": "Last 90 days",
-    "Horários de São Paulo": "São Paulo time",
-    "Histórico de até 90 dias": "Up to 90 days of history",
-    "TOKENS CONSUMIDOS": "TOKENS USED",
-    "vs. período anterior": "vs. previous period",
-    "Sem registros no período": "No records in this period",
-    "APROVEITAMENTO DE CACHE": "CACHE UTILIZATION",
-    "Aguardando contadores de tokens": "Waiting for token counters",
-    "ECONOMIA POR CACHE": "CACHE SAVINGS",
-    Estimada: "Estimated",
-    "% do custo sem cache": "% of the cost without cache",
-    "Sem tokens de cache no período": "No cached tokens in this period",
-    "SESSÕES COM CONSUMO": "SESSIONS WITH USAGE",
-    "CHAMADAS IMPORTADAS": "IMPORTED REQUESTS",
-    "Nenhum histórico nesta seleção": "No history for this selection",
-    "CUSTO ESTIMADO / REAL": "ESTIMATED / ACTUAL COST",
-    Misto: "Mixed",
-    Estimado: "Estimated",
-    Real: "Actual",
-    "Real:": "Actual:",
-    "· Estimado:": "· Estimated:",
-    "Preço por modelo não cadastrado": "No price set for this model",
-    de: "of",
-    "registros sem estimativa": "records without an estimate",
-    "sem estimativa": "without an estimate",
-    "Valores calculados com base na tabela de preços por modelo em USD/BRL e nos custos nativos informados pelas ferramentas.":
+    "Usage source": "Usage source",
+    Tools: "Tools",
+    tools: "tools",
+    Service: "Service",
+    Project: "Project",
+    "All services": "All services",
+    "All projects": "All projects",
+    Period: "Period",
+    "Last 7 days": "Last 7 days",
+    "Last 30 days": "Last 30 days",
+    "Last 90 days": "Last 90 days",
+    "São Paulo time": "São Paulo time",
+    "Up to 90 days of history": "Up to 90 days of history",
+    "TOKENS USED": "TOKENS USED",
+    "vs. previous period": "vs. previous period",
+    "No records in this period": "No records in this period",
+    "CACHE UTILIZATION": "CACHE UTILIZATION",
+    "Waiting for token counters": "Waiting for token counters",
+    "CACHE SAVINGS": "CACHE SAVINGS",
+    "Estimated savings": "Estimated",
+    "% of the cost without cache": "% of the cost without cache",
+    "No cached tokens in this period": "No cached tokens in this period",
+    "SESSIONS WITH USAGE": "SESSIONS WITH USAGE",
+    "IMPORTED REQUESTS": "IMPORTED REQUESTS",
+    "No history for this selection": "No history for this selection",
+    "ESTIMATED / ACTUAL COST": "ESTIMATED / ACTUAL COST",
+    Mixed: "Mixed",
+    Estimated: "Estimated",
+    Actual: "Actual",
+    "Actual:": "Actual:",
+    "· Estimated:": "· Estimated:",
+    "No price set for this model": "No price set for this model",
+    of: "of",
+    "records without an estimate": "records without an estimate",
+    "without an estimate": "without an estimate",
+    "Values calculated from model prices in USD/BRL and costs reported by the tools.":
       "Values calculated from model prices in USD/BRL and costs reported by the tools.",
     Local: "Local",
-    Importado: "Imported",
-    "Sem dados": "No data",
+    Imported: "Imported",
+    "No data": "No data",
     tokens: "tokens",
     Tokens: "Tokens",
-    "Sem consumo nesta seleção": "No usage for this selection",
-    "Suas chamadas de API, em um só lugar": "Your API requests in one place",
-    "Seu histórico começa aqui": "Your history starts here",
-    "Importe logs com os contadores retornados pelas APIs. Sem registros locais, não há consumo remoto disponível para consultar.":
+    "No usage for this selection": "No usage for this selection",
+    "Your API requests in one place": "Your API requests in one place",
+    "Your history starts here": "Your history starts here",
+    "Import logs with the counters returned by APIs. Without local records, remote usage cannot be retrieved.":
       "Import logs with the counters returned by APIs. Without local records, remote usage cannot be retrieved.",
-    "Esta seleção não tem registros de tokens. Consulte o diagnóstico das fontes ou experimente outros filtros.":
+    "This selection has no token records. Check source diagnostics or try other filters.":
       "This selection has no token records. Check source diagnostics or try other filters.",
-    "Importar consumo de API": "Import API usage",
-    "Ver fontes de dados": "View data sources",
-    "Consumo ao longo do tempo": "Usage over time",
-    "Um olhar diário sobre o uso de cada serviço.":
+    "Import API usage": "Import API usage",
+    "View data sources": "View data sources",
+    "Usage over time": "Usage over time",
+    "A daily view of each service’s usage.":
       "A daily view of each service’s usage.",
-    Diário: "Daily",
-    "Por serviço": "By service",
-    "Participação no consumo": "Share of usage",
-    "Seus modelos mais usados": "Your most used models",
-    "Onde os seus tokens estão sendo consumidos.":
-      "Where your tokens are being used.",
-    modelos: "models",
-    Modelo: "Model",
-    Modelos: "Models",
+    Daily: "Daily",
+    "By service": "By service",
+    "Share of usage": "Share of usage",
+    "Your most used models": "Your most used models",
+    "Where your tokens are being used.": "Where your tokens are being used.",
+    models: "models",
+    Model: "Model",
+    Models: "Models",
     Cache: "Cache",
-    Participação: "Share",
-    "Explorar atividade": "Explore activity",
-    "Por projeto": "By project",
-    "Seu foco no período": "Your focus in this period",
-    representa: "accounts for",
-    "% do seu consumo neste período.": "% of your usage in this period.",
-    "Assinaturas por mês": "Monthly subscriptions",
-    "Valores informados por você, separados do custo de tokens.":
+    Share: "Share",
+    "Explore activity": "Explore activity",
+    "By project": "By project",
+    "Your focus in this period": "Your focus in this period",
+    "accounts for": "accounts for",
+    "% of your usage in this period.": "% of your usage in this period.",
+    "Monthly subscriptions": "Monthly subscriptions",
+    "Values provided by you, separate from token costs.":
       "Values provided by you, separate from token costs.",
-    "Adicione as mensalidades para acompanhar seu investimento em IA.":
+    "Add subscription fees to track your spending on AI.":
       "Add subscription fees to track your spending on AI.",
-    "Não informado": "Not provided",
-    Configurar: "Configure",
-    "Meta mensal de tokens": "Monthly token goal",
-    "· seleção atual": "· current selection",
-    "Histórico de sessões": "Session history",
-    "Histórico de chamadas": "Request history",
-    sessões: "sessions",
-    chamadas: "requests",
-    "no período selecionado": "in the selected period",
-    "Buscar atividade": "Search activity",
-    "Buscar projeto ou modelo": "Search project or model",
-    "Serviço / projeto": "Service / project",
-    "Última atividade": "Last activity",
-    "Custo / cobertura": "Cost / coverage",
-    "Mostrar mais 20": "Show 20 more",
-    "Nenhum registro encontrado": "No records found",
-    "Experimente outro período, serviço ou busca.":
+    "Not provided": "Not provided",
+    Configure: "Configure",
+    "Monthly token goal": "Monthly token goal",
+    "· current selection": "· current selection",
+    "Session history": "Session history",
+    "Request history": "Request history",
+    sessions: "sessions",
+    requests: "requests",
+    "in the selected period": "in the selected period",
+    "Search activity": "Search activity",
+    "Search project or model": "Search project or model",
+    "Service / project": "Service / project",
+    "Last activity": "Last activity",
+    "Cost / coverage": "Cost / coverage",
+    "Show 20 more": "Show 20 more",
+    "No records found": "No records found",
+    "Try another period, service or search.":
       "Try another period, service or search.",
-    "DO SEU JEITO": "YOUR WAY",
-    "Preferências de acompanhamento": "Tracking preferences",
-    Geral: "General",
-    "Tabela de preços": "Price table",
-    "Informe o que você paga nas assinaturas. Esses valores ficam separados dos custos registrados pelas ferramentas.":
+    "YOUR WAY": "YOUR WAY",
+    "Tracking preferences": "Tracking preferences",
+    General: "General",
+    "Price table": "Price table",
+    "Enter what you pay for subscriptions. These amounts are separate from costs recorded by the tools.":
       "Enter what you pay for subscriptions. These amounts are separate from costs recorded by the tools.",
-    "R$ / mês": "R$ / month",
-    "Total mensal informado": "Reported monthly total",
-    "Opcional. Acompanhamento de consumo, sem bloquear suas ferramentas.":
+    "R$ / month": "R$ / month",
+    "Reported monthly total": "Reported monthly total",
+    "Optional. Track usage without blocking your tools.":
       "Optional. Track usage without blocking your tools.",
-    "Ex.: 100000000": "E.g. 100000000",
-    "Cotação do Dólar (USD / BRL)": "Dollar exchange rate (USD / BRL)",
-    "Usada para estimar custos e economia em reais. Padrão: R$ 5,75.":
+    "E.g. 100000000": "E.g. 100000000",
+    "Dollar exchange rate (USD / BRL)": "Dollar exchange rate (USD / BRL)",
+    "Used to estimate costs and savings in BRL. Default: R$ 5.75.":
       "Used to estimate costs and savings in BRL. Default: R$ 5.75.",
-    "Tabela de Preços por Modelo (USD por 1M tokens)":
+    "Model price table (USD per 1M tokens)":
       "Model price table (USD per 1M tokens)",
-    "Preços de referência históricos, sem atualização automática. Personalize para estimar ferramentas sem custo informado.":
+    "Historical reference prices, without automatic updates. Customize to estimate tools with no reported costs.":
       "Historical reference prices, without automatic updates. Customize to estimate tools with no reported costs.",
-    "Nome do modelo": "Model name",
-    "Ex.: meu-modelo": "E.g. my-model",
-    "Adicionar modelo": "Add model",
-    "Entrada ($)": "Input ($)",
-    "Saída ($)": "Output ($)",
+    "Model name": "Model name",
+    "E.g. my-model": "E.g. my-model",
+    "Add model": "Add model",
+    "Input ($)": "Input ($)",
+    "Output ($)": "Output ($)",
     "Cache ($)": "Cache ($)",
-    Ações: "Actions",
-    Personalizado: "Custom",
-    Entrada: "Input",
-    Saída: "Output",
-    "Restaurar padrão": "Restore default",
-    "Remover modelo": "Remove model",
-    "Salvando…": "Saving…",
-    "Preferências salvas": "Preferences saved",
-    "Salvar preferências": "Save preferences",
-    "Seu histórico fica aqui.": "Your history stays here.",
-    "Os coletores leem contadores de tokens e metadados de sessão. O conteúdo das conversas não é enviado ao navegador.":
+    Actions: "Actions",
+    Custom: "Custom",
+    Input: "Input",
+    Output: "Output",
+    "Restore default": "Restore default",
+    "Remove model": "Remove model",
+    "Saving…": "Saving…",
+    "Preferences saved": "Preferences saved",
+    "Save preferences": "Save preferences",
+    "Your history stays here.": "Your history stays here.",
+    "Collectors read token counters and session metadata. Conversation content is not sent to the browser.":
       "Collectors read token counters and session metadata. Conversation content is not sent to the browser.",
-    "Preferências e métricas são guardadas localmente neste computador. A dashboard não usa cookies de login nem chaves das suas ferramentas.":
+    "Preferences and metrics are stored locally on this computer. The dashboard uses no login cookies or tool keys.":
       "Preferences and metrics are stored locally on this computer. The dashboard uses no login cookies or tool keys.",
-    "Execução local": "Local execution",
-    "Este modelo já está na tabela.": "This model is already in the table.",
-    "Informe o nome do modelo.": "Enter the model name.",
-    "Não foi possível salvar.": "Could not save.",
-    "PERFIL DESTE COMPUTADOR": "THIS COMPUTER’S PROFILE",
-    "Suas fontes de consumo": "Your usage sources",
-    "Leitura automática do histórico local. Nenhuma chave de API necessária.":
+    "Local execution": "Local execution",
+    "This model is already in the table.":
+      "This model is already in the table.",
+    "Enter the model name.": "Enter the model name.",
+    "Could not save.": "Could not save.",
+    "THIS COMPUTER’S PROFILE": "THIS COMPUTER’S PROFILE",
+    "Your usage sources": "Your usage sources",
+    "Automatic reading of local history. No API key required.":
       "Automatic reading of local history. No API key required.",
-    Coletando: "Collecting",
-    "Sem contadores": "No counters",
-    "Não encontrado": "Not found",
-    "Requer atenção": "Needs attention",
-    "arquivos consultados": "files checked",
-    "registros de uso": "usage records",
-    "Último:": "Latest:",
-    "arquivo(s) ou registro(s) não puderam ser lidos. Os totais podem estar incompletos.":
+    Collecting: "Collecting",
+    "No counters": "No counters",
+    "Not found": "Not found",
+    "Needs attention": "Needs attention",
+    "files checked": "files checked",
+    "usage records": "usage records",
+    "Latest:": "Latest:",
+    "files or records could not be read. Totals may be incomplete.":
       "files or records could not be read. Totals may be incomplete.",
-    "CHAMADAS DOS SEUS PROJETOS": "YOUR PROJECT REQUESTS",
-    "Traga seus logs de API": "Bring your API logs",
-    "Importe os contadores retornados por Grok, OpenAI, Claude ou Gemini. O arquivo é processado neste computador.":
+    "YOUR PROJECT REQUESTS": "YOUR PROJECT REQUESTS",
+    "Bring your API logs": "Bring your API logs",
+    "Import counters returned by Grok, OpenAI, Claude or Gemini. The file is processed on this computer.":
       "Import counters returned by Grok, OpenAI, Claude or Gemini. The file is processed on this computer.",
-    "Arquivo de consumo de API": "API usage file",
-    "Importando…": "Importing…",
-    "Importar JSON ou JSONL": "Import JSON or JSONL",
-    "Até 4 MB · 10.000 registros por arquivo":
+    "API usage file": "API usage file",
+    "Importing…": "Importing…",
+    "Import JSON or JSONL": "Import JSON or JSONL",
+    "Up to 4 MB · 10,000 records per file":
       "Up to 4 MB · 10,000 records per file",
-    "Como preparar o arquivo": "How to prepare the file",
-    "Uma chamada por registro, com provider (codex, claude, grok ou gemini), timestamp, model, project opcional e usage. Para Gemini use usageMetadata. Inclua o ID da chamada para deduplicar.":
+    "How to prepare the file": "How to prepare the file",
+    "One request per record, with provider (codex, claude, grok or gemini), timestamp, model, optional project and usage. For Gemini use usageMetadata. Include the request ID to avoid duplicates.":
       "One request per record, with provider (codex, claude, grok or gemini), timestamp, model, optional project and usage. For Gemini use usageMetadata. Include the request ID to avoid duplicates.",
-    "Exemplo de formato. Esses valores não entram na dashboard.":
+    "Format example. These values are not added to the dashboard.":
       "Format example. These values are not added to the dashboard.",
-    "O histórico local cobre as sessões salvas nesta máquina. Uso nos sites, em outros computadores e chamadas sem logs não aparece automaticamente.":
+    "Local history covers sessions saved on this computer. Website usage, other computers and requests without logs do not appear automatically.":
       "Local history covers sessions saved on this computer. Website usage, other computers and requests without logs do not appear automatically.",
-    "Selecione um arquivo de até 4 MB.": "Select a file up to 4 MB.",
-    "Não foi possível importar.": "Could not import.",
-    "Selecionar tema": "Select theme",
-    "Tema claro": "Light theme",
-    "Tema escuro": "Dark theme",
-    "Tema do sistema": "System theme",
-    "Entrada + saída · inclui cache": "Input + output · includes cache",
-    "serviços usados": "services used",
-    "Não foi possível consultar seu histórico.": "Could not read your history.",
-    "Falha na coleta.": "Collection failed.",
-    "{input} entrada + {output} saída": "{input} input + {output} output",
-    "{count} tokens reutilizados": "{count} reused tokens",
-    "{models} modelos · {projects} projetos":
+    "Select a file up to 4 MB.": "Select a file up to 4 MB.",
+    "Could not import.": "Could not import.",
+    "Select theme": "Select theme",
+    "Light theme": "Light theme",
+    "Dark theme": "Dark theme",
+    "System theme": "System theme",
+    "Input + output · includes cache": "Input + output · includes cache",
+    "services used": "services used",
+    "Could not read your history.": "Could not read your history.",
+    "Collection failed.": "Collection failed.",
+    "{input} input + {output} output": "{input} input + {output} output",
+    "{count} reused tokens": "{count} reused tokens",
+    "{models} models · {projects} projects":
       "{models} models · {projects} projects",
-    "Distribuição de {count} tokens por serviço":
+    "Distribution of {count} tokens by service":
       "Distribution of {count} tokens by service",
-    "{added} novos registros; {processed} processados. Importações repetidas não duplicam consumo.":
+    "{added} new records; {processed} processed. Repeated imports do not duplicate usage.":
       "{added} new records; {processed} processed. Repeated imports do not duplicate usage.",
-    "{count} registros ou arquivos não puderam ser lidos. Ver diagnóstico":
+    "{count} records or files could not be read. View diagnostics":
       "{count} records or files could not be read. View diagnostics",
-    "{count} de 4 fontes {kind} com histórico":
+    "{count} of 4 {kind} sources with history":
       "{count} of 4 {kind} sources with history",
-    locais: "local",
-    importadas: "imported",
-    "Atualizado às {time}": "Updated at {time}",
-    "{label} de {model}": "{label} for {model}",
-    "Codex · histórico local": "Codex · local history",
-    "Claude Code · histórico local": "Claude Code · local history",
-    "Grok Build · histórico local": "Grok Build · local history",
-    "Gemini CLI · histórico local": "Gemini CLI · local history",
-    "Histórico local não encontrado neste usuário.":
+    "local sources": "local",
+    "imported sources": "imported",
+    "Updated at {time}": "Updated at {time}",
+    "{label} for {model}": "{label} for {model}",
+    "Codex · local history": "Codex · local history",
+    "Claude Code · local history": "Claude Code · local history",
+    "Grok Build · local history": "Grok Build · local history",
+    "Gemini CLI · local history": "Gemini CLI · local history",
+    "Local history was not found for this user.":
       "Local history was not found for this user.",
-    "Não foi possível ler parte do histórico. Verifique as permissões.":
+    "Could not read part of the history. Check permissions.":
       "Could not read part of the history. Check permissions.",
-    "Tokens por turno e modelo. Custos informados pela ferramenta quando disponíveis.":
+    "Tokens per turn and model. Tool-reported costs when available.":
       "Tokens per turn and model. Tool-reported costs when available.",
-    "Tokens reais extraídos das sessões salvas neste computador.":
+    "Actual token counts from sessions saved on this computer.":
       "Actual token counts from sessions saved on this computer.",
-    "O histórico existe, mas alguns arquivos não puderam ser interpretados.":
+    "History exists, but some files could not be parsed.":
       "History exists, but some files could not be parsed.",
-    "Gemini encontrado, mas sem sessões com contadores de tokens. Logs antigos de mensagens não informam consumo.":
+    "Gemini found, but no sessions have token counters. Older message logs do not report usage.":
       "Gemini found, but no sessions have token counters. Older message logs do not report usage.",
-    "Nenhum registro de tokens disponível nos últimos 90 dias.":
+    "No token records available in the last 90 days.":
       "No token records available in the last 90 days.",
-    "Consumo importado dos seus projetos. Nenhuma consulta remota é feita.":
+    "Usage imported from your projects. No remote queries are made.":
       "Usage imported from your projects. No remote queries are made.",
-    "Importe logs JSON ou JSONL retornados pelas APIs.":
+    "Import JSON or JSONL logs returned by APIs.":
       "Import JSON or JSONL logs returned by APIs.",
-    "Origem não permitida.": "Origin not allowed.",
-    "Não foi possível salvar as preferências locais.":
-      "Could not save local preferences.",
-    "Valores inválidos. Informe números positivos ou deixe os campos vazios.":
+    "Origin not allowed.": "Origin not allowed.",
+    "Could not save local preferences.": "Could not save local preferences.",
+    "Invalid values. Enter positive numbers or leave the fields blank.":
       "Invalid values. Enter positive numbers or leave the fields blank.",
-    "Tokenusage · Seu consumo de IA": "Tokenusage · Your AI usage",
-    "Importação local JSON / JSONL": "Local JSON / JSONL import",
-    "Consumo extraído dos arquivos importados. Custos informados são preservados; os demais são estimados quando há preço configurado.":
+    "Tokenusage · Your AI usage": "Tokenusage · Your AI usage",
+    "Local JSON / JSONL import": "Local JSON / JSONL import",
+    "Usage extracted from imported files. Reported costs are preserved; others are estimated when a price is configured.":
       "Usage extracted from imported files. Reported costs are preserved; others are estimated when a price is configured.",
-    "Importe logs com os contadores retornados pela API. Não requer chave administrativa.":
+    "Import logs with counters returned by the API. No admin key required.":
       "Import logs with counters returned by the API. No admin key required.",
-    "Selecione um arquivo de consumo.": "Select a usage file.",
-    "O arquivo deve ter até 4 MB.": "The file must be no larger than 4 MB.",
-    "Limite de 100.000 registros locais atingido.":
+    "Select a usage file.": "Select a usage file.",
+    "The file must be no larger than 4 MB.":
+      "The file must be no larger than 4 MB.",
+    "The limit of 100,000 local records has been reached.":
       "The limit of 100,000 local records has been reached.",
-    "Falha ao importar.": "Import failed.",
-    "Arquivo inválido. Use JSON ou JSONL com um registro de consumo por chamada.":
+    "Import failed.": "Import failed.",
+    "Invalid file. Use JSON or JSONL with one usage record per request.":
       "Invalid file. Use JSON or JSONL with one usage record per request.",
-    "Importe entre 1 e 10.000 registros por arquivo.":
+    "Import between 1 and 10,000 records per file.":
       "Import between 1 and 10,000 records per file.",
-    "Registro {index}: informe provider, timestamp, model e usage (ou usageMetadata).":
+    "Record {index}: provide provider, timestamp, model and usage (or usageMetadata).":
       "Record {index}: provide provider, timestamp, model and usage (or usageMetadata).",
-    "Registro {index}: contadores devem ser inteiros não negativos.":
+    "Record {index}: counters must be nonnegative integers.":
       "Record {index}: counters must be nonnegative integers.",
-    "Registro {index}: nenhum contador de tokens reconhecido para {provider}.":
+    "Record {index}: no recognized token counter for {provider}.":
       "Record {index}: no recognized token counter for {provider}.",
-    "Não foi possível ler os dados locais. Verifique o arquivo e as permissões.":
+    "Could not read local data. Check the file and permissions.":
       "Could not read local data. Check the file and permissions.",
-    "Não foi possível ler as preferências locais.":
-      "Could not read local preferences.",
-    "Acesso permitido apenas pela dashboard local.":
+    "Could not read local preferences.": "Could not read local preferences.",
+    "Access is allowed only from the local dashboard.":
       "Access is allowed only from the local dashboard.",
-    Custo: "Cost",
-    "Alternar menu lateral": "Toggle sidebar",
-    "Nenhum dado foi carregado ainda.": "No data has been loaded yet.",
-    "Lendo seu histórico local. A primeira coleta pode levar alguns instantes; depois, os arquivos inalterados ficam em cache.":
+    Cost: "Cost",
+    "Toggle sidebar": "Toggle sidebar",
+    "No data has been loaded yet.": "No data has been loaded yet.",
+    "Reading your local history. The first collection may take a moment; unchanged files are cached afterward.":
       "Reading your local history. The first collection may take a moment; unchanged files are cached afterward.",
-    "Os totais podem estar incompletos.": "Totals may be incomplete.",
-    "Ver diagnóstico": "View diagnostics",
-    "Horários de São Paulo · Histórico de até 90 dias":
+    "Totals may be incomplete.": "Totals may be incomplete.",
+    "View diagnostics": "View diagnostics",
+    "São Paulo time · Up to 90 days of history":
       "São Paulo time · Up to 90 days of history",
-    "Uso local de IA": "Local AI usage",
-    Acompanhamento: "Tracking",
-    "sem dados": "no data",
-    "Fica nesta máquina.": "Stays on this computer.",
-    "Só contadores e nomes de modelo; nenhuma conversa é lida.":
+    "Local AI usage": "Local AI usage",
+    Tracking: "Tracking",
+    "no data": "no data",
+    "Stays on this computer.": "Stays on this computer.",
+    "Only counters and model names; no conversations are read.":
       "Only counters and model names; no conversations are read.",
-    "Tokens consumidos": "Tokens used",
-    "Acima do período anterior": "Above the previous period",
-    "Abaixo do período anterior": "Below the previous period",
-    "Sem período anterior para comparar": "No previous period to compare",
-    "entrada ·": "input ·",
-    saída: "output",
-    "Custo no período": "Cost in this period",
-    Parcial: "Partial",
-    "Economia por cache": "Cache savings",
-    "Sem tarifa para estimar": "No rate to estimate",
-    "do custo sem cache": " of the cost without cache",
-    "registros com cache sem tarifa": "cached records without a rate",
-    "Aproveitamento de cache": "Cache utilization",
-    "tokens de entrada": "input tokens",
-    "Consumo por dia": "Daily usage",
-    "Entrada + saída, com cache · últimos":
+    "Tokens used": "Tokens used",
+    "Above the previous period": "Above the previous period",
+    "Below the previous period": "Below the previous period",
+    "No previous period to compare": "No previous period to compare",
+    "input ·": "input ·",
+    output: "output",
+    "Cost in this period": "Cost in this period",
+    Partial: "Partial",
+    "Cache savings": "Cache savings",
+    "No rate to estimate": "No rate to estimate",
+    "of the cost without cache": " of the cost without cache",
+    "cached records without a rate": "cached records without a rate",
+    "Cache utilization": "Cache utilization",
+    "input tokens": "input tokens",
+    "Daily usage": "Daily usage",
+    "Input + output, including cache · last":
       "Input + output, including cache · last",
-    dias: "days",
-    "Sem consumo": "No usage",
-    "Nenhum contador no histórico": "No counters in the history",
+    days: "days",
+    "No usage": "No usage",
+    "No counters in the history": "No counters in the history",
     local: "local",
-    importado: "imported",
-    ", mês atual": ", current month",
-    "Nenhuma meta definida. A meta acompanha o consumo sem bloquear suas ferramentas.":
+    imported: "imported",
+    ", current month": ", current month",
+    "No goal set. The goal tracks usage without blocking your tools.":
       "No goal set. The goal tracks usage without blocking your tools.",
-    Mensalidades: "Subscription fees",
-    "Modelos mais usados": "Most used models",
-    modelo: "model",
-    em: "in",
-    sessão: "session",
-    chamada: "request",
-    "Ver atividade": "View activity",
-    "Custo parcial": "Partial cost",
-    "sem tarifa cadastrada; esses registros ficam fora do custo.":
+    "Subscription fees": "Subscription fees",
+    "Most used models": "Most used models",
+    model: "model",
+    in: "in",
+    session: "session",
+    request: "request",
+    "View activity": "View activity",
+    "Partial cost": "Partial cost",
+    "without a configured rate; these records are excluded from cost.":
       "without a configured rate; these records are excluded from cost.",
-    "Definir tarifa": "Set rate",
-    "sem tarifa": "no rate",
-    "Mensalidades, meta de tokens, cotação e tarifas por modelo.":
+    "Set rate": "Set rate",
+    "no rate": "no rate",
+    "Subscription fees, token goal, exchange rate and model prices.":
       "Subscription fees, token goal, exchange rate and model prices.",
-    "Seu histórico fica aqui": "Your history stays here",
-    "Execução local, sem login.": "Local execution, no login.",
-    "Leitura automática do histórico local deste computador. Nenhuma chave de API necessária.":
+    "Your history stays here": "Your history stays here",
+    "Local execution, no login.": "Local execution, no login.",
+    "Automatic reading of this computer’s local history. No API key required.":
       "Automatic reading of this computer’s local history. No API key required.",
-    "arquivo consultado": "file checked",
-    "registro de uso": "usage record",
-    "arquivo(s) ou registro(s) de": "files or records from",
-    "não puderam ser lidos. Os totais podem estar incompletos.":
+    "file checked": "file checked",
+    "usage record": "usage record",
+    "files or records from": "files or records from",
+    "could not be read. Totals may be incomplete.":
       "could not be read. Totals may be incomplete.",
-    "{count} registros ou arquivos não puderam ser lidos":
+    "{count} records or files could not be read":
       "{count} records or files could not be read",
-    "{amount} · cotação {rate}": "{amount} · exchange rate {rate}",
-    "Informado {amount}": "Reported {amount}",
-    "estimado {amount}": "estimated {amount}",
-    "{amount} economizados": "{amount} saved",
-    "{amount}/mês": "{amount}/month",
-    "Meta mensal: {percent}": "Monthly goal: {percent}",
-    "e mais {count}": "and {count} more",
+    "{amount} · exchange rate {rate}": "{amount} · exchange rate {rate}",
+    "Reported {amount}": "Reported {amount}",
+    "estimated {amount}": "estimated {amount}",
+    "{amount} saved": "{amount} saved",
+    "{amount}/month": "{amount}/month",
+    "Monthly goal: {percent}": "Monthly goal: {percent}",
+    "and {count} more": "and {count} more",
   },
   es: {
-    Idioma: "Idioma",
-    "Idioma da interface": "Idioma de la interfaz",
-    "A escolha será aplicada ao salvar as preferências.":
+    Language: "Idioma",
+    "Interface language": "Idioma de la interfaz",
+    "Your choice takes effect when you save preferences.":
       "La selección se aplica al guardar las preferencias.",
-    "Visão geral": "Resumen",
-    Atividade: "Actividad",
-    "Fontes de dados": "Fuentes de datos",
-    Preferências: "Preferencias",
-    "Ir para o conteúdo": "Ir al contenido",
-    "Fechar navegação": "Cerrar navegación",
-    "Tokenusage início": "Inicio de Tokenusage",
-    "Meu workspace": "Mi espacio de trabajo",
-    "Pessoal · local": "Personal · local",
-    ACOMPANHAMENTO: "SEGUIMIENTO",
-    "Navegação principal": "Navegación principal",
-    "SUAS FERRAMENTAS": "TUS HERRAMIENTAS",
-    "Histórico disponível": "Historial disponible",
-    "Sem histórico de tokens": "Sin historial de tokens",
-    "Seus dados. Sua máquina.": "Tus datos. Tu computadora.",
-    "Métricas locais, sem enviar suas conversas para a nuvem.":
+    Overview: "Resumen",
+    Activity: "Actividad",
+    "Data sources": "Fuentes de datos",
+    Preferences: "Preferencias",
+    "Skip to content": "Ir al contenido",
+    "Close navigation": "Cerrar navegación",
+    "Tokenusage home": "Inicio de Tokenusage",
+    "My workspace": "Mi espacio de trabajo",
+    "Personal · local": "Personal · local",
+    TRACKING: "SEGUIMIENTO",
+    "Main navigation": "Navegación principal",
+    "YOUR TOOLS": "TUS HERRAMIENTAS",
+    "History available": "Historial disponible",
+    "No token history": "Sin historial de tokens",
+    "Your data. Your computer.": "Tus datos. Tu computadora.",
+    "Local metrics, without sending your conversations to the cloud.":
       "Métricas locales, sin enviar tus conversaciones a la nube.",
-    "Sobre a coleta": "Sobre la recopilación",
-    "Este computador": "Esta computadora",
-    "Fechar menu": "Cerrar menú",
-    "Abrir menu": "Abrir menú",
-    "Dados locais": "Datos locales",
-    "Como funciona a coleta": "Cómo funciona la recopilación",
-    EU: "YO",
-    "INTELIGÊNCIA SOBRE SEU USO DE IA": "INFORMACIÓN SOBRE TU USO DE IA",
-    "Todos os seus tokens. Uma perspectiva mais clara.":
+    "About collection": "Sobre la recopilación",
+    "This computer": "Esta computadora",
+    "Close menu": "Cerrar menú",
+    "Open menu": "Abrir menú",
+    "Local data": "Datos locales",
+    "How collection works": "Cómo funciona la recopilación",
+    ME: "YO",
+    "INSIGHTS INTO YOUR AI USAGE": "INFORMACIÓN SOBRE TU USO DE IA",
+    "All your tokens. A clearer perspective.":
       "Todos tus tokens. Una perspectiva más clara.",
-    "Explore o consumo das suas sessões, sem o conteúdo das conversas.":
+    "Explore your session usage, without conversation content.":
       "Explora el consumo de tus sesiones, sin el contenido de las conversaciones.",
-    "Saiba de onde vêm os números e quais dados estão disponíveis.":
+    "See where the numbers come from and which data is available.":
       "Consulta de dónde vienen las cifras y qué datos están disponibles.",
-    "Um acompanhamento que faz sentido para a sua rotina.":
+    "Tracking that fits your routine.":
       "Un seguimiento que se adapta a tu rutina.",
-    Atualizando: "Actualizando",
-    Atualizar: "Actualizar",
-    "Exportar CSV": "Exportar CSV",
-    "Os números abaixo são da última coleta bem-sucedida.":
+    Refreshing: "Actualizando",
+    Refresh: "Actualizar",
+    "Export CSV": "Exportar CSV",
+    "The numbers below are from the last successful collection.":
       "Las cifras siguientes son de la última recopilación correcta.",
-    "Tentar novamente": "Reintentar",
-    "Lendo seu histórico local": "Leyendo tu historial local",
-    "A primeira coleta pode levar alguns instantes. Depois, os arquivos inalterados ficam em cache.":
+    "Try again": "Reintentar",
+    "Reading your local history": "Leyendo tu historial local",
+    "The first collection may take a moment. Unchanged files are cached afterward.":
       "La primera recopilación puede tardar unos instantes. Después, los archivos sin cambios quedan en caché.",
-    "Origem do consumo": "Origen del consumo",
-    Ferramentas: "Herramientas",
-    ferramentas: "herramientas",
-    Serviço: "Servicio",
-    Projeto: "Proyecto",
-    "Todos os serviços": "Todos los servicios",
-    "Todos os projetos": "Todos los proyectos",
-    Período: "Período",
-    "Últimos 7 dias": "Últimos 7 días",
-    "Últimos 30 dias": "Últimos 30 días",
-    "Últimos 90 dias": "Últimos 90 días",
-    "Horários de São Paulo": "Hora de São Paulo",
-    "Histórico de até 90 dias": "Hasta 90 días de historial",
-    "TOKENS CONSUMIDOS": "TOKENS CONSUMIDOS",
-    "vs. período anterior": "vs. período anterior",
-    "Sem registros no período": "Sin registros en este período",
-    "APROVEITAMENTO DE CACHE": "USO DE CACHÉ",
-    "Aguardando contadores de tokens": "Esperando contadores de tokens",
-    "ECONOMIA POR CACHE": "AHORRO POR CACHÉ",
-    Estimada: "Estimada",
-    "% do custo sem cache": "% del costo sin caché",
-    "Sem tokens de cache no período": "Sin tokens en caché en este período",
-    "SESSÕES COM CONSUMO": "SESIONES CON CONSUMO",
-    "CHAMADAS IMPORTADAS": "SOLICITUDES IMPORTADAS",
-    "Nenhum histórico nesta seleção": "Sin historial para esta selección",
-    "CUSTO ESTIMADO / REAL": "COSTO ESTIMADO / REAL",
-    Misto: "Mixto",
-    Estimado: "Estimado",
-    Real: "Real",
-    "Real:": "Real:",
-    "· Estimado:": "· Estimado:",
-    "Preço por modelo não cadastrado": "Sin precio para este modelo",
-    de: "de",
-    "registros sem estimativa": "registros sin estimación",
-    "sem estimativa": "sin estimación",
-    "Valores calculados com base na tabela de preços por modelo em USD/BRL e nos custos nativos informados pelas ferramentas.":
+    "Usage source": "Origen del consumo",
+    Tools: "Herramientas",
+    tools: "herramientas",
+    Service: "Servicio",
+    Project: "Proyecto",
+    "All services": "Todos los servicios",
+    "All projects": "Todos los proyectos",
+    Period: "Período",
+    "Last 7 days": "Últimos 7 días",
+    "Last 30 days": "Últimos 30 días",
+    "Last 90 days": "Últimos 90 días",
+    "São Paulo time": "Hora de São Paulo",
+    "Up to 90 days of history": "Hasta 90 días de historial",
+    "TOKENS USED": "TOKENS CONSUMIDOS",
+    "vs. previous period": "vs. período anterior",
+    "No records in this period": "Sin registros en este período",
+    "CACHE UTILIZATION": "USO DE CACHÉ",
+    "Waiting for token counters": "Esperando contadores de tokens",
+    "CACHE SAVINGS": "AHORRO POR CACHÉ",
+    "Estimated savings": "Estimada",
+    "% of the cost without cache": "% del costo sin caché",
+    "No cached tokens in this period": "Sin tokens en caché en este período",
+    "SESSIONS WITH USAGE": "SESIONES CON CONSUMO",
+    "IMPORTED REQUESTS": "SOLICITUDES IMPORTADAS",
+    "No history for this selection": "Sin historial para esta selección",
+    "ESTIMATED / ACTUAL COST": "COSTO ESTIMADO / REAL",
+    Mixed: "Mixto",
+    Estimated: "Estimado",
+    Actual: "Real",
+    "Actual:": "Real:",
+    "· Estimated:": "· Estimado:",
+    "No price set for this model": "Sin precio para este modelo",
+    of: "de",
+    "records without an estimate": "registros sin estimación",
+    "without an estimate": "sin estimación",
+    "Values calculated from model prices in USD/BRL and costs reported by the tools.":
       "Valores calculados según los precios por modelo en USD/BRL y los costos informados por las herramientas.",
     Local: "Local",
-    Importado: "Importado",
-    "Sem dados": "Sin datos",
+    Imported: "Importado",
+    "No data": "Sin datos",
     tokens: "tokens",
     Tokens: "Tokens",
-    "Sem consumo nesta seleção": "Sin consumo para esta selección",
-    "Suas chamadas de API, em um só lugar":
-      "Tus solicitudes de API en un solo lugar",
-    "Seu histórico começa aqui": "Tu historial comienza aquí",
-    "Importe logs com os contadores retornados pelas APIs. Sem registros locais, não há consumo remoto disponível para consultar.":
+    "No usage for this selection": "Sin consumo para esta selección",
+    "Your API requests in one place": "Tus solicitudes de API en un solo lugar",
+    "Your history starts here": "Tu historial comienza aquí",
+    "Import logs with the counters returned by APIs. Without local records, remote usage cannot be retrieved.":
       "Importa registros con los contadores devueltos por las API. Sin registros locales, no se puede consultar el consumo remoto.",
-    "Esta seleção não tem registros de tokens. Consulte o diagnóstico das fontes ou experimente outros filtros.":
+    "This selection has no token records. Check source diagnostics or try other filters.":
       "Esta selección no tiene registros de tokens. Consulta el diagnóstico de las fuentes o prueba otros filtros.",
-    "Importar consumo de API": "Importar consumo de API",
-    "Ver fontes de dados": "Ver fuentes de datos",
-    "Consumo ao longo do tempo": "Consumo a lo largo del tiempo",
-    "Um olhar diário sobre o uso de cada serviço.":
+    "Import API usage": "Importar consumo de API",
+    "View data sources": "Ver fuentes de datos",
+    "Usage over time": "Consumo a lo largo del tiempo",
+    "A daily view of each service’s usage.":
       "Una vista diaria del uso de cada servicio.",
-    Diário: "Diario",
-    "Por serviço": "Por servicio",
-    "Participação no consumo": "Proporción del consumo",
-    "Seus modelos mais usados": "Tus modelos más usados",
-    "Onde os seus tokens estão sendo consumidos.":
-      "Dónde se consumen tus tokens.",
-    modelos: "modelos",
-    Modelo: "Modelo",
-    Modelos: "Modelos",
+    Daily: "Diario",
+    "By service": "Por servicio",
+    "Share of usage": "Proporción del consumo",
+    "Your most used models": "Tus modelos más usados",
+    "Where your tokens are being used.": "Dónde se consumen tus tokens.",
+    models: "modelos",
+    Model: "Modelo",
+    Models: "Modelos",
     Cache: "Caché",
-    Participação: "Proporción",
-    "Explorar atividade": "Explorar actividad",
-    "Por projeto": "Por proyecto",
-    "Seu foco no período": "Tu enfoque en este período",
-    representa: "representa",
-    "% do seu consumo neste período.": "% de tu consumo en este período.",
-    "Assinaturas por mês": "Suscripciones mensuales",
-    "Valores informados por você, separados do custo de tokens.":
+    Share: "Proporción",
+    "Explore activity": "Explorar actividad",
+    "By project": "Por proyecto",
+    "Your focus in this period": "Tu enfoque en este período",
+    "accounts for": "representa",
+    "% of your usage in this period.": "% de tu consumo en este período.",
+    "Monthly subscriptions": "Suscripciones mensuales",
+    "Values provided by you, separate from token costs.":
       "Valores indicados por ti, separados del costo de tokens.",
-    "Adicione as mensalidades para acompanhar seu investimento em IA.":
+    "Add subscription fees to track your spending on AI.":
       "Añade las cuotas mensuales para seguir tu gasto en IA.",
-    "Não informado": "No indicado",
-    Configurar: "Configurar",
-    "Meta mensal de tokens": "Objetivo mensual de tokens",
-    "· seleção atual": "· selección actual",
-    "Histórico de sessões": "Historial de sesiones",
-    "Histórico de chamadas": "Historial de solicitudes",
-    sessões: "sesiones",
-    chamadas: "solicitudes",
-    "no período selecionado": "en el período seleccionado",
-    "Buscar atividade": "Buscar actividad",
-    "Buscar projeto ou modelo": "Buscar proyecto o modelo",
-    "Serviço / projeto": "Servicio / proyecto",
-    "Última atividade": "Última actividad",
-    "Custo / cobertura": "Costo / cobertura",
-    "Mostrar mais 20": "Mostrar 20 más",
-    "Nenhum registro encontrado": "No se encontraron registros",
-    "Experimente outro período, serviço ou busca.":
+    "Not provided": "No indicado",
+    Configure: "Configurar",
+    "Monthly token goal": "Objetivo mensual de tokens",
+    "· current selection": "· selección actual",
+    "Session history": "Historial de sesiones",
+    "Request history": "Historial de solicitudes",
+    sessions: "sesiones",
+    requests: "solicitudes",
+    "in the selected period": "en el período seleccionado",
+    "Search activity": "Buscar actividad",
+    "Search project or model": "Buscar proyecto o modelo",
+    "Service / project": "Servicio / proyecto",
+    "Last activity": "Última actividad",
+    "Cost / coverage": "Costo / cobertura",
+    "Show 20 more": "Mostrar 20 más",
+    "No records found": "No se encontraron registros",
+    "Try another period, service or search.":
       "Prueba otro período, servicio o búsqueda.",
-    "DO SEU JEITO": "A TU MANERA",
-    "Preferências de acompanhamento": "Preferencias de seguimiento",
-    Geral: "General",
-    "Tabela de preços": "Tabla de precios",
-    "Informe o que você paga nas assinaturas. Esses valores ficam separados dos custos registrados pelas ferramentas.":
+    "YOUR WAY": "A TU MANERA",
+    "Tracking preferences": "Preferencias de seguimiento",
+    General: "General",
+    "Price table": "Tabla de precios",
+    "Enter what you pay for subscriptions. These amounts are separate from costs recorded by the tools.":
       "Indica lo que pagas por suscripciones. Estos valores se separan de los costos registrados por las herramientas.",
-    "R$ / mês": "R$ / mes",
-    "Total mensal informado": "Total mensual indicado",
-    "Opcional. Acompanhamento de consumo, sem bloquear suas ferramentas.":
+    "R$ / month": "R$ / mes",
+    "Reported monthly total": "Total mensual indicado",
+    "Optional. Track usage without blocking your tools.":
       "Opcional. Sigue el consumo sin bloquear tus herramientas.",
-    "Ex.: 100000000": "Ej.: 100000000",
-    "Cotação do Dólar (USD / BRL)": "Tipo de cambio del dólar (USD / BRL)",
-    "Usada para estimar custos e economia em reais. Padrão: R$ 5,75.":
+    "E.g. 100000000": "Ej.: 100000000",
+    "Dollar exchange rate (USD / BRL)": "Tipo de cambio del dólar (USD / BRL)",
+    "Used to estimate costs and savings in BRL. Default: R$ 5.75.":
       "Se usa para estimar costos y ahorros en reales. Valor predeterminado: R$ 5,75.",
-    "Tabela de Preços por Modelo (USD por 1M tokens)":
+    "Model price table (USD per 1M tokens)":
       "Tabla de precios por modelo (USD por 1M tokens)",
-    "Preços de referência históricos, sem atualização automática. Personalize para estimar ferramentas sem custo informado.":
+    "Historical reference prices, without automatic updates. Customize to estimate tools with no reported costs.":
       "Precios de referencia históricos, sin actualización automática. Personalízalos para estimar herramientas sin costos informados.",
-    "Nome do modelo": "Nombre del modelo",
-    "Ex.: meu-modelo": "Ej.: mi-modelo",
-    "Adicionar modelo": "Añadir modelo",
-    "Entrada ($)": "Entrada ($)",
-    "Saída ($)": "Salida ($)",
+    "Model name": "Nombre del modelo",
+    "E.g. my-model": "Ej.: mi-modelo",
+    "Add model": "Añadir modelo",
+    "Input ($)": "Entrada ($)",
+    "Output ($)": "Salida ($)",
     "Cache ($)": "Caché ($)",
-    Ações: "Acciones",
-    Personalizado: "Personalizado",
-    Entrada: "Entrada",
-    Saída: "Salida",
-    "Restaurar padrão": "Restaurar valor predeterminado",
-    "Remover modelo": "Eliminar modelo",
-    "Salvando…": "Guardando…",
-    "Preferências salvas": "Preferencias guardadas",
-    "Salvar preferências": "Guardar preferencias",
-    "Seu histórico fica aqui.": "Tu historial se queda aquí.",
-    "Os coletores leem contadores de tokens e metadados de sessão. O conteúdo das conversas não é enviado ao navegador.":
+    Actions: "Acciones",
+    Custom: "Personalizado",
+    Input: "Entrada",
+    Output: "Salida",
+    "Restore default": "Restaurar valor predeterminado",
+    "Remove model": "Eliminar modelo",
+    "Saving…": "Guardando…",
+    "Preferences saved": "Preferencias guardadas",
+    "Save preferences": "Guardar preferencias",
+    "Your history stays here.": "Tu historial se queda aquí.",
+    "Collectors read token counters and session metadata. Conversation content is not sent to the browser.":
       "Los recopiladores leen contadores de tokens y metadatos de sesión. El contenido de las conversaciones no se envía al navegador.",
-    "Preferências e métricas são guardadas localmente neste computador. A dashboard não usa cookies de login nem chaves das suas ferramentas.":
+    "Preferences and metrics are stored locally on this computer. The dashboard uses no login cookies or tool keys.":
       "Las preferencias y métricas se guardan localmente en esta computadora. El panel no usa cookies de inicio de sesión ni claves de tus herramientas.",
-    "Execução local": "Ejecución local",
-    "Este modelo já está na tabela.": "Este modelo ya está en la tabla.",
-    "Informe o nome do modelo.": "Indica el nombre del modelo.",
-    "Não foi possível salvar.": "No se pudo guardar.",
-    "PERFIL DESTE COMPUTADOR": "PERFIL DE ESTA COMPUTADORA",
-    "Suas fontes de consumo": "Tus fuentes de consumo",
-    "Leitura automática do histórico local. Nenhuma chave de API necessária.":
+    "Local execution": "Ejecución local",
+    "This model is already in the table.": "Este modelo ya está en la tabla.",
+    "Enter the model name.": "Indica el nombre del modelo.",
+    "Could not save.": "No se pudo guardar.",
+    "THIS COMPUTER’S PROFILE": "PERFIL DE ESTA COMPUTADORA",
+    "Your usage sources": "Tus fuentes de consumo",
+    "Automatic reading of local history. No API key required.":
       "Lectura automática del historial local. No se necesita una clave de API.",
-    Coletando: "Recopilando",
-    "Sem contadores": "Sin contadores",
-    "Não encontrado": "No encontrado",
-    "Requer atenção": "Requiere atención",
-    "arquivos consultados": "archivos consultados",
-    "registros de uso": "registros de uso",
-    "Último:": "Último:",
-    "arquivo(s) ou registro(s) não puderam ser lidos. Os totais podem estar incompletos.":
+    Collecting: "Recopilando",
+    "No counters": "Sin contadores",
+    "Not found": "No encontrado",
+    "Needs attention": "Requiere atención",
+    "files checked": "archivos consultados",
+    "usage records": "registros de uso",
+    "Latest:": "Último:",
+    "files or records could not be read. Totals may be incomplete.":
       "archivos o registros no se pudieron leer. Los totales pueden estar incompletos.",
-    "CHAMADAS DOS SEUS PROJETOS": "SOLICITUDES DE TUS PROYECTOS",
-    "Traga seus logs de API": "Importa tus registros de API",
-    "Importe os contadores retornados por Grok, OpenAI, Claude ou Gemini. O arquivo é processado neste computador.":
+    "YOUR PROJECT REQUESTS": "SOLICITUDES DE TUS PROYECTOS",
+    "Bring your API logs": "Importa tus registros de API",
+    "Import counters returned by Grok, OpenAI, Claude or Gemini. The file is processed on this computer.":
       "Importa los contadores de Grok, OpenAI, Claude o Gemini. El archivo se procesa en esta computadora.",
-    "Arquivo de consumo de API": "Archivo de consumo de API",
-    "Importando…": "Importando…",
-    "Importar JSON ou JSONL": "Importar JSON o JSONL",
-    "Até 4 MB · 10.000 registros por arquivo":
+    "API usage file": "Archivo de consumo de API",
+    "Importing…": "Importando…",
+    "Import JSON or JSONL": "Importar JSON o JSONL",
+    "Up to 4 MB · 10,000 records per file":
       "Hasta 4 MB · 10.000 registros por archivo",
-    "Como preparar o arquivo": "Cómo preparar el archivo",
-    "Uma chamada por registro, com provider (codex, claude, grok ou gemini), timestamp, model, project opcional e usage. Para Gemini use usageMetadata. Inclua o ID da chamada para deduplicar.":
+    "How to prepare the file": "Cómo preparar el archivo",
+    "One request per record, with provider (codex, claude, grok or gemini), timestamp, model, optional project and usage. For Gemini use usageMetadata. Include the request ID to avoid duplicates.":
       "Una solicitud por registro, con provider (codex, claude, grok o gemini), timestamp, model, project opcional y usage. Para Gemini usa usageMetadata. Incluye el ID de la solicitud para evitar duplicados.",
-    "Exemplo de formato. Esses valores não entram na dashboard.":
+    "Format example. These values are not added to the dashboard.":
       "Ejemplo de formato. Estos valores no se añaden al panel.",
-    "O histórico local cobre as sessões salvas nesta máquina. Uso nos sites, em outros computadores e chamadas sem logs não aparece automaticamente.":
+    "Local history covers sessions saved on this computer. Website usage, other computers and requests without logs do not appear automatically.":
       "El historial local incluye sesiones guardadas en esta computadora. El uso en sitios web, otras computadoras y solicitudes sin registros no aparece automáticamente.",
-    "Selecione um arquivo de até 4 MB.": "Selecciona un archivo de hasta 4 MB.",
-    "Não foi possível importar.": "No se pudo importar.",
-    "Selecionar tema": "Seleccionar tema",
-    "Tema claro": "Tema claro",
-    "Tema escuro": "Tema oscuro",
-    "Tema do sistema": "Tema del sistema",
-    "Entrada + saída · inclui cache": "Entrada + salida · incluye caché",
-    "serviços usados": "servicios usados",
-    "Não foi possível consultar seu histórico.":
-      "No se pudo consultar tu historial.",
-    "Falha na coleta.": "Falló la recopilación.",
-    "{input} entrada + {output} saída": "{input} entrada + {output} salida",
-    "{count} tokens reutilizados": "{count} tokens reutilizados",
-    "{models} modelos · {projects} projetos":
+    "Select a file up to 4 MB.": "Selecciona un archivo de hasta 4 MB.",
+    "Could not import.": "No se pudo importar.",
+    "Select theme": "Seleccionar tema",
+    "Light theme": "Tema claro",
+    "Dark theme": "Tema oscuro",
+    "System theme": "Tema del sistema",
+    "Input + output · includes cache": "Entrada + salida · incluye caché",
+    "services used": "servicios usados",
+    "Could not read your history.": "No se pudo consultar tu historial.",
+    "Collection failed.": "Falló la recopilación.",
+    "{input} input + {output} output": "{input} entrada + {output} salida",
+    "{count} reused tokens": "{count} tokens reutilizados",
+    "{models} models · {projects} projects":
       "{models} modelos · {projects} proyectos",
-    "Distribuição de {count} tokens por serviço":
+    "Distribution of {count} tokens by service":
       "Distribución de {count} tokens por servicio",
-    "{added} novos registros; {processed} processados. Importações repetidas não duplicam consumo.":
+    "{added} new records; {processed} processed. Repeated imports do not duplicate usage.":
       "{added} registros nuevos; {processed} procesados. Las importaciones repetidas no duplican el consumo.",
-    "{count} registros ou arquivos não puderam ser lidos. Ver diagnóstico":
+    "{count} records or files could not be read. View diagnostics":
       "No se pudieron leer {count} registros o archivos. Ver diagnóstico",
-    "{count} de 4 fontes {kind} com histórico":
+    "{count} of 4 {kind} sources with history":
       "{count} de 4 fuentes {kind} con historial",
-    locais: "locales",
-    importadas: "importadas",
-    "Atualizado às {time}": "Actualizado a las {time}",
-    "{label} de {model}": "{label} de {model}",
-    "Codex · histórico local": "Codex · historial local",
-    "Claude Code · histórico local": "Claude Code · historial local",
-    "Grok Build · histórico local": "Grok Build · historial local",
-    "Gemini CLI · histórico local": "Gemini CLI · historial local",
-    "Histórico local não encontrado neste usuário.":
+    "local sources": "locales",
+    "imported sources": "importadas",
+    "Updated at {time}": "Actualizado a las {time}",
+    "{label} for {model}": "{label} de {model}",
+    "Codex · local history": "Codex · historial local",
+    "Claude Code · local history": "Claude Code · historial local",
+    "Grok Build · local history": "Grok Build · historial local",
+    "Gemini CLI · local history": "Gemini CLI · historial local",
+    "Local history was not found for this user.":
       "No se encontró historial local para este usuario.",
-    "Não foi possível ler parte do histórico. Verifique as permissões.":
+    "Could not read part of the history. Check permissions.":
       "No se pudo leer parte del historial. Revisa los permisos.",
-    "Tokens por turno e modelo. Custos informados pela ferramenta quando disponíveis.":
+    "Tokens per turn and model. Tool-reported costs when available.":
       "Tokens por turno y modelo. Costos de la herramienta cuando están disponibles.",
-    "Tokens reais extraídos das sessões salvas neste computador.":
+    "Actual token counts from sessions saved on this computer.":
       "Tokens reales extraídos de sesiones guardadas en esta computadora.",
-    "O histórico existe, mas alguns arquivos não puderam ser interpretados.":
+    "History exists, but some files could not be parsed.":
       "Existe historial, pero no se pudieron interpretar algunos archivos.",
-    "Gemini encontrado, mas sem sessões com contadores de tokens. Logs antigos de mensagens não informam consumo.":
+    "Gemini found, but no sessions have token counters. Older message logs do not report usage.":
       "Se encontró Gemini, pero no hay sesiones con contadores de tokens. Los registros antiguos no indican el consumo.",
-    "Nenhum registro de tokens disponível nos últimos 90 dias.":
+    "No token records available in the last 90 days.":
       "Sin registros de tokens en los últimos 90 días.",
-    "Consumo importado dos seus projetos. Nenhuma consulta remota é feita.":
+    "Usage imported from your projects. No remote queries are made.":
       "Consumo importado de tus proyectos. No se realizan consultas remotas.",
-    "Importe logs JSON ou JSONL retornados pelas APIs.":
+    "Import JSON or JSONL logs returned by APIs.":
       "Importa registros JSON o JSONL de las API.",
-    "Origem não permitida.": "Origen no permitido.",
-    "Não foi possível salvar as preferências locais.":
+    "Origin not allowed.": "Origen no permitido.",
+    "Could not save local preferences.":
       "No se pudieron guardar las preferencias locales.",
-    "Valores inválidos. Informe números positivos ou deixe os campos vazios.":
+    "Invalid values. Enter positive numbers or leave the fields blank.":
       "Valores no válidos. Introduce números positivos o deja los campos vacíos.",
-    "Tokenusage · Seu consumo de IA": "Tokenusage · Tu consumo de IA",
-    "Importação local JSON / JSONL": "Importación local JSON / JSONL",
-    "Consumo extraído dos arquivos importados. Custos informados são preservados; os demais são estimados quando há preço configurado.":
+    "Tokenusage · Your AI usage": "Tokenusage · Tu consumo de IA",
+    "Local JSON / JSONL import": "Importación local JSON / JSONL",
+    "Usage extracted from imported files. Reported costs are preserved; others are estimated when a price is configured.":
       "Consumo extraído de los archivos importados. Se conservan los costos informados; los demás se estiman si hay un precio configurado.",
-    "Importe logs com os contadores retornados pela API. Não requer chave administrativa.":
+    "Import logs with counters returned by the API. No admin key required.":
       "Importa registros con los contadores de la API. No se requiere una clave administrativa.",
-    "Selecione um arquivo de consumo.": "Selecciona un archivo de consumo.",
-    "O arquivo deve ter até 4 MB.": "El archivo debe tener hasta 4 MB.",
-    "Limite de 100.000 registros locais atingido.":
+    "Select a usage file.": "Selecciona un archivo de consumo.",
+    "The file must be no larger than 4 MB.":
+      "El archivo debe tener hasta 4 MB.",
+    "The limit of 100,000 local records has been reached.":
       "Se alcanzó el límite de 100.000 registros locales.",
-    "Falha ao importar.": "Falló la importación.",
-    "Arquivo inválido. Use JSON ou JSONL com um registro de consumo por chamada.":
+    "Import failed.": "Falló la importación.",
+    "Invalid file. Use JSON or JSONL with one usage record per request.":
       "Archivo no válido. Usa JSON o JSONL con un registro de consumo por solicitud.",
-    "Importe entre 1 e 10.000 registros por arquivo.":
+    "Import between 1 and 10,000 records per file.":
       "Importa entre 1 y 10.000 registros por archivo.",
-    "Registro {index}: informe provider, timestamp, model e usage (ou usageMetadata).":
+    "Record {index}: provide provider, timestamp, model and usage (or usageMetadata).":
       "Registro {index}: indica provider, timestamp, model y usage (o usageMetadata).",
-    "Registro {index}: contadores devem ser inteiros não negativos.":
+    "Record {index}: counters must be nonnegative integers.":
       "Registro {index}: los contadores deben ser enteros no negativos.",
-    "Registro {index}: nenhum contador de tokens reconhecido para {provider}.":
+    "Record {index}: no recognized token counter for {provider}.":
       "Registro {index}: no se reconoce ningún contador de tokens para {provider}.",
-    "Não foi possível ler os dados locais. Verifique o arquivo e as permissões.":
+    "Could not read local data. Check the file and permissions.":
       "No se pudieron leer los datos locales. Revisa el archivo y los permisos.",
-    "Não foi possível ler as preferências locais.":
+    "Could not read local preferences.":
       "No se pudieron leer las preferencias locales.",
-    "Acesso permitido apenas pela dashboard local.":
+    "Access is allowed only from the local dashboard.":
       "Solo se permite el acceso desde el panel local.",
-    Custo: "Costo",
-    "Alternar menu lateral": "Alternar menú lateral",
-    "Nenhum dado foi carregado ainda.": "Aún no se han cargado datos.",
-    "Lendo seu histórico local. A primeira coleta pode levar alguns instantes; depois, os arquivos inalterados ficam em cache.":
+    Cost: "Costo",
+    "Toggle sidebar": "Alternar menú lateral",
+    "No data has been loaded yet.": "Aún no se han cargado datos.",
+    "Reading your local history. The first collection may take a moment; unchanged files are cached afterward.":
       "Leyendo tu historial local. La primera recopilación puede tardar; después, los archivos sin cambios quedan en caché.",
-    "Os totais podem estar incompletos.":
-      "Los totales pueden estar incompletos.",
-    "Ver diagnóstico": "Ver diagnóstico",
-    "Horários de São Paulo · Histórico de até 90 dias":
+    "Totals may be incomplete.": "Los totales pueden estar incompletos.",
+    "View diagnostics": "Ver diagnóstico",
+    "São Paulo time · Up to 90 days of history":
       "Hora de São Paulo · Hasta 90 días de historial",
-    "Uso local de IA": "Uso local de IA",
-    Acompanhamento: "Seguimiento",
-    "sem dados": "sin datos",
-    "Fica nesta máquina.": "Se queda en esta computadora.",
-    "Só contadores e nomes de modelo; nenhuma conversa é lida.":
+    "Local AI usage": "Uso local de IA",
+    Tracking: "Seguimiento",
+    "no data": "sin datos",
+    "Stays on this computer.": "Se queda en esta computadora.",
+    "Only counters and model names; no conversations are read.":
       "Solo contadores y nombres de modelos; no se leen conversaciones.",
-    "Tokens consumidos": "Tokens consumidos",
-    "Acima do período anterior": "Por encima del período anterior",
-    "Abaixo do período anterior": "Por debajo del período anterior",
-    "Sem período anterior para comparar": "Sin período anterior para comparar",
-    "entrada ·": "entrada ·",
-    saída: "salida",
-    "Custo no período": "Costo en este período",
-    Parcial: "Parcial",
-    "Economia por cache": "Ahorro por caché",
-    "Sem tarifa para estimar": "Sin tarifa para estimar",
-    "do custo sem cache": " del costo sin caché",
-    "registros com cache sem tarifa": "registros con caché sin tarifa",
-    "Aproveitamento de cache": "Uso de caché",
-    "tokens de entrada": "tokens de entrada",
-    "Consumo por dia": "Consumo diario",
-    "Entrada + saída, com cache · últimos":
+    "Tokens used": "Tokens consumidos",
+    "Above the previous period": "Por encima del período anterior",
+    "Below the previous period": "Por debajo del período anterior",
+    "No previous period to compare": "Sin período anterior para comparar",
+    "input ·": "entrada ·",
+    output: "salida",
+    "Cost in this period": "Costo en este período",
+    Partial: "Parcial",
+    "Cache savings": "Ahorro por caché",
+    "No rate to estimate": "Sin tarifa para estimar",
+    "of the cost without cache": " del costo sin caché",
+    "cached records without a rate": "registros con caché sin tarifa",
+    "Cache utilization": "Uso de caché",
+    "input tokens": "tokens de entrada",
+    "Daily usage": "Consumo diario",
+    "Input + output, including cache · last":
       "Entrada + salida, con caché · últimos",
-    dias: "días",
-    "Sem consumo": "Sin consumo",
-    "Nenhum contador no histórico": "Sin contadores en el historial",
+    days: "días",
+    "No usage": "Sin consumo",
+    "No counters in the history": "Sin contadores en el historial",
     local: "local",
-    importado: "importado",
-    ", mês atual": ", mes actual",
-    "Nenhuma meta definida. A meta acompanha o consumo sem bloquear suas ferramentas.":
+    imported: "importado",
+    ", current month": ", mes actual",
+    "No goal set. The goal tracks usage without blocking your tools.":
       "Sin objetivo definido. El objetivo sigue el consumo sin bloquear tus herramientas.",
-    Mensalidades: "Cuotas mensuales",
-    "Modelos mais usados": "Modelos más usados",
-    modelo: "modelo",
-    em: "en",
-    sessão: "sesión",
-    chamada: "solicitud",
-    "Ver atividade": "Ver actividad",
-    "Custo parcial": "Costo parcial",
-    "sem tarifa cadastrada; esses registros ficam fora do custo.":
+    "Subscription fees": "Cuotas mensuales",
+    "Most used models": "Modelos más usados",
+    model: "modelo",
+    in: "en",
+    session: "sesión",
+    request: "solicitud",
+    "View activity": "Ver actividad",
+    "Partial cost": "Costo parcial",
+    "without a configured rate; these records are excluded from cost.":
       "sin tarifa configurada; estos registros se excluyen del costo.",
-    "Definir tarifa": "Definir tarifa",
-    "sem tarifa": "sin tarifa",
-    "Mensalidades, meta de tokens, cotação e tarifas por modelo.":
+    "Set rate": "Definir tarifa",
+    "no rate": "sin tarifa",
+    "Subscription fees, token goal, exchange rate and model prices.":
       "Cuotas mensuales, objetivo de tokens, tipo de cambio y precios por modelo.",
-    "Seu histórico fica aqui": "Tu historial se queda aquí",
-    "Execução local, sem login.": "Ejecución local, sin inicio de sesión.",
-    "Leitura automática do histórico local deste computador. Nenhuma chave de API necessária.":
+    "Your history stays here": "Tu historial se queda aquí",
+    "Local execution, no login.": "Ejecución local, sin inicio de sesión.",
+    "Automatic reading of this computer’s local history. No API key required.":
       "Lectura automática del historial local de esta computadora. No se necesita una clave de API.",
-    "arquivo consultado": "archivo consultado",
-    "registro de uso": "registro de uso",
-    "arquivo(s) ou registro(s) de": "archivos o registros de",
-    "não puderam ser lidos. Os totais podem estar incompletos.":
+    "file checked": "archivo consultado",
+    "usage record": "registro de uso",
+    "files or records from": "archivos o registros de",
+    "could not be read. Totals may be incomplete.":
       "no se pudieron leer. Los totales pueden estar incompletos.",
-    "{count} registros ou arquivos não puderam ser lidos":
+    "{count} records or files could not be read":
       "No se pudieron leer {count} registros o archivos",
-    "{amount} · cotação {rate}": "{amount} · tipo de cambio {rate}",
-    "Informado {amount}": "Informado {amount}",
-    "estimado {amount}": "estimado {amount}",
-    "{amount} economizados": "{amount} ahorrados",
-    "{amount}/mês": "{amount}/mes",
-    "Meta mensal: {percent}": "Objetivo mensual: {percent}",
-    "e mais {count}": "y {count} más",
+    "{amount} · exchange rate {rate}": "{amount} · tipo de cambio {rate}",
+    "Reported {amount}": "Informado {amount}",
+    "estimated {amount}": "estimado {amount}",
+    "{amount} saved": "{amount} ahorrados",
+    "{amount}/month": "{amount}/mes",
+    "Monthly goal: {percent}": "Objetivo mensual: {percent}",
+    "and {count} more": "y {count} más",
   },
   it: {
-    Idioma: "Lingua",
-    "Idioma da interface": "Lingua dell’interfaccia",
-    "A escolha será aplicada ao salvar as preferências.":
+    Language: "Lingua",
+    "Interface language": "Lingua dell’interfaccia",
+    "Your choice takes effect when you save preferences.":
       "La scelta viene applicata salvando le preferenze.",
-    "Visão geral": "Panoramica",
-    Atividade: "Attività",
-    "Fontes de dados": "Fonti dei dati",
-    Preferências: "Preferenze",
-    "Ir para o conteúdo": "Vai al contenuto",
-    "Fechar navegação": "Chiudi navigazione",
-    "Tokenusage início": "Home Tokenusage",
-    "Meu workspace": "Il mio spazio di lavoro",
-    "Pessoal · local": "Personale · locale",
-    ACOMPANHAMENTO: "MONITORAGGIO",
-    "Navegação principal": "Navigazione principale",
-    "SUAS FERRAMENTAS": "I TUOI STRUMENTI",
-    "Histórico disponível": "Cronologia disponibile",
-    "Sem histórico de tokens": "Nessuna cronologia dei token",
-    "Seus dados. Sua máquina.": "I tuoi dati. Il tuo computer.",
-    "Métricas locais, sem enviar suas conversas para a nuvem.":
+    Overview: "Panoramica",
+    Activity: "Attività",
+    "Data sources": "Fonti dei dati",
+    Preferences: "Preferenze",
+    "Skip to content": "Vai al contenuto",
+    "Close navigation": "Chiudi navigazione",
+    "Tokenusage home": "Home Tokenusage",
+    "My workspace": "Il mio spazio di lavoro",
+    "Personal · local": "Personale · locale",
+    TRACKING: "MONITORAGGIO",
+    "Main navigation": "Navigazione principale",
+    "YOUR TOOLS": "I TUOI STRUMENTI",
+    "History available": "Cronologia disponibile",
+    "No token history": "Nessuna cronologia dei token",
+    "Your data. Your computer.": "I tuoi dati. Il tuo computer.",
+    "Local metrics, without sending your conversations to the cloud.":
       "Metriche locali, senza inviare le tue conversazioni al cloud.",
-    "Sobre a coleta": "Informazioni sulla raccolta",
-    "Este computador": "Questo computer",
-    "Fechar menu": "Chiudi menu",
-    "Abrir menu": "Apri menu",
-    "Dados locais": "Dati locali",
-    "Como funciona a coleta": "Come funziona la raccolta",
-    EU: "IO",
-    "INTELIGÊNCIA SOBRE SEU USO DE IA": "ANALISI DEL TUO USO DELL’IA",
-    "Todos os seus tokens. Uma perspectiva mais clara.":
+    "About collection": "Informazioni sulla raccolta",
+    "This computer": "Questo computer",
+    "Close menu": "Chiudi menu",
+    "Open menu": "Apri menu",
+    "Local data": "Dati locali",
+    "How collection works": "Come funziona la raccolta",
+    ME: "IO",
+    "INSIGHTS INTO YOUR AI USAGE": "ANALISI DEL TUO USO DELL’IA",
+    "All your tokens. A clearer perspective.":
       "Tutti i tuoi token. Una prospettiva più chiara.",
-    "Explore o consumo das suas sessões, sem o conteúdo das conversas.":
+    "Explore your session usage, without conversation content.":
       "Esplora il consumo delle sessioni, senza il contenuto delle conversazioni.",
-    "Saiba de onde vêm os números e quais dados estão disponíveis.":
+    "See where the numbers come from and which data is available.":
       "Scopri da dove provengono i numeri e quali dati sono disponibili.",
-    "Um acompanhamento que faz sentido para a sua rotina.":
+    "Tracking that fits your routine.":
       "Un monitoraggio adatto alla tua routine.",
-    Atualizando: "Aggiornamento",
-    Atualizar: "Aggiorna",
-    "Exportar CSV": "Esporta CSV",
-    "Os números abaixo são da última coleta bem-sucedida.":
+    Refreshing: "Aggiornamento",
+    Refresh: "Aggiorna",
+    "Export CSV": "Esporta CSV",
+    "The numbers below are from the last successful collection.":
       "I numeri seguenti provengono dall’ultima raccolta riuscita.",
-    "Tentar novamente": "Riprova",
-    "Lendo seu histórico local": "Lettura della cronologia locale",
-    "A primeira coleta pode levar alguns instantes. Depois, os arquivos inalterados ficam em cache.":
+    "Try again": "Riprova",
+    "Reading your local history": "Lettura della cronologia locale",
+    "The first collection may take a moment. Unchanged files are cached afterward.":
       "La prima raccolta può richiedere qualche istante. In seguito, i file invariati vengono memorizzati nella cache.",
-    "Origem do consumo": "Origine del consumo",
-    Ferramentas: "Strumenti",
-    ferramentas: "strumenti",
-    Serviço: "Servizio",
-    Projeto: "Progetto",
-    "Todos os serviços": "Tutti i servizi",
-    "Todos os projetos": "Tutti i progetti",
-    Período: "Periodo",
-    "Últimos 7 dias": "Ultimi 7 giorni",
-    "Últimos 30 dias": "Ultimi 30 giorni",
-    "Últimos 90 dias": "Ultimi 90 giorni",
-    "Horários de São Paulo": "Ora di San Paolo",
-    "Histórico de até 90 dias": "Fino a 90 giorni di cronologia",
-    "TOKENS CONSUMIDOS": "TOKEN CONSUMATI",
-    "vs. período anterior": "rispetto al periodo precedente",
-    "Sem registros no período": "Nessun dato nel periodo",
-    "APROVEITAMENTO DE CACHE": "UTILIZZO DELLA CACHE",
-    "Aguardando contadores de tokens": "In attesa dei contatori di token",
-    "ECONOMIA POR CACHE": "RISPARMIO CON LA CACHE",
-    Estimada: "Stimata",
-    "% do custo sem cache": "% del costo senza cache",
-    "Sem tokens de cache no período": "Nessun token in cache nel periodo",
-    "SESSÕES COM CONSUMO": "SESSIONI CON CONSUMO",
-    "CHAMADAS IMPORTADAS": "RICHIESTE IMPORTATE",
-    "Nenhum histórico nesta seleção": "Nessuna cronologia per questa selezione",
-    "CUSTO ESTIMADO / REAL": "COSTO STIMATO / EFFETTIVO",
-    Misto: "Misto",
-    Estimado: "Stimato",
-    Real: "Effettivo",
-    "Real:": "Effettivo:",
-    "· Estimado:": "· Stimato:",
-    "Preço por modelo não cadastrado": "Prezzo del modello non impostato",
-    de: "di",
-    "registros sem estimativa": "record senza stima",
-    "sem estimativa": "senza stima",
-    "Valores calculados com base na tabela de preços por modelo em USD/BRL e nos custos nativos informados pelas ferramentas.":
+    "Usage source": "Origine del consumo",
+    Tools: "Strumenti",
+    tools: "strumenti",
+    Service: "Servizio",
+    Project: "Progetto",
+    "All services": "Tutti i servizi",
+    "All projects": "Tutti i progetti",
+    Period: "Periodo",
+    "Last 7 days": "Ultimi 7 giorni",
+    "Last 30 days": "Ultimi 30 giorni",
+    "Last 90 days": "Ultimi 90 giorni",
+    "São Paulo time": "Ora di San Paolo",
+    "Up to 90 days of history": "Fino a 90 giorni di cronologia",
+    "TOKENS USED": "TOKEN CONSUMATI",
+    "vs. previous period": "rispetto al periodo precedente",
+    "No records in this period": "Nessun dato nel periodo",
+    "CACHE UTILIZATION": "UTILIZZO DELLA CACHE",
+    "Waiting for token counters": "In attesa dei contatori di token",
+    "CACHE SAVINGS": "RISPARMIO CON LA CACHE",
+    "Estimated savings": "Stimata",
+    "% of the cost without cache": "% del costo senza cache",
+    "No cached tokens in this period": "Nessun token in cache nel periodo",
+    "SESSIONS WITH USAGE": "SESSIONI CON CONSUMO",
+    "IMPORTED REQUESTS": "RICHIESTE IMPORTATE",
+    "No history for this selection": "Nessuna cronologia per questa selezione",
+    "ESTIMATED / ACTUAL COST": "COSTO STIMATO / EFFETTIVO",
+    Mixed: "Misto",
+    Estimated: "Stimato",
+    Actual: "Effettivo",
+    "Actual:": "Effettivo:",
+    "· Estimated:": "· Stimato:",
+    "No price set for this model": "Prezzo del modello non impostato",
+    of: "di",
+    "records without an estimate": "record senza stima",
+    "without an estimate": "senza stima",
+    "Values calculated from model prices in USD/BRL and costs reported by the tools.":
       "Valori calcolati dai prezzi dei modelli in USD/BRL e dai costi riportati dagli strumenti.",
     Local: "Locale",
-    Importado: "Importato",
-    "Sem dados": "Nessun dato",
+    Imported: "Importato",
+    "No data": "Nessun dato",
     tokens: "token",
     Tokens: "Token",
-    "Sem consumo nesta seleção": "Nessun consumo per questa selezione",
-    "Suas chamadas de API, em um só lugar":
-      "Le tue richieste API in un unico posto",
-    "Seu histórico começa aqui": "La tua cronologia inizia qui",
-    "Importe logs com os contadores retornados pelas APIs. Sem registros locais, não há consumo remoto disponível para consultar.":
+    "No usage for this selection": "Nessun consumo per questa selezione",
+    "Your API requests in one place": "Le tue richieste API in un unico posto",
+    "Your history starts here": "La tua cronologia inizia qui",
+    "Import logs with the counters returned by APIs. Without local records, remote usage cannot be retrieved.":
       "Importa log con i contatori restituiti dalle API. Senza log locali, non è possibile recuperare il consumo remoto.",
-    "Esta seleção não tem registros de tokens. Consulte o diagnóstico das fontes ou experimente outros filtros.":
+    "This selection has no token records. Check source diagnostics or try other filters.":
       "Questa selezione non contiene dati sui token. Consulta la diagnostica delle fonti o prova altri filtri.",
-    "Importar consumo de API": "Importa consumo API",
-    "Ver fontes de dados": "Visualizza fonti dei dati",
-    "Consumo ao longo do tempo": "Consumo nel tempo",
-    "Um olhar diário sobre o uso de cada serviço.":
+    "Import API usage": "Importa consumo API",
+    "View data sources": "Visualizza fonti dei dati",
+    "Usage over time": "Consumo nel tempo",
+    "A daily view of each service’s usage.":
       "Una vista giornaliera dell’uso di ogni servizio.",
-    Diário: "Giornaliero",
-    "Por serviço": "Per servizio",
-    "Participação no consumo": "Quota del consumo",
-    "Seus modelos mais usados": "I tuoi modelli più usati",
-    "Onde os seus tokens estão sendo consumidos.":
-      "Dove vengono consumati i tuoi token.",
-    modelos: "modelli",
-    Modelo: "Modello",
-    Modelos: "Modelli",
+    Daily: "Giornaliero",
+    "By service": "Per servizio",
+    "Share of usage": "Quota del consumo",
+    "Your most used models": "I tuoi modelli più usati",
+    "Where your tokens are being used.": "Dove vengono consumati i tuoi token.",
+    models: "modelli",
+    Model: "Modello",
+    Models: "Modelli",
     Cache: "Cache",
-    Participação: "Quota",
-    "Explorar atividade": "Esplora attività",
-    "Por projeto": "Per progetto",
-    "Seu foco no período": "Il tuo focus nel periodo",
-    representa: "rappresenta",
-    "% do seu consumo neste período.": "% del tuo consumo nel periodo.",
-    "Assinaturas por mês": "Abbonamenti mensili",
-    "Valores informados por você, separados do custo de tokens.":
+    Share: "Quota",
+    "Explore activity": "Esplora attività",
+    "By project": "Per progetto",
+    "Your focus in this period": "Il tuo focus nel periodo",
+    "accounts for": "rappresenta",
+    "% of your usage in this period.": "% del tuo consumo nel periodo.",
+    "Monthly subscriptions": "Abbonamenti mensili",
+    "Values provided by you, separate from token costs.":
       "Valori indicati da te, separati dal costo dei token.",
-    "Adicione as mensalidades para acompanhar seu investimento em IA.":
+    "Add subscription fees to track your spending on AI.":
       "Aggiungi i canoni mensili per monitorare la spesa per l’IA.",
-    "Não informado": "Non indicato",
-    Configurar: "Configura",
-    "Meta mensal de tokens": "Obiettivo mensile di token",
-    "· seleção atual": "· selezione attuale",
-    "Histórico de sessões": "Cronologia delle sessioni",
-    "Histórico de chamadas": "Cronologia delle richieste",
-    sessões: "sessioni",
-    chamadas: "richieste",
-    "no período selecionado": "nel periodo selezionato",
-    "Buscar atividade": "Cerca attività",
-    "Buscar projeto ou modelo": "Cerca progetto o modello",
-    "Serviço / projeto": "Servizio / progetto",
-    "Última atividade": "Ultima attività",
-    "Custo / cobertura": "Costo / copertura",
-    "Mostrar mais 20": "Mostra altri 20",
-    "Nenhum registro encontrado": "Nessun record trovato",
-    "Experimente outro período, serviço ou busca.":
+    "Not provided": "Non indicato",
+    Configure: "Configura",
+    "Monthly token goal": "Obiettivo mensile di token",
+    "· current selection": "· selezione attuale",
+    "Session history": "Cronologia delle sessioni",
+    "Request history": "Cronologia delle richieste",
+    sessions: "sessioni",
+    requests: "richieste",
+    "in the selected period": "nel periodo selezionato",
+    "Search activity": "Cerca attività",
+    "Search project or model": "Cerca progetto o modello",
+    "Service / project": "Servizio / progetto",
+    "Last activity": "Ultima attività",
+    "Cost / coverage": "Costo / copertura",
+    "Show 20 more": "Mostra altri 20",
+    "No records found": "Nessun record trovato",
+    "Try another period, service or search.":
       "Prova un altro periodo, servizio o ricerca.",
-    "DO SEU JEITO": "A MODO TUO",
-    "Preferências de acompanhamento": "Preferenze di monitoraggio",
-    Geral: "Generale",
-    "Tabela de preços": "Tabella dei prezzi",
-    "Informe o que você paga nas assinaturas. Esses valores ficam separados dos custos registrados pelas ferramentas.":
+    "YOUR WAY": "A MODO TUO",
+    "Tracking preferences": "Preferenze di monitoraggio",
+    General: "Generale",
+    "Price table": "Tabella dei prezzi",
+    "Enter what you pay for subscriptions. These amounts are separate from costs recorded by the tools.":
       "Indica quanto paghi per gli abbonamenti. Questi importi sono separati dai costi registrati dagli strumenti.",
-    "R$ / mês": "R$ / mese",
-    "Total mensal informado": "Totale mensile indicato",
-    "Opcional. Acompanhamento de consumo, sem bloquear suas ferramentas.":
+    "R$ / month": "R$ / mese",
+    "Reported monthly total": "Totale mensile indicato",
+    "Optional. Track usage without blocking your tools.":
       "Facoltativo. Monitora il consumo senza bloccare i tuoi strumenti.",
-    "Ex.: 100000000": "Es.: 100000000",
-    "Cotação do Dólar (USD / BRL)": "Cambio del dollaro (USD / BRL)",
-    "Usada para estimar custos e economia em reais. Padrão: R$ 5,75.":
+    "E.g. 100000000": "Es.: 100000000",
+    "Dollar exchange rate (USD / BRL)": "Cambio del dollaro (USD / BRL)",
+    "Used to estimate costs and savings in BRL. Default: R$ 5.75.":
       "Usato per stimare costi e risparmi in BRL. Valore predefinito: R$ 5,75.",
-    "Tabela de Preços por Modelo (USD por 1M tokens)":
+    "Model price table (USD per 1M tokens)":
       "Prezzi per modello (USD per 1M token)",
-    "Preços de referência históricos, sem atualização automática. Personalize para estimar ferramentas sem custo informado.":
+    "Historical reference prices, without automatic updates. Customize to estimate tools with no reported costs.":
       "Prezzi di riferimento storici, senza aggiornamenti automatici. Personalizzali per stimare strumenti senza costi riportati.",
-    "Nome do modelo": "Nome del modello",
-    "Ex.: meu-modelo": "Es.: mio-modello",
-    "Adicionar modelo": "Aggiungi modello",
-    "Entrada ($)": "Input ($)",
-    "Saída ($)": "Output ($)",
+    "Model name": "Nome del modello",
+    "E.g. my-model": "Es.: mio-modello",
+    "Add model": "Aggiungi modello",
+    "Input ($)": "Input ($)",
+    "Output ($)": "Output ($)",
     "Cache ($)": "Cache ($)",
-    Ações: "Azioni",
-    Personalizado: "Personalizzato",
-    Entrada: "Input",
-    Saída: "Output",
-    "Restaurar padrão": "Ripristina predefinito",
-    "Remover modelo": "Rimuovi modello",
-    "Salvando…": "Salvataggio…",
-    "Preferências salvas": "Preferenze salvate",
-    "Salvar preferências": "Salva preferenze",
-    "Seu histórico fica aqui.": "La tua cronologia resta qui.",
-    "Os coletores leem contadores de tokens e metadados de sessão. O conteúdo das conversas não é enviado ao navegador.":
+    Actions: "Azioni",
+    Custom: "Personalizzato",
+    Input: "Input",
+    Output: "Output",
+    "Restore default": "Ripristina predefinito",
+    "Remove model": "Rimuovi modello",
+    "Saving…": "Salvataggio…",
+    "Preferences saved": "Preferenze salvate",
+    "Save preferences": "Salva preferenze",
+    "Your history stays here.": "La tua cronologia resta qui.",
+    "Collectors read token counters and session metadata. Conversation content is not sent to the browser.":
       "I collettori leggono contatori di token e metadati delle sessioni. Il contenuto delle conversazioni non viene inviato al browser.",
-    "Preferências e métricas são guardadas localmente neste computador. A dashboard não usa cookies de login nem chaves das suas ferramentas.":
+    "Preferences and metrics are stored locally on this computer. The dashboard uses no login cookies or tool keys.":
       "Preferenze e metriche vengono salvate localmente su questo computer. La dashboard non usa cookie di accesso né chiavi dei tuoi strumenti.",
-    "Execução local": "Esecuzione locale",
-    "Este modelo já está na tabela.": "Questo modello è già nella tabella.",
-    "Informe o nome do modelo.": "Inserisci il nome del modello.",
-    "Não foi possível salvar.": "Impossibile salvare.",
-    "PERFIL DESTE COMPUTADOR": "PROFILO DI QUESTO COMPUTER",
-    "Suas fontes de consumo": "Le tue fonti di consumo",
-    "Leitura automática do histórico local. Nenhuma chave de API necessária.":
+    "Local execution": "Esecuzione locale",
+    "This model is already in the table.":
+      "Questo modello è già nella tabella.",
+    "Enter the model name.": "Inserisci il nome del modello.",
+    "Could not save.": "Impossibile salvare.",
+    "THIS COMPUTER’S PROFILE": "PROFILO DI QUESTO COMPUTER",
+    "Your usage sources": "Le tue fonti di consumo",
+    "Automatic reading of local history. No API key required.":
       "Lettura automatica della cronologia locale. Nessuna chiave API necessaria.",
-    Coletando: "Raccolta attiva",
-    "Sem contadores": "Nessun contatore",
-    "Não encontrado": "Non trovato",
-    "Requer atenção": "Richiede attenzione",
-    "arquivos consultados": "file consultati",
-    "registros de uso": "record di consumo",
-    "Último:": "Ultimo:",
-    "arquivo(s) ou registro(s) não puderam ser lidos. Os totais podem estar incompletos.":
+    Collecting: "Raccolta attiva",
+    "No counters": "Nessun contatore",
+    "Not found": "Non trovato",
+    "Needs attention": "Richiede attenzione",
+    "files checked": "file consultati",
+    "usage records": "record di consumo",
+    "Latest:": "Ultimo:",
+    "files or records could not be read. Totals may be incomplete.":
       "file o record non sono stati letti. I totali potrebbero essere incompleti.",
-    "CHAMADAS DOS SEUS PROJETOS": "RICHIESTE DEI TUOI PROGETTI",
-    "Traga seus logs de API": "Importa i tuoi log API",
-    "Importe os contadores retornados por Grok, OpenAI, Claude ou Gemini. O arquivo é processado neste computador.":
+    "YOUR PROJECT REQUESTS": "RICHIESTE DEI TUOI PROGETTI",
+    "Bring your API logs": "Importa i tuoi log API",
+    "Import counters returned by Grok, OpenAI, Claude or Gemini. The file is processed on this computer.":
       "Importa i contatori di Grok, OpenAI, Claude o Gemini. Il file viene elaborato su questo computer.",
-    "Arquivo de consumo de API": "File di consumo API",
-    "Importando…": "Importazione…",
-    "Importar JSON ou JSONL": "Importa JSON o JSONL",
-    "Até 4 MB · 10.000 registros por arquivo":
+    "API usage file": "File di consumo API",
+    "Importing…": "Importazione…",
+    "Import JSON or JSONL": "Importa JSON o JSONL",
+    "Up to 4 MB · 10,000 records per file":
       "Fino a 4 MB · 10.000 record per file",
-    "Como preparar o arquivo": "Come preparare il file",
-    "Uma chamada por registro, com provider (codex, claude, grok ou gemini), timestamp, model, project opcional e usage. Para Gemini use usageMetadata. Inclua o ID da chamada para deduplicar.":
+    "How to prepare the file": "Come preparare il file",
+    "One request per record, with provider (codex, claude, grok or gemini), timestamp, model, optional project and usage. For Gemini use usageMetadata. Include the request ID to avoid duplicates.":
       "Una richiesta per record, con provider (codex, claude, grok o gemini), timestamp, model, project facoltativo e usage. Per Gemini usa usageMetadata. Includi l’ID della richiesta per evitare duplicati.",
-    "Exemplo de formato. Esses valores não entram na dashboard.":
+    "Format example. These values are not added to the dashboard.":
       "Esempio di formato. Questi valori non vengono aggiunti alla dashboard.",
-    "O histórico local cobre as sessões salvas nesta máquina. Uso nos sites, em outros computadores e chamadas sem logs não aparece automaticamente.":
+    "Local history covers sessions saved on this computer. Website usage, other computers and requests without logs do not appear automatically.":
       "La cronologia locale include le sessioni salvate su questo computer. L’uso sui siti, su altri computer e le richieste senza log non compaiono automaticamente.",
-    "Selecione um arquivo de até 4 MB.": "Seleziona un file fino a 4 MB.",
-    "Não foi possível importar.": "Impossibile importare.",
-    "Selecionar tema": "Seleziona tema",
-    "Tema claro": "Tema chiaro",
-    "Tema escuro": "Tema scuro",
-    "Tema do sistema": "Tema di sistema",
-    "Entrada + saída · inclui cache": "Input + output · include cache",
-    "serviços usados": "servizi usati",
-    "Não foi possível consultar seu histórico.":
-      "Impossibile leggere la cronologia.",
-    "Falha na coleta.": "Raccolta non riuscita.",
-    "{input} entrada + {output} saída": "{input} input + {output} output",
-    "{count} tokens reutilizados": "{count} token riutilizzati",
-    "{models} modelos · {projects} projetos":
+    "Select a file up to 4 MB.": "Seleziona un file fino a 4 MB.",
+    "Could not import.": "Impossibile importare.",
+    "Select theme": "Seleziona tema",
+    "Light theme": "Tema chiaro",
+    "Dark theme": "Tema scuro",
+    "System theme": "Tema di sistema",
+    "Input + output · includes cache": "Input + output · include cache",
+    "services used": "servizi usati",
+    "Could not read your history.": "Impossibile leggere la cronologia.",
+    "Collection failed.": "Raccolta non riuscita.",
+    "{input} input + {output} output": "{input} input + {output} output",
+    "{count} reused tokens": "{count} token riutilizzati",
+    "{models} models · {projects} projects":
       "{models} modelli · {projects} progetti",
-    "Distribuição de {count} tokens por serviço":
+    "Distribution of {count} tokens by service":
       "Distribuzione di {count} token per servizio",
-    "{added} novos registros; {processed} processados. Importações repetidas não duplicam consumo.":
+    "{added} new records; {processed} processed. Repeated imports do not duplicate usage.":
       "{added} nuovi record; {processed} elaborati. Le importazioni ripetute non duplicano il consumo.",
-    "{count} registros ou arquivos não puderam ser lidos. Ver diagnóstico":
+    "{count} records or files could not be read. View diagnostics":
       "Impossibile leggere {count} record o file. Vedi diagnostica",
-    "{count} de 4 fontes {kind} com histórico":
+    "{count} of 4 {kind} sources with history":
       "{count} di 4 fonti {kind} con cronologia",
-    locais: "locali",
-    importadas: "importate",
-    "Atualizado às {time}": "Aggiornato alle {time}",
-    "{label} de {model}": "{label} di {model}",
-    "Codex · histórico local": "Codex · cronologia locale",
-    "Claude Code · histórico local": "Claude Code · cronologia locale",
-    "Grok Build · histórico local": "Grok Build · cronologia locale",
-    "Gemini CLI · histórico local": "Gemini CLI · cronologia locale",
-    "Histórico local não encontrado neste usuário.":
+    "local sources": "locali",
+    "imported sources": "importate",
+    "Updated at {time}": "Aggiornato alle {time}",
+    "{label} for {model}": "{label} di {model}",
+    "Codex · local history": "Codex · cronologia locale",
+    "Claude Code · local history": "Claude Code · cronologia locale",
+    "Grok Build · local history": "Grok Build · cronologia locale",
+    "Gemini CLI · local history": "Gemini CLI · cronologia locale",
+    "Local history was not found for this user.":
       "Cronologia locale non trovata per questo utente.",
-    "Não foi possível ler parte do histórico. Verifique as permissões.":
+    "Could not read part of the history. Check permissions.":
       "Impossibile leggere parte della cronologia. Controlla i permessi.",
-    "Tokens por turno e modelo. Custos informados pela ferramenta quando disponíveis.":
+    "Tokens per turn and model. Tool-reported costs when available.":
       "Token per turno e modello. Costi riportati dallo strumento quando disponibili.",
-    "Tokens reais extraídos das sessões salvas neste computador.":
+    "Actual token counts from sessions saved on this computer.":
       "Conteggi reali dei token dalle sessioni salvate su questo computer.",
-    "O histórico existe, mas alguns arquivos não puderam ser interpretados.":
+    "History exists, but some files could not be parsed.":
       "La cronologia esiste, ma alcuni file non sono stati interpretati.",
-    "Gemini encontrado, mas sem sessões com contadores de tokens. Logs antigos de mensagens não informam consumo.":
+    "Gemini found, but no sessions have token counters. Older message logs do not report usage.":
       "Gemini trovato, ma senza sessioni con contatori di token. I vecchi log dei messaggi non riportano il consumo.",
-    "Nenhum registro de tokens disponível nos últimos 90 dias.":
+    "No token records available in the last 90 days.":
       "Nessun dato sui token negli ultimi 90 giorni.",
-    "Consumo importado dos seus projetos. Nenhuma consulta remota é feita.":
+    "Usage imported from your projects. No remote queries are made.":
       "Consumo importato dai tuoi progetti. Nessuna interrogazione remota.",
-    "Importe logs JSON ou JSONL retornados pelas APIs.":
+    "Import JSON or JSONL logs returned by APIs.":
       "Importa log JSON o JSONL restituiti dalle API.",
-    "Origem não permitida.": "Origine non consentita.",
-    "Não foi possível salvar as preferências locais.":
+    "Origin not allowed.": "Origine non consentita.",
+    "Could not save local preferences.":
       "Impossibile salvare le preferenze locali.",
-    "Valores inválidos. Informe números positivos ou deixe os campos vazios.":
+    "Invalid values. Enter positive numbers or leave the fields blank.":
       "Valori non validi. Inserisci numeri positivi o lascia vuoti i campi.",
-    "Tokenusage · Seu consumo de IA": "Tokenusage · Il tuo consumo di IA",
-    "Importação local JSON / JSONL": "Importazione locale JSON / JSONL",
-    "Consumo extraído dos arquivos importados. Custos informados são preservados; os demais são estimados quando há preço configurado.":
+    "Tokenusage · Your AI usage": "Tokenusage · Il tuo consumo di IA",
+    "Local JSON / JSONL import": "Importazione locale JSON / JSONL",
+    "Usage extracted from imported files. Reported costs are preserved; others are estimated when a price is configured.":
       "Consumo estratto dai file importati. I costi riportati vengono conservati; gli altri vengono stimati se è impostato un prezzo.",
-    "Importe logs com os contadores retornados pela API. Não requer chave administrativa.":
+    "Import logs with counters returned by the API. No admin key required.":
       "Importa log con i contatori restituiti dall’API. Nessuna chiave amministrativa necessaria.",
-    "Selecione um arquivo de consumo.": "Seleziona un file di consumo.",
-    "O arquivo deve ter até 4 MB.": "Il file non deve superare 4 MB.",
-    "Limite de 100.000 registros locais atingido.":
+    "Select a usage file.": "Seleziona un file di consumo.",
+    "The file must be no larger than 4 MB.": "Il file non deve superare 4 MB.",
+    "The limit of 100,000 local records has been reached.":
       "Raggiunto il limite di 100.000 record locali.",
-    "Falha ao importar.": "Importazione non riuscita.",
-    "Arquivo inválido. Use JSON ou JSONL com um registro de consumo por chamada.":
+    "Import failed.": "Importazione non riuscita.",
+    "Invalid file. Use JSON or JSONL with one usage record per request.":
       "File non valido. Usa JSON o JSONL con un record di consumo per richiesta.",
-    "Importe entre 1 e 10.000 registros por arquivo.":
+    "Import between 1 and 10,000 records per file.":
       "Importa da 1 a 10.000 record per file.",
-    "Registro {index}: informe provider, timestamp, model e usage (ou usageMetadata).":
+    "Record {index}: provide provider, timestamp, model and usage (or usageMetadata).":
       "Record {index}: indica provider, timestamp, model e usage (o usageMetadata).",
-    "Registro {index}: contadores devem ser inteiros não negativos.":
+    "Record {index}: counters must be nonnegative integers.":
       "Record {index}: i contatori devono essere interi non negativi.",
-    "Registro {index}: nenhum contador de tokens reconhecido para {provider}.":
+    "Record {index}: no recognized token counter for {provider}.":
       "Record {index}: nessun contatore di token riconosciuto per {provider}.",
-    "Não foi possível ler os dados locais. Verifique o arquivo e as permissões.":
+    "Could not read local data. Check the file and permissions.":
       "Impossibile leggere i dati locali. Controlla il file e i permessi.",
-    "Não foi possível ler as preferências locais.":
+    "Could not read local preferences.":
       "Impossibile leggere le preferenze locali.",
-    "Acesso permitido apenas pela dashboard local.":
+    "Access is allowed only from the local dashboard.":
       "Accesso consentito solo dalla dashboard locale.",
-    Custo: "Costo",
-    "Alternar menu lateral": "Mostra o nascondi menu laterale",
-    "Nenhum dado foi carregado ainda.": "Nessun dato ancora caricato.",
-    "Lendo seu histórico local. A primeira coleta pode levar alguns instantes; depois, os arquivos inalterados ficam em cache.":
+    Cost: "Costo",
+    "Toggle sidebar": "Mostra o nascondi menu laterale",
+    "No data has been loaded yet.": "Nessun dato ancora caricato.",
+    "Reading your local history. The first collection may take a moment; unchanged files are cached afterward.":
       "Lettura della cronologia locale. La prima raccolta può richiedere un istante; poi i file invariati vengono memorizzati nella cache.",
-    "Os totais podem estar incompletos.":
-      "I totali potrebbero essere incompleti.",
-    "Ver diagnóstico": "Vedi diagnostica",
-    "Horários de São Paulo · Histórico de até 90 dias":
+    "Totals may be incomplete.": "I totali potrebbero essere incompleti.",
+    "View diagnostics": "Vedi diagnostica",
+    "São Paulo time · Up to 90 days of history":
       "Ora di San Paolo · Fino a 90 giorni di cronologia",
-    "Uso local de IA": "Uso locale dell’IA",
-    Acompanhamento: "Monitoraggio",
-    "sem dados": "nessun dato",
-    "Fica nesta máquina.": "Resta su questo computer.",
-    "Só contadores e nomes de modelo; nenhuma conversa é lida.":
+    "Local AI usage": "Uso locale dell’IA",
+    Tracking: "Monitoraggio",
+    "no data": "nessun dato",
+    "Stays on this computer.": "Resta su questo computer.",
+    "Only counters and model names; no conversations are read.":
       "Solo contatori e nomi dei modelli; nessuna conversazione viene letta.",
-    "Tokens consumidos": "Token consumati",
-    "Acima do período anterior": "Sopra il periodo precedente",
-    "Abaixo do período anterior": "Sotto il periodo precedente",
-    "Sem período anterior para comparar":
-      "Nessun periodo precedente da confrontare",
-    "entrada ·": "input ·",
-    saída: "output",
-    "Custo no período": "Costo nel periodo",
-    Parcial: "Parziale",
-    "Economia por cache": "Risparmio con la cache",
-    "Sem tarifa para estimar": "Nessuna tariffa per la stima",
-    "do custo sem cache": " del costo senza cache",
-    "registros com cache sem tarifa": "record con cache senza tariffa",
-    "Aproveitamento de cache": "Utilizzo della cache",
-    "tokens de entrada": "token di input",
-    "Consumo por dia": "Consumo giornaliero",
-    "Entrada + saída, com cache · últimos":
+    "Tokens used": "Token consumati",
+    "Above the previous period": "Sopra il periodo precedente",
+    "Below the previous period": "Sotto il periodo precedente",
+    "No previous period to compare": "Nessun periodo precedente da confrontare",
+    "input ·": "input ·",
+    output: "output",
+    "Cost in this period": "Costo nel periodo",
+    Partial: "Parziale",
+    "Cache savings": "Risparmio con la cache",
+    "No rate to estimate": "Nessuna tariffa per la stima",
+    "of the cost without cache": " del costo senza cache",
+    "cached records without a rate": "record con cache senza tariffa",
+    "Cache utilization": "Utilizzo della cache",
+    "input tokens": "token di input",
+    "Daily usage": "Consumo giornaliero",
+    "Input + output, including cache · last":
       "Input + output, con cache · ultimi",
-    dias: "giorni",
-    "Sem consumo": "Nessun consumo",
-    "Nenhum contador no histórico": "Nessun contatore nella cronologia",
+    days: "giorni",
+    "No usage": "Nessun consumo",
+    "No counters in the history": "Nessun contatore nella cronologia",
     local: "locale",
-    importado: "importato",
-    ", mês atual": ", mese attuale",
-    "Nenhuma meta definida. A meta acompanha o consumo sem bloquear suas ferramentas.":
+    imported: "importato",
+    ", current month": ", mese attuale",
+    "No goal set. The goal tracks usage without blocking your tools.":
       "Nessun obiettivo impostato. L’obiettivo monitora il consumo senza bloccare i tuoi strumenti.",
-    Mensalidades: "Canoni mensili",
-    "Modelos mais usados": "Modelli più usati",
-    modelo: "modello",
-    em: "in",
-    sessão: "sessione",
-    chamada: "richiesta",
-    "Ver atividade": "Vedi attività",
-    "Custo parcial": "Costo parziale",
-    "sem tarifa cadastrada; esses registros ficam fora do custo.":
+    "Subscription fees": "Canoni mensili",
+    "Most used models": "Modelli più usati",
+    model: "modello",
+    in: "in",
+    session: "sessione",
+    request: "richiesta",
+    "View activity": "Vedi attività",
+    "Partial cost": "Costo parziale",
+    "without a configured rate; these records are excluded from cost.":
       "senza tariffa impostata; questi record sono esclusi dal costo.",
-    "Definir tarifa": "Imposta tariffa",
-    "sem tarifa": "nessuna tariffa",
-    "Mensalidades, meta de tokens, cotação e tarifas por modelo.":
+    "Set rate": "Imposta tariffa",
+    "no rate": "nessuna tariffa",
+    "Subscription fees, token goal, exchange rate and model prices.":
       "Canoni mensili, obiettivo di token, cambio e tariffe per modello.",
-    "Seu histórico fica aqui": "La tua cronologia resta qui",
-    "Execução local, sem login.": "Esecuzione locale, senza accesso.",
-    "Leitura automática do histórico local deste computador. Nenhuma chave de API necessária.":
+    "Your history stays here": "La tua cronologia resta qui",
+    "Local execution, no login.": "Esecuzione locale, senza accesso.",
+    "Automatic reading of this computer’s local history. No API key required.":
       "Lettura automatica della cronologia locale di questo computer. Nessuna chiave API necessaria.",
-    "arquivo consultado": "file consultato",
-    "registro de uso": "record di consumo",
-    "arquivo(s) ou registro(s) de": "file o record di",
-    "não puderam ser lidos. Os totais podem estar incompletos.":
+    "file checked": "file consultato",
+    "usage record": "record di consumo",
+    "files or records from": "file o record di",
+    "could not be read. Totals may be incomplete.":
       "non sono stati letti. I totali potrebbero essere incompleti.",
-    "{count} registros ou arquivos não puderam ser lidos":
+    "{count} records or files could not be read":
       "Impossibile leggere {count} record o file",
-    "{amount} · cotação {rate}": "{amount} · cambio {rate}",
-    "Informado {amount}": "Riportato {amount}",
-    "estimado {amount}": "stimato {amount}",
-    "{amount} economizados": "{amount} risparmiati",
-    "{amount}/mês": "{amount}/mese",
-    "Meta mensal: {percent}": "Obiettivo mensile: {percent}",
-    "e mais {count}": "e altri {count}",
+    "{amount} · exchange rate {rate}": "{amount} · cambio {rate}",
+    "Reported {amount}": "Riportato {amount}",
+    "estimated {amount}": "stimato {amount}",
+    "{amount} saved": "{amount} risparmiati",
+    "{amount}/month": "{amount}/mese",
+    "Monthly goal: {percent}": "Obiettivo mensile: {percent}",
+    "and {count} more": "e altri {count}",
   },
   fr: {
-    Idioma: "Langue",
-    "Idioma da interface": "Langue de l’interface",
-    "A escolha será aplicada ao salvar as preferências.":
+    Language: "Langue",
+    "Interface language": "Langue de l’interface",
+    "Your choice takes effect when you save preferences.":
       "Votre choix s’applique après l’enregistrement des préférences.",
-    "Visão geral": "Vue d’ensemble",
-    Atividade: "Activité",
-    "Fontes de dados": "Sources de données",
-    Preferências: "Préférences",
-    "Ir para o conteúdo": "Aller au contenu",
-    "Fechar navegação": "Fermer la navigation",
-    "Tokenusage início": "Accueil Tokenusage",
-    "Meu workspace": "Mon espace de travail",
-    "Pessoal · local": "Personnel · local",
-    ACOMPANHAMENTO: "SUIVI",
-    "Navegação principal": "Navigation principale",
-    "SUAS FERRAMENTAS": "VOS OUTILS",
-    "Histórico disponível": "Historique disponible",
-    "Sem histórico de tokens": "Aucun historique de tokens",
-    "Seus dados. Sua máquina.": "Vos données. Votre ordinateur.",
-    "Métricas locais, sem enviar suas conversas para a nuvem.":
+    Overview: "Vue d’ensemble",
+    Activity: "Activité",
+    "Data sources": "Sources de données",
+    Preferences: "Préférences",
+    "Skip to content": "Aller au contenu",
+    "Close navigation": "Fermer la navigation",
+    "Tokenusage home": "Accueil Tokenusage",
+    "My workspace": "Mon espace de travail",
+    "Personal · local": "Personnel · local",
+    TRACKING: "SUIVI",
+    "Main navigation": "Navigation principale",
+    "YOUR TOOLS": "VOS OUTILS",
+    "History available": "Historique disponible",
+    "No token history": "Aucun historique de tokens",
+    "Your data. Your computer.": "Vos données. Votre ordinateur.",
+    "Local metrics, without sending your conversations to the cloud.":
       "Des métriques locales, sans envoyer vos conversations dans le cloud.",
-    "Sobre a coleta": "À propos de la collecte",
-    "Este computador": "Cet ordinateur",
-    "Fechar menu": "Fermer le menu",
-    "Abrir menu": "Ouvrir le menu",
-    "Dados locais": "Données locales",
-    "Como funciona a coleta": "Fonctionnement de la collecte",
-    EU: "MOI",
-    "INTELIGÊNCIA SOBRE SEU USO DE IA": "ANALYSE DE VOTRE UTILISATION DE L’IA",
-    "Todos os seus tokens. Uma perspectiva mais clara.":
+    "About collection": "À propos de la collecte",
+    "This computer": "Cet ordinateur",
+    "Close menu": "Fermer le menu",
+    "Open menu": "Ouvrir le menu",
+    "Local data": "Données locales",
+    "How collection works": "Fonctionnement de la collecte",
+    ME: "MOI",
+    "INSIGHTS INTO YOUR AI USAGE": "ANALYSE DE VOTRE UTILISATION DE L’IA",
+    "All your tokens. A clearer perspective.":
       "Tous vos tokens. Une vision plus claire.",
-    "Explore o consumo das suas sessões, sem o conteúdo das conversas.":
+    "Explore your session usage, without conversation content.":
       "Explorez la consommation de vos sessions, sans le contenu des conversations.",
-    "Saiba de onde vêm os números e quais dados estão disponíveis.":
+    "See where the numbers come from and which data is available.":
       "Découvrez l’origine des chiffres et les données disponibles.",
-    "Um acompanhamento que faz sentido para a sua rotina.":
-      "Un suivi adapté à votre quotidien.",
-    Atualizando: "Actualisation",
-    Atualizar: "Actualiser",
-    "Exportar CSV": "Exporter en CSV",
-    "Os números abaixo são da última coleta bem-sucedida.":
+    "Tracking that fits your routine.": "Un suivi adapté à votre quotidien.",
+    Refreshing: "Actualisation",
+    Refresh: "Actualiser",
+    "Export CSV": "Exporter en CSV",
+    "The numbers below are from the last successful collection.":
       "Les chiffres ci-dessous proviennent de la dernière collecte réussie.",
-    "Tentar novamente": "Réessayer",
-    "Lendo seu histórico local": "Lecture de votre historique local",
-    "A primeira coleta pode levar alguns instantes. Depois, os arquivos inalterados ficam em cache.":
+    "Try again": "Réessayer",
+    "Reading your local history": "Lecture de votre historique local",
+    "The first collection may take a moment. Unchanged files are cached afterward.":
       "La première collecte peut prendre un instant. Les fichiers inchangés sont ensuite mis en cache.",
-    "Origem do consumo": "Origine de la consommation",
-    Ferramentas: "Outils",
-    ferramentas: "outils",
-    Serviço: "Service",
-    Projeto: "Projet",
-    "Todos os serviços": "Tous les services",
-    "Todos os projetos": "Tous les projets",
-    Período: "Période",
-    "Últimos 7 dias": "7 derniers jours",
-    "Últimos 30 dias": "30 derniers jours",
-    "Últimos 90 dias": "90 derniers jours",
-    "Horários de São Paulo": "Heure de São Paulo",
-    "Histórico de até 90 dias": "Jusqu’à 90 jours d’historique",
-    "TOKENS CONSUMIDOS": "TOKENS CONSOMMÉS",
-    "vs. período anterior": "par rapport à la période précédente",
-    "Sem registros no período": "Aucune donnée sur cette période",
-    "APROVEITAMENTO DE CACHE": "UTILISATION DU CACHE",
-    "Aguardando contadores de tokens": "En attente des compteurs de tokens",
-    "ECONOMIA POR CACHE": "ÉCONOMIES GRÂCE AU CACHE",
-    Estimada: "Estimée",
-    "% do custo sem cache": "% du coût sans cache",
-    "Sem tokens de cache no período": "Aucun token en cache sur cette période",
-    "SESSÕES COM CONSUMO": "SESSIONS AVEC CONSOMMATION",
-    "CHAMADAS IMPORTADAS": "REQUÊTES IMPORTÉES",
-    "Nenhum histórico nesta seleção": "Aucun historique pour cette sélection",
-    "CUSTO ESTIMADO / REAL": "COÛT ESTIMÉ / RÉEL",
-    Misto: "Mixte",
-    Estimado: "Estimé",
-    Real: "Réel",
-    "Real:": "Réel :",
-    "· Estimado:": "· Estimé :",
-    "Preço por modelo não cadastrado": "Aucun tarif défini pour ce modèle",
-    de: "sur",
-    "registros sem estimativa": "enregistrements sans estimation",
-    "sem estimativa": "sans estimation",
-    "Valores calculados com base na tabela de preços por modelo em USD/BRL e nos custos nativos informados pelas ferramentas.":
+    "Usage source": "Origine de la consommation",
+    Tools: "Outils",
+    tools: "outils",
+    Service: "Service",
+    Project: "Projet",
+    "All services": "Tous les services",
+    "All projects": "Tous les projets",
+    Period: "Période",
+    "Last 7 days": "7 derniers jours",
+    "Last 30 days": "30 derniers jours",
+    "Last 90 days": "90 derniers jours",
+    "São Paulo time": "Heure de São Paulo",
+    "Up to 90 days of history": "Jusqu’à 90 jours d’historique",
+    "TOKENS USED": "TOKENS CONSOMMÉS",
+    "vs. previous period": "par rapport à la période précédente",
+    "No records in this period": "Aucune donnée sur cette période",
+    "CACHE UTILIZATION": "UTILISATION DU CACHE",
+    "Waiting for token counters": "En attente des compteurs de tokens",
+    "CACHE SAVINGS": "ÉCONOMIES GRÂCE AU CACHE",
+    "Estimated savings": "Estimée",
+    "% of the cost without cache": "% du coût sans cache",
+    "No cached tokens in this period": "Aucun token en cache sur cette période",
+    "SESSIONS WITH USAGE": "SESSIONS AVEC CONSOMMATION",
+    "IMPORTED REQUESTS": "REQUÊTES IMPORTÉES",
+    "No history for this selection": "Aucun historique pour cette sélection",
+    "ESTIMATED / ACTUAL COST": "COÛT ESTIMÉ / RÉEL",
+    Mixed: "Mixte",
+    Estimated: "Estimé",
+    Actual: "Réel",
+    "Actual:": "Réel :",
+    "· Estimated:": "· Estimé :",
+    "No price set for this model": "Aucun tarif défini pour ce modèle",
+    of: "sur",
+    "records without an estimate": "enregistrements sans estimation",
+    "without an estimate": "sans estimation",
+    "Values calculated from model prices in USD/BRL and costs reported by the tools.":
       "Valeurs calculées à partir des tarifs par modèle en USD/BRL et des coûts indiqués par les outils.",
     Local: "Local",
-    Importado: "Importé",
-    "Sem dados": "Aucune donnée",
+    Imported: "Importé",
+    "No data": "Aucune donnée",
     tokens: "tokens",
     Tokens: "Tokens",
-    "Sem consumo nesta seleção": "Aucune consommation pour cette sélection",
-    "Suas chamadas de API, em um só lugar": "Vos requêtes API au même endroit",
-    "Seu histórico começa aqui": "Votre historique commence ici",
-    "Importe logs com os contadores retornados pelas APIs. Sem registros locais, não há consumo remoto disponível para consultar.":
+    "No usage for this selection": "Aucune consommation pour cette sélection",
+    "Your API requests in one place": "Vos requêtes API au même endroit",
+    "Your history starts here": "Votre historique commence ici",
+    "Import logs with the counters returned by APIs. Without local records, remote usage cannot be retrieved.":
       "Importez des journaux contenant les compteurs renvoyés par les API. Sans données locales, la consommation distante ne peut pas être consultée.",
-    "Esta seleção não tem registros de tokens. Consulte o diagnóstico das fontes ou experimente outros filtros.":
+    "This selection has no token records. Check source diagnostics or try other filters.":
       "Cette sélection ne contient aucun token. Consultez le diagnostic des sources ou essayez d’autres filtres.",
-    "Importar consumo de API": "Importer la consommation API",
-    "Ver fontes de dados": "Voir les sources de données",
-    "Consumo ao longo do tempo": "Consommation dans le temps",
-    "Um olhar diário sobre o uso de cada serviço.":
+    "Import API usage": "Importer la consommation API",
+    "View data sources": "Voir les sources de données",
+    "Usage over time": "Consommation dans le temps",
+    "A daily view of each service’s usage.":
       "Une vue quotidienne de l’utilisation de chaque service.",
-    Diário: "Quotidien",
-    "Por serviço": "Par service",
-    "Participação no consumo": "Part de la consommation",
-    "Seus modelos mais usados": "Vos modèles les plus utilisés",
-    "Onde os seus tokens estão sendo consumidos.":
-      "Où vos tokens sont consommés.",
-    modelos: "modèles",
-    Modelo: "Modèle",
-    Modelos: "Modèles",
+    Daily: "Quotidien",
+    "By service": "Par service",
+    "Share of usage": "Part de la consommation",
+    "Your most used models": "Vos modèles les plus utilisés",
+    "Where your tokens are being used.": "Où vos tokens sont consommés.",
+    models: "modèles",
+    Model: "Modèle",
+    Models: "Modèles",
     Cache: "Cache",
-    Participação: "Part",
-    "Explorar atividade": "Explorer l’activité",
-    "Por projeto": "Par projet",
-    "Seu foco no período": "Votre activité sur cette période",
-    representa: "représente",
-    "% do seu consumo neste período.":
+    Share: "Part",
+    "Explore activity": "Explorer l’activité",
+    "By project": "Par projet",
+    "Your focus in this period": "Votre activité sur cette période",
+    "accounts for": "représente",
+    "% of your usage in this period.":
       "% de votre consommation sur cette période.",
-    "Assinaturas por mês": "Abonnements mensuels",
-    "Valores informados por você, separados do custo de tokens.":
+    "Monthly subscriptions": "Abonnements mensuels",
+    "Values provided by you, separate from token costs.":
       "Montants renseignés par vous, distincts du coût des tokens.",
-    "Adicione as mensalidades para acompanhar seu investimento em IA.":
+    "Add subscription fees to track your spending on AI.":
       "Ajoutez les mensualités pour suivre vos dépenses en IA.",
-    "Não informado": "Non renseigné",
-    Configurar: "Configurer",
-    "Meta mensal de tokens": "Objectif mensuel de tokens",
-    "· seleção atual": "· sélection actuelle",
-    "Histórico de sessões": "Historique des sessions",
-    "Histórico de chamadas": "Historique des requêtes",
-    sessões: "sessions",
-    chamadas: "requêtes",
-    "no período selecionado": "sur la période sélectionnée",
-    "Buscar atividade": "Rechercher une activité",
-    "Buscar projeto ou modelo": "Rechercher un projet ou modèle",
-    "Serviço / projeto": "Service / projet",
-    "Última atividade": "Dernière activité",
-    "Custo / cobertura": "Coût / couverture",
-    "Mostrar mais 20": "Afficher 20 de plus",
-    "Nenhum registro encontrado": "Aucun enregistrement trouvé",
-    "Experimente outro período, serviço ou busca.":
+    "Not provided": "Non renseigné",
+    Configure: "Configurer",
+    "Monthly token goal": "Objectif mensuel de tokens",
+    "· current selection": "· sélection actuelle",
+    "Session history": "Historique des sessions",
+    "Request history": "Historique des requêtes",
+    sessions: "sessions",
+    requests: "requêtes",
+    "in the selected period": "sur la période sélectionnée",
+    "Search activity": "Rechercher une activité",
+    "Search project or model": "Rechercher un projet ou modèle",
+    "Service / project": "Service / projet",
+    "Last activity": "Dernière activité",
+    "Cost / coverage": "Coût / couverture",
+    "Show 20 more": "Afficher 20 de plus",
+    "No records found": "Aucun enregistrement trouvé",
+    "Try another period, service or search.":
       "Essayez une autre période, un autre service ou une autre recherche.",
-    "DO SEU JEITO": "À VOTRE FAÇON",
-    "Preferências de acompanhamento": "Préférences de suivi",
-    Geral: "Général",
-    "Tabela de preços": "Grille tarifaire",
-    "Informe o que você paga nas assinaturas. Esses valores ficam separados dos custos registrados pelas ferramentas.":
+    "YOUR WAY": "À VOTRE FAÇON",
+    "Tracking preferences": "Préférences de suivi",
+    General: "Général",
+    "Price table": "Grille tarifaire",
+    "Enter what you pay for subscriptions. These amounts are separate from costs recorded by the tools.":
       "Indiquez le montant de vos abonnements. Ces montants sont distincts des coûts enregistrés par les outils.",
-    "R$ / mês": "R$ / mois",
-    "Total mensal informado": "Total mensuel renseigné",
-    "Opcional. Acompanhamento de consumo, sem bloquear suas ferramentas.":
+    "R$ / month": "R$ / mois",
+    "Reported monthly total": "Total mensuel renseigné",
+    "Optional. Track usage without blocking your tools.":
       "Facultatif. Suivez la consommation sans bloquer vos outils.",
-    "Ex.: 100000000": "Ex. : 100000000",
-    "Cotação do Dólar (USD / BRL)": "Taux de change du dollar (USD / BRL)",
-    "Usada para estimar custos e economia em reais. Padrão: R$ 5,75.":
+    "E.g. 100000000": "Ex. : 100000000",
+    "Dollar exchange rate (USD / BRL)": "Taux de change du dollar (USD / BRL)",
+    "Used to estimate costs and savings in BRL. Default: R$ 5.75.":
       "Utilisé pour estimer les coûts et économies en BRL. Valeur par défaut : R$ 5,75.",
-    "Tabela de Preços por Modelo (USD por 1M tokens)":
+    "Model price table (USD per 1M tokens)":
       "Tarifs par modèle (USD par million de tokens)",
-    "Preços de referência históricos, sem atualização automática. Personalize para estimar ferramentas sem custo informado.":
+    "Historical reference prices, without automatic updates. Customize to estimate tools with no reported costs.":
       "Tarifs historiques de référence, sans mise à jour automatique. Personnalisez-les pour estimer les outils sans coût indiqué.",
-    "Nome do modelo": "Nom du modèle",
-    "Ex.: meu-modelo": "Ex. : mon-modèle",
-    "Adicionar modelo": "Ajouter un modèle",
-    "Entrada ($)": "Entrée ($)",
-    "Saída ($)": "Sortie ($)",
+    "Model name": "Nom du modèle",
+    "E.g. my-model": "Ex. : mon-modèle",
+    "Add model": "Ajouter un modèle",
+    "Input ($)": "Entrée ($)",
+    "Output ($)": "Sortie ($)",
     "Cache ($)": "Cache ($)",
-    Ações: "Actions",
-    Personalizado: "Personnalisé",
-    Entrada: "Entrée",
-    Saída: "Sortie",
-    "Restaurar padrão": "Rétablir la valeur par défaut",
-    "Remover modelo": "Supprimer le modèle",
-    "Salvando…": "Enregistrement…",
-    "Preferências salvas": "Préférences enregistrées",
-    "Salvar preferências": "Enregistrer les préférences",
-    "Seu histórico fica aqui.": "Votre historique reste ici.",
-    "Os coletores leem contadores de tokens e metadados de sessão. O conteúdo das conversas não é enviado ao navegador.":
+    Actions: "Actions",
+    Custom: "Personnalisé",
+    Input: "Entrée",
+    Output: "Sortie",
+    "Restore default": "Rétablir la valeur par défaut",
+    "Remove model": "Supprimer le modèle",
+    "Saving…": "Enregistrement…",
+    "Preferences saved": "Préférences enregistrées",
+    "Save preferences": "Enregistrer les préférences",
+    "Your history stays here.": "Votre historique reste ici.",
+    "Collectors read token counters and session metadata. Conversation content is not sent to the browser.":
       "Les collecteurs lisent les compteurs de tokens et les métadonnées des sessions. Le contenu des conversations n’est pas envoyé au navigateur.",
-    "Preferências e métricas são guardadas localmente neste computador. A dashboard não usa cookies de login nem chaves das suas ferramentas.":
+    "Preferences and metrics are stored locally on this computer. The dashboard uses no login cookies or tool keys.":
       "Les préférences et métriques sont stockées localement sur cet ordinateur. Le tableau de bord n’utilise ni cookies de connexion ni clés de vos outils.",
-    "Execução local": "Exécution locale",
-    "Este modelo já está na tabela.": "Ce modèle figure déjà dans la grille.",
-    "Informe o nome do modelo.": "Saisissez le nom du modèle.",
-    "Não foi possível salvar.": "Impossible d’enregistrer.",
-    "PERFIL DESTE COMPUTADOR": "PROFIL DE CET ORDINATEUR",
-    "Suas fontes de consumo": "Vos sources de consommation",
-    "Leitura automática do histórico local. Nenhuma chave de API necessária.":
+    "Local execution": "Exécution locale",
+    "This model is already in the table.":
+      "Ce modèle figure déjà dans la grille.",
+    "Enter the model name.": "Saisissez le nom du modèle.",
+    "Could not save.": "Impossible d’enregistrer.",
+    "THIS COMPUTER’S PROFILE": "PROFIL DE CET ORDINATEUR",
+    "Your usage sources": "Vos sources de consommation",
+    "Automatic reading of local history. No API key required.":
       "Lecture automatique de l’historique local. Aucune clé API requise.",
-    Coletando: "Collecte en cours",
-    "Sem contadores": "Aucun compteur",
-    "Não encontrado": "Introuvable",
-    "Requer atenção": "Attention requise",
-    "arquivos consultados": "fichiers consultés",
-    "registros de uso": "enregistrements d’utilisation",
-    "Último:": "Dernier :",
-    "arquivo(s) ou registro(s) não puderam ser lidos. Os totais podem estar incompletos.":
+    Collecting: "Collecte en cours",
+    "No counters": "Aucun compteur",
+    "Not found": "Introuvable",
+    "Needs attention": "Attention requise",
+    "files checked": "fichiers consultés",
+    "usage records": "enregistrements d’utilisation",
+    "Latest:": "Dernier :",
+    "files or records could not be read. Totals may be incomplete.":
       "fichiers ou enregistrements n’ont pas pu être lus. Les totaux peuvent être incomplets.",
-    "CHAMADAS DOS SEUS PROJETOS": "REQUÊTES DE VOS PROJETS",
-    "Traga seus logs de API": "Importez vos journaux API",
-    "Importe os contadores retornados por Grok, OpenAI, Claude ou Gemini. O arquivo é processado neste computador.":
+    "YOUR PROJECT REQUESTS": "REQUÊTES DE VOS PROJETS",
+    "Bring your API logs": "Importez vos journaux API",
+    "Import counters returned by Grok, OpenAI, Claude or Gemini. The file is processed on this computer.":
       "Importez les compteurs de Grok, OpenAI, Claude ou Gemini. Le fichier est traité sur cet ordinateur.",
-    "Arquivo de consumo de API": "Fichier de consommation API",
-    "Importando…": "Importation…",
-    "Importar JSON ou JSONL": "Importer JSON ou JSONL",
-    "Até 4 MB · 10.000 registros por arquivo":
+    "API usage file": "Fichier de consommation API",
+    "Importing…": "Importation…",
+    "Import JSON or JSONL": "Importer JSON ou JSONL",
+    "Up to 4 MB · 10,000 records per file":
       "Jusqu’à 4 Mo · 10 000 enregistrements par fichier",
-    "Como preparar o arquivo": "Comment préparer le fichier",
-    "Uma chamada por registro, com provider (codex, claude, grok ou gemini), timestamp, model, project opcional e usage. Para Gemini use usageMetadata. Inclua o ID da chamada para deduplicar.":
+    "How to prepare the file": "Comment préparer le fichier",
+    "One request per record, with provider (codex, claude, grok or gemini), timestamp, model, optional project and usage. For Gemini use usageMetadata. Include the request ID to avoid duplicates.":
       "Une requête par enregistrement, avec provider (codex, claude, grok ou gemini), timestamp, model, project facultatif et usage. Pour Gemini, utilisez usageMetadata. Incluez l’ID de la requête pour éviter les doublons.",
-    "Exemplo de formato. Esses valores não entram na dashboard.":
+    "Format example. These values are not added to the dashboard.":
       "Exemple de format. Ces valeurs ne sont pas ajoutées au tableau de bord.",
-    "O histórico local cobre as sessões salvas nesta máquina. Uso nos sites, em outros computadores e chamadas sem logs não aparece automaticamente.":
+    "Local history covers sessions saved on this computer. Website usage, other computers and requests without logs do not appear automatically.":
       "L’historique local couvre les sessions enregistrées sur cet ordinateur. L’utilisation sur les sites, sur d’autres ordinateurs et les requêtes sans journal n’apparaissent pas automatiquement.",
-    "Selecione um arquivo de até 4 MB.":
-      "Sélectionnez un fichier de 4 Mo maximum.",
-    "Não foi possível importar.": "Impossible d’importer.",
-    "Selecionar tema": "Choisir le thème",
-    "Tema claro": "Thème clair",
-    "Tema escuro": "Thème sombre",
-    "Tema do sistema": "Thème du système",
-    "Entrada + saída · inclui cache": "Entrée + sortie · cache inclus",
-    "serviços usados": "services utilisés",
-    "Não foi possível consultar seu histórico.":
-      "Impossible de consulter votre historique.",
-    "Falha na coleta.": "Échec de la collecte.",
-    "{input} entrada + {output} saída":
-      "{input} en entrée + {output} en sortie",
-    "{count} tokens reutilizados": "{count} tokens réutilisés",
-    "{models} modelos · {projects} projetos":
+    "Select a file up to 4 MB.": "Sélectionnez un fichier de 4 Mo maximum.",
+    "Could not import.": "Impossible d’importer.",
+    "Select theme": "Choisir le thème",
+    "Light theme": "Thème clair",
+    "Dark theme": "Thème sombre",
+    "System theme": "Thème du système",
+    "Input + output · includes cache": "Entrée + sortie · cache inclus",
+    "services used": "services utilisés",
+    "Could not read your history.": "Impossible de consulter votre historique.",
+    "Collection failed.": "Échec de la collecte.",
+    "{input} input + {output} output": "{input} en entrée + {output} en sortie",
+    "{count} reused tokens": "{count} tokens réutilisés",
+    "{models} models · {projects} projects":
       "{models} modèles · {projects} projets",
-    "Distribuição de {count} tokens por serviço":
+    "Distribution of {count} tokens by service":
       "Répartition de {count} tokens par service",
-    "{added} novos registros; {processed} processados. Importações repetidas não duplicam consumo.":
+    "{added} new records; {processed} processed. Repeated imports do not duplicate usage.":
       "{added} nouveaux enregistrements ; {processed} traités. Les imports répétés ne dupliquent pas la consommation.",
-    "{count} registros ou arquivos não puderam ser lidos. Ver diagnóstico":
+    "{count} records or files could not be read. View diagnostics":
       "{count} enregistrements ou fichiers n’ont pas pu être lus. Voir le diagnostic",
-    "{count} de 4 fontes {kind} com histórico":
+    "{count} of 4 {kind} sources with history":
       "{count} sources {kind} sur 4 avec historique",
-    locais: "locales",
-    importadas: "importées",
-    "Atualizado às {time}": "Mis à jour à {time}",
-    "{label} de {model}": "{label} de {model}",
-    "Codex · histórico local": "Codex · historique local",
-    "Claude Code · histórico local": "Claude Code · historique local",
-    "Grok Build · histórico local": "Grok Build · historique local",
-    "Gemini CLI · histórico local": "Gemini CLI · historique local",
-    "Histórico local não encontrado neste usuário.":
+    "local sources": "locales",
+    "imported sources": "importées",
+    "Updated at {time}": "Mis à jour à {time}",
+    "{label} for {model}": "{label} de {model}",
+    "Codex · local history": "Codex · historique local",
+    "Claude Code · local history": "Claude Code · historique local",
+    "Grok Build · local history": "Grok Build · historique local",
+    "Gemini CLI · local history": "Gemini CLI · historique local",
+    "Local history was not found for this user.":
       "Aucun historique local trouvé pour cet utilisateur.",
-    "Não foi possível ler parte do histórico. Verifique as permissões.":
+    "Could not read part of the history. Check permissions.":
       "Impossible de lire une partie de l’historique. Vérifiez les autorisations.",
-    "Tokens por turno e modelo. Custos informados pela ferramenta quando disponíveis.":
+    "Tokens per turn and model. Tool-reported costs when available.":
       "Tokens par tour et modèle. Coûts indiqués par l’outil lorsqu’ils sont disponibles.",
-    "Tokens reais extraídos das sessões salvas neste computador.":
+    "Actual token counts from sessions saved on this computer.":
       "Compteurs réels extraits des sessions enregistrées sur cet ordinateur.",
-    "O histórico existe, mas alguns arquivos não puderam ser interpretados.":
+    "History exists, but some files could not be parsed.":
       "L’historique existe, mais certains fichiers n’ont pas pu être interprétés.",
-    "Gemini encontrado, mas sem sessões com contadores de tokens. Logs antigos de mensagens não informam consumo.":
+    "Gemini found, but no sessions have token counters. Older message logs do not report usage.":
       "Gemini trouvé, mais sans sessions avec compteurs de tokens. Les anciens journaux de messages n’indiquent pas la consommation.",
-    "Nenhum registro de tokens disponível nos últimos 90 dias.":
+    "No token records available in the last 90 days.":
       "Aucun token enregistré au cours des 90 derniers jours.",
-    "Consumo importado dos seus projetos. Nenhuma consulta remota é feita.":
+    "Usage imported from your projects. No remote queries are made.":
       "Consommation importée de vos projets. Aucune requête distante n’est effectuée.",
-    "Importe logs JSON ou JSONL retornados pelas APIs.":
+    "Import JSON or JSONL logs returned by APIs.":
       "Importez les journaux JSON ou JSONL renvoyés par les API.",
-    "Origem não permitida.": "Origine non autorisée.",
-    "Não foi possível salvar as preferências locais.":
+    "Origin not allowed.": "Origine non autorisée.",
+    "Could not save local preferences.":
       "Impossible d’enregistrer les préférences locales.",
-    "Valores inválidos. Informe números positivos ou deixe os campos vazios.":
+    "Invalid values. Enter positive numbers or leave the fields blank.":
       "Valeurs invalides. Saisissez des nombres positifs ou laissez les champs vides.",
-    "Tokenusage · Seu consumo de IA": "Tokenusage · Votre consommation d’IA",
-    "Importação local JSON / JSONL": "Import local JSON / JSONL",
-    "Consumo extraído dos arquivos importados. Custos informados são preservados; os demais são estimados quando há preço configurado.":
+    "Tokenusage · Your AI usage": "Tokenusage · Votre consommation d’IA",
+    "Local JSON / JSONL import": "Import local JSON / JSONL",
+    "Usage extracted from imported files. Reported costs are preserved; others are estimated when a price is configured.":
       "Consommation extraite des fichiers importés. Les coûts indiqués sont conservés ; les autres sont estimés si un tarif est configuré.",
-    "Importe logs com os contadores retornados pela API. Não requer chave administrativa.":
+    "Import logs with counters returned by the API. No admin key required.":
       "Importez les journaux contenant les compteurs de l’API. Aucune clé d’administration requise.",
-    "Selecione um arquivo de consumo.":
-      "Sélectionnez un fichier de consommation.",
-    "O arquivo deve ter até 4 MB.": "Le fichier ne doit pas dépasser 4 Mo.",
-    "Limite de 100.000 registros locais atingido.":
+    "Select a usage file.": "Sélectionnez un fichier de consommation.",
+    "The file must be no larger than 4 MB.":
+      "Le fichier ne doit pas dépasser 4 Mo.",
+    "The limit of 100,000 local records has been reached.":
       "La limite de 100 000 enregistrements locaux est atteinte.",
-    "Falha ao importar.": "Échec de l’importation.",
-    "Arquivo inválido. Use JSON ou JSONL com um registro de consumo por chamada.":
+    "Import failed.": "Échec de l’importation.",
+    "Invalid file. Use JSON or JSONL with one usage record per request.":
       "Fichier invalide. Utilisez JSON ou JSONL avec un enregistrement par requête.",
-    "Importe entre 1 e 10.000 registros por arquivo.":
+    "Import between 1 and 10,000 records per file.":
       "Importez entre 1 et 10 000 enregistrements par fichier.",
-    "Registro {index}: informe provider, timestamp, model e usage (ou usageMetadata).":
+    "Record {index}: provide provider, timestamp, model and usage (or usageMetadata).":
       "Enregistrement {index} : renseignez provider, timestamp, model et usage (ou usageMetadata).",
-    "Registro {index}: contadores devem ser inteiros não negativos.":
+    "Record {index}: counters must be nonnegative integers.":
       "Enregistrement {index} : les compteurs doivent être des entiers positifs ou nuls.",
-    "Registro {index}: nenhum contador de tokens reconhecido para {provider}.":
+    "Record {index}: no recognized token counter for {provider}.":
       "Enregistrement {index} : aucun compteur de tokens reconnu pour {provider}.",
-    "Não foi possível ler os dados locais. Verifique o arquivo e as permissões.":
+    "Could not read local data. Check the file and permissions.":
       "Impossible de lire les données locales. Vérifiez le fichier et les autorisations.",
-    "Não foi possível ler as preferências locais.":
+    "Could not read local preferences.":
       "Impossible de lire les préférences locales.",
-    "Acesso permitido apenas pela dashboard local.":
+    "Access is allowed only from the local dashboard.":
       "Accès autorisé uniquement depuis le tableau de bord local.",
-    Custo: "Coût",
-    "Alternar menu lateral": "Afficher ou masquer le menu latéral",
-    "Nenhum dado foi carregado ainda.": "Aucune donnée n’a encore été chargée.",
-    "Lendo seu histórico local. A primeira coleta pode levar alguns instantes; depois, os arquivos inalterados ficam em cache.":
+    Cost: "Coût",
+    "Toggle sidebar": "Afficher ou masquer le menu latéral",
+    "No data has been loaded yet.": "Aucune donnée n’a encore été chargée.",
+    "Reading your local history. The first collection may take a moment; unchanged files are cached afterward.":
       "Lecture de votre historique local. La première collecte peut prendre un instant ; les fichiers inchangés sont ensuite mis en cache.",
-    "Os totais podem estar incompletos.": "Les totaux peuvent être incomplets.",
-    "Ver diagnóstico": "Voir le diagnostic",
-    "Horários de São Paulo · Histórico de até 90 dias":
+    "Totals may be incomplete.": "Les totaux peuvent être incomplets.",
+    "View diagnostics": "Voir le diagnostic",
+    "São Paulo time · Up to 90 days of history":
       "Heure de São Paulo · Jusqu’à 90 jours d’historique",
-    "Uso local de IA": "Utilisation locale de l’IA",
-    Acompanhamento: "Suivi",
-    "sem dados": "aucune donnée",
-    "Fica nesta máquina.": "Reste sur cet ordinateur.",
-    "Só contadores e nomes de modelo; nenhuma conversa é lida.":
+    "Local AI usage": "Utilisation locale de l’IA",
+    Tracking: "Suivi",
+    "no data": "aucune donnée",
+    "Stays on this computer.": "Reste sur cet ordinateur.",
+    "Only counters and model names; no conversations are read.":
       "Uniquement les compteurs et noms de modèles ; aucune conversation n’est lue.",
-    "Tokens consumidos": "Tokens consommés",
-    "Acima do período anterior": "Au-dessus de la période précédente",
-    "Abaixo do período anterior": "En dessous de la période précédente",
-    "Sem período anterior para comparar":
-      "Aucune période précédente à comparer",
-    "entrada ·": "entrée ·",
-    saída: "sortie",
-    "Custo no período": "Coût sur cette période",
-    Parcial: "Partiel",
-    "Economia por cache": "Économies grâce au cache",
-    "Sem tarifa para estimar": "Aucun tarif pour estimer",
-    "do custo sem cache": " du coût sans cache",
-    "registros com cache sem tarifa": "enregistrements avec cache sans tarif",
-    "Aproveitamento de cache": "Utilisation du cache",
-    "tokens de entrada": "tokens en entrée",
-    "Consumo por dia": "Consommation quotidienne",
-    "Entrada + saída, com cache · últimos":
+    "Tokens used": "Tokens consommés",
+    "Above the previous period": "Au-dessus de la période précédente",
+    "Below the previous period": "En dessous de la période précédente",
+    "No previous period to compare": "Aucune période précédente à comparer",
+    "input ·": "entrée ·",
+    output: "sortie",
+    "Cost in this period": "Coût sur cette période",
+    Partial: "Partiel",
+    "Cache savings": "Économies grâce au cache",
+    "No rate to estimate": "Aucun tarif pour estimer",
+    "of the cost without cache": " du coût sans cache",
+    "cached records without a rate": "enregistrements avec cache sans tarif",
+    "Cache utilization": "Utilisation du cache",
+    "input tokens": "tokens en entrée",
+    "Daily usage": "Consommation quotidienne",
+    "Input + output, including cache · last":
       "Entrée + sortie, cache inclus · derniers",
-    dias: "jours",
-    "Sem consumo": "Aucune consommation",
-    "Nenhum contador no histórico": "Aucun compteur dans l’historique",
+    days: "jours",
+    "No usage": "Aucune consommation",
+    "No counters in the history": "Aucun compteur dans l’historique",
     local: "local",
-    importado: "importé",
-    ", mês atual": ", mois en cours",
-    "Nenhuma meta definida. A meta acompanha o consumo sem bloquear suas ferramentas.":
+    imported: "importé",
+    ", current month": ", mois en cours",
+    "No goal set. The goal tracks usage without blocking your tools.":
       "Aucun objectif défini. L’objectif suit la consommation sans bloquer vos outils.",
-    Mensalidades: "Mensualités",
-    "Modelos mais usados": "Modèles les plus utilisés",
-    modelo: "modèle",
-    em: "dans",
-    sessão: "session",
-    chamada: "requête",
-    "Ver atividade": "Voir l’activité",
-    "Custo parcial": "Coût partiel",
-    "sem tarifa cadastrada; esses registros ficam fora do custo.":
+    "Subscription fees": "Mensualités",
+    "Most used models": "Modèles les plus utilisés",
+    model: "modèle",
+    in: "dans",
+    session: "session",
+    request: "requête",
+    "View activity": "Voir l’activité",
+    "Partial cost": "Coût partiel",
+    "without a configured rate; these records are excluded from cost.":
       "sans tarif défini ; ces enregistrements sont exclus du coût.",
-    "Definir tarifa": "Définir un tarif",
-    "sem tarifa": "sans tarif",
-    "Mensalidades, meta de tokens, cotação e tarifas por modelo.":
+    "Set rate": "Définir un tarif",
+    "no rate": "sans tarif",
+    "Subscription fees, token goal, exchange rate and model prices.":
       "Mensualités, objectif de tokens, taux de change et tarifs par modèle.",
-    "Seu histórico fica aqui": "Votre historique reste ici",
-    "Execução local, sem login.": "Exécution locale, sans connexion.",
-    "Leitura automática do histórico local deste computador. Nenhuma chave de API necessária.":
+    "Your history stays here": "Votre historique reste ici",
+    "Local execution, no login.": "Exécution locale, sans connexion.",
+    "Automatic reading of this computer’s local history. No API key required.":
       "Lecture automatique de l’historique local de cet ordinateur. Aucune clé API requise.",
-    "arquivo consultado": "fichier consulté",
-    "registro de uso": "enregistrement d’utilisation",
-    "arquivo(s) ou registro(s) de": "fichiers ou enregistrements de",
-    "não puderam ser lidos. Os totais podem estar incompletos.":
+    "file checked": "fichier consulté",
+    "usage record": "enregistrement d’utilisation",
+    "files or records from": "fichiers ou enregistrements de",
+    "could not be read. Totals may be incomplete.":
       "n’ont pas pu être lus. Les totaux peuvent être incomplets.",
-    "{count} registros ou arquivos não puderam ser lidos":
+    "{count} records or files could not be read":
       "{count} enregistrements ou fichiers n’ont pas pu être lus",
-    "{amount} · cotação {rate}": "{amount} · taux de change {rate}",
-    "Informado {amount}": "Indiqué {amount}",
-    "estimado {amount}": "estimé {amount}",
-    "{amount} economizados": "{amount} économisés",
-    "{amount}/mês": "{amount}/mois",
-    "Meta mensal: {percent}": "Objectif mensuel : {percent}",
-    "e mais {count}": "et {count} autres",
+    "{amount} · exchange rate {rate}": "{amount} · taux de change {rate}",
+    "Reported {amount}": "Indiqué {amount}",
+    "estimated {amount}": "estimé {amount}",
+    "{amount} saved": "{amount} économisés",
+    "{amount}/month": "{amount}/mois",
+    "Monthly goal: {percent}": "Objectif mensuel : {percent}",
+    "and {count} more": "et {count} autres",
   },
   "zh-CN": {
-    Idioma: "语言",
-    "Idioma da interface": "界面语言",
-    "A escolha será aplicada ao salvar as preferências.":
+    Language: "语言",
+    "Interface language": "界面语言",
+    "Your choice takes effect when you save preferences.":
       "保存偏好设置后，所选语言将生效。",
-    "Visão geral": "概览",
-    Atividade: "活动",
-    "Fontes de dados": "数据来源",
-    Preferências: "偏好设置",
-    "Ir para o conteúdo": "跳转到内容",
-    "Fechar navegação": "关闭导航",
-    "Tokenusage início": "Tokenusage 首页",
-    "Meu workspace": "我的工作区",
-    "Pessoal · local": "个人 · 本地",
-    ACOMPANHAMENTO: "用量跟踪",
-    "Navegação principal": "主导航",
-    "SUAS FERRAMENTAS": "你的工具",
-    "Histórico disponível": "历史记录可用",
-    "Sem histórico de tokens": "没有令牌历史记录",
-    "Seus dados. Sua máquina.": "你的数据，你的电脑。",
-    "Métricas locais, sem enviar suas conversas para a nuvem.":
+    Overview: "概览",
+    Activity: "活动",
+    "Data sources": "数据来源",
+    Preferences: "偏好设置",
+    "Skip to content": "跳转到内容",
+    "Close navigation": "关闭导航",
+    "Tokenusage home": "Tokenusage 首页",
+    "My workspace": "我的工作区",
+    "Personal · local": "个人 · 本地",
+    TRACKING: "用量跟踪",
+    "Main navigation": "主导航",
+    "YOUR TOOLS": "你的工具",
+    "History available": "历史记录可用",
+    "No token history": "没有令牌历史记录",
+    "Your data. Your computer.": "你的数据，你的电脑。",
+    "Local metrics, without sending your conversations to the cloud.":
       "本地统计，不会将你的对话发送到云端。",
-    "Sobre a coleta": "关于数据采集",
-    "Este computador": "这台电脑",
-    "Fechar menu": "关闭菜单",
-    "Abrir menu": "打开菜单",
-    "Dados locais": "本地数据",
-    "Como funciona a coleta": "数据采集方式",
-    EU: "我",
-    "INTELIGÊNCIA SOBRE SEU USO DE IA": "了解你的 AI 用量",
-    "Todos os seus tokens. Uma perspectiva mais clara.":
-      "汇总所有令牌，让用量一目了然。",
-    "Explore o consumo das suas sessões, sem o conteúdo das conversas.":
+    "About collection": "关于数据采集",
+    "This computer": "这台电脑",
+    "Close menu": "关闭菜单",
+    "Open menu": "打开菜单",
+    "Local data": "本地数据",
+    "How collection works": "数据采集方式",
+    ME: "我",
+    "INSIGHTS INTO YOUR AI USAGE": "了解你的 AI 用量",
+    "All your tokens. A clearer perspective.": "汇总所有令牌，让用量一目了然。",
+    "Explore your session usage, without conversation content.":
       "查看会话用量，不包含对话内容。",
-    "Saiba de onde vêm os números e quais dados estão disponíveis.":
+    "See where the numbers come from and which data is available.":
       "了解统计来源及可用的数据。",
-    "Um acompanhamento que faz sentido para a sua rotina.":
-      "适合日常使用的用量跟踪。",
-    Atualizando: "正在刷新",
-    Atualizar: "刷新",
-    "Exportar CSV": "导出 CSV",
-    "Os números abaixo são da última coleta bem-sucedida.":
+    "Tracking that fits your routine.": "适合日常使用的用量跟踪。",
+    Refreshing: "正在刷新",
+    Refresh: "刷新",
+    "Export CSV": "导出 CSV",
+    "The numbers below are from the last successful collection.":
       "以下数据来自上一次成功采集。",
-    "Tentar novamente": "重试",
-    "Lendo seu histórico local": "正在读取本地历史记录",
-    "A primeira coleta pode levar alguns instantes. Depois, os arquivos inalterados ficam em cache.":
+    "Try again": "重试",
+    "Reading your local history": "正在读取本地历史记录",
+    "The first collection may take a moment. Unchanged files are cached afterward.":
       "首次采集可能需要一些时间。之后会缓存未更改的文件。",
-    "Origem do consumo": "用量来源",
-    Ferramentas: "工具",
-    ferramentas: "工具",
-    Serviço: "服务",
-    Projeto: "项目",
-    "Todos os serviços": "所有服务",
-    "Todos os projetos": "所有项目",
-    Período: "时间范围",
-    "Últimos 7 dias": "最近 7 天",
-    "Últimos 30 dias": "最近 30 天",
-    "Últimos 90 dias": "最近 90 天",
-    "Horários de São Paulo": "圣保罗时间",
-    "Histórico de até 90 dias": "最多 90 天的历史记录",
-    "TOKENS CONSUMIDOS": "已使用令牌",
-    "vs. período anterior": "与上一时间段相比",
-    "Sem registros no período": "此时间段内没有记录",
-    "APROVEITAMENTO DE CACHE": "缓存利用率",
-    "Aguardando contadores de tokens": "等待令牌计数",
-    "ECONOMIA POR CACHE": "缓存节省费用",
-    Estimada: "估算",
-    "% do custo sem cache": "% 的无缓存费用",
-    "Sem tokens de cache no período": "此时间段内没有缓存令牌",
-    "SESSÕES COM CONSUMO": "有用量的会话",
-    "CHAMADAS IMPORTADAS": "已导入请求",
-    "Nenhum histórico nesta seleção": "当前筛选没有历史记录",
-    "CUSTO ESTIMADO / REAL": "估算 / 实际费用",
-    Misto: "混合",
-    Estimado: "估算",
-    Real: "实际",
-    "Real:": "实际：",
-    "· Estimado:": "· 估算：",
-    "Preço por modelo não cadastrado": "尚未设置模型价格",
-    de: "/",
-    "registros sem estimativa": "条记录未估算",
-    "sem estimativa": "未估算",
-    "Valores calculados com base na tabela de preços por modelo em USD/BRL e nos custos nativos informados pelas ferramentas.":
+    "Usage source": "用量来源",
+    Tools: "工具",
+    tools: "工具",
+    Service: "服务",
+    Project: "项目",
+    "All services": "所有服务",
+    "All projects": "所有项目",
+    Period: "时间范围",
+    "Last 7 days": "最近 7 天",
+    "Last 30 days": "最近 30 天",
+    "Last 90 days": "最近 90 天",
+    "São Paulo time": "圣保罗时间",
+    "Up to 90 days of history": "最多 90 天的历史记录",
+    "TOKENS USED": "已使用令牌",
+    "vs. previous period": "与上一时间段相比",
+    "No records in this period": "此时间段内没有记录",
+    "CACHE UTILIZATION": "缓存利用率",
+    "Waiting for token counters": "等待令牌计数",
+    "CACHE SAVINGS": "缓存节省费用",
+    "Estimated savings": "估算",
+    "% of the cost without cache": "% 的无缓存费用",
+    "No cached tokens in this period": "此时间段内没有缓存令牌",
+    "SESSIONS WITH USAGE": "有用量的会话",
+    "IMPORTED REQUESTS": "已导入请求",
+    "No history for this selection": "当前筛选没有历史记录",
+    "ESTIMATED / ACTUAL COST": "估算 / 实际费用",
+    Mixed: "混合",
+    Estimated: "估算",
+    Actual: "实际",
+    "Actual:": "实际：",
+    "· Estimated:": "· 估算：",
+    "No price set for this model": "尚未设置模型价格",
+    of: "/",
+    "records without an estimate": "条记录未估算",
+    "without an estimate": "未估算",
+    "Values calculated from model prices in USD/BRL and costs reported by the tools.":
       "根据模型的 USD/BRL 价格及工具报告的费用计算。",
     Local: "本地",
-    Importado: "已导入",
-    "Sem dados": "暂无数据",
+    Imported: "已导入",
+    "No data": "暂无数据",
     tokens: "令牌",
     Tokens: "令牌",
-    "Sem consumo nesta seleção": "当前筛选没有用量",
-    "Suas chamadas de API, em um só lugar": "集中查看 API 请求",
-    "Seu histórico começa aqui": "你的历史记录从这里开始",
-    "Importe logs com os contadores retornados pelas APIs. Sem registros locais, não há consumo remoto disponível para consultar.":
+    "No usage for this selection": "当前筛选没有用量",
+    "Your API requests in one place": "集中查看 API 请求",
+    "Your history starts here": "你的历史记录从这里开始",
+    "Import logs with the counters returned by APIs. Without local records, remote usage cannot be retrieved.":
       "导入含 API 返回计数的日志。没有本地记录时，无法查询远程用量。",
-    "Esta seleção não tem registros de tokens. Consulte o diagnóstico das fontes ou experimente outros filtros.":
+    "This selection has no token records. Check source diagnostics or try other filters.":
       "当前筛选没有令牌记录。请查看数据来源诊断或尝试其他筛选。",
-    "Importar consumo de API": "导入 API 用量",
-    "Ver fontes de dados": "查看数据来源",
-    "Consumo ao longo do tempo": "用量趋势",
-    "Um olhar diário sobre o uso de cada serviço.": "各服务的每日用量。",
-    Diário: "每日",
-    "Por serviço": "按服务",
-    "Participação no consumo": "用量占比",
-    "Seus modelos mais usados": "最常使用的模型",
-    "Onde os seus tokens estão sendo consumidos.": "令牌用量的分布。",
-    modelos: "个模型",
-    Modelo: "模型",
-    Modelos: "模型",
+    "Import API usage": "导入 API 用量",
+    "View data sources": "查看数据来源",
+    "Usage over time": "用量趋势",
+    "A daily view of each service’s usage.": "各服务的每日用量。",
+    Daily: "每日",
+    "By service": "按服务",
+    "Share of usage": "用量占比",
+    "Your most used models": "最常使用的模型",
+    "Where your tokens are being used.": "令牌用量的分布。",
+    models: "个模型",
+    Model: "模型",
+    Models: "模型",
     Cache: "缓存",
-    Participação: "占比",
-    "Explorar atividade": "查看活动",
-    "Por projeto": "按项目",
-    "Seu foco no período": "此时间段的重点项目",
-    representa: "占",
-    "% do seu consumo neste período.": "% 的本时间段用量。",
-    "Assinaturas por mês": "每月订阅费用",
-    "Valores informados por você, separados do custo de tokens.":
+    Share: "占比",
+    "Explore activity": "查看活动",
+    "By project": "按项目",
+    "Your focus in this period": "此时间段的重点项目",
+    "accounts for": "占",
+    "% of your usage in this period.": "% 的本时间段用量。",
+    "Monthly subscriptions": "每月订阅费用",
+    "Values provided by you, separate from token costs.":
       "你填写的金额，与令牌费用分开统计。",
-    "Adicione as mensalidades para acompanhar seu investimento em IA.":
+    "Add subscription fees to track your spending on AI.":
       "添加每月订阅费用，跟踪 AI 支出。",
-    "Não informado": "未填写",
-    Configurar: "设置",
-    "Meta mensal de tokens": "每月令牌目标",
-    "· seleção atual": "· 当前筛选",
-    "Histórico de sessões": "会话历史",
-    "Histórico de chamadas": "请求历史",
-    sessões: "次会话",
-    chamadas: "次请求",
-    "no período selecionado": "在所选时间段内",
-    "Buscar atividade": "搜索活动",
-    "Buscar projeto ou modelo": "搜索项目或模型",
-    "Serviço / projeto": "服务 / 项目",
-    "Última atividade": "最近活动",
-    "Custo / cobertura": "费用 / 覆盖率",
-    "Mostrar mais 20": "再显示 20 条",
-    "Nenhum registro encontrado": "未找到记录",
-    "Experimente outro período, serviço ou busca.":
+    "Not provided": "未填写",
+    Configure: "设置",
+    "Monthly token goal": "每月令牌目标",
+    "· current selection": "· 当前筛选",
+    "Session history": "会话历史",
+    "Request history": "请求历史",
+    sessions: "次会话",
+    requests: "次请求",
+    "in the selected period": "在所选时间段内",
+    "Search activity": "搜索活动",
+    "Search project or model": "搜索项目或模型",
+    "Service / project": "服务 / 项目",
+    "Last activity": "最近活动",
+    "Cost / coverage": "费用 / 覆盖率",
+    "Show 20 more": "再显示 20 条",
+    "No records found": "未找到记录",
+    "Try another period, service or search.":
       "尝试其他时间范围、服务或搜索条件。",
-    "DO SEU JEITO": "按你的方式",
-    "Preferências de acompanhamento": "用量跟踪偏好",
-    Geral: "常规",
-    "Tabela de preços": "价格表",
-    "Informe o que você paga nas assinaturas. Esses valores ficam separados dos custos registrados pelas ferramentas.":
+    "YOUR WAY": "按你的方式",
+    "Tracking preferences": "用量跟踪偏好",
+    General: "常规",
+    "Price table": "价格表",
+    "Enter what you pay for subscriptions. These amounts are separate from costs recorded by the tools.":
       "填写订阅费用。这些金额与工具记录的费用分开统计。",
-    "R$ / mês": "R$ / 月",
-    "Total mensal informado": "已填写的每月总额",
-    "Opcional. Acompanhamento de consumo, sem bloquear suas ferramentas.":
+    "R$ / month": "R$ / 月",
+    "Reported monthly total": "已填写的每月总额",
+    "Optional. Track usage without blocking your tools.":
       "可选。跟踪用量，不会限制工具使用。",
-    "Ex.: 100000000": "例如：100000000",
-    "Cotação do Dólar (USD / BRL)": "美元汇率（USD / BRL）",
-    "Usada para estimar custos e economia em reais. Padrão: R$ 5,75.":
+    "E.g. 100000000": "例如：100000000",
+    "Dollar exchange rate (USD / BRL)": "美元汇率（USD / BRL）",
+    "Used to estimate costs and savings in BRL. Default: R$ 5.75.":
       "用于估算以巴西雷亚尔计价的费用和节省金额。默认：R$ 5.75。",
-    "Tabela de Preços por Modelo (USD por 1M tokens)":
+    "Model price table (USD per 1M tokens)":
       "模型价格表（每百万令牌的美元价格）",
-    "Preços de referência históricos, sem atualização automática. Personalize para estimar ferramentas sem custo informado.":
+    "Historical reference prices, without automatic updates. Customize to estimate tools with no reported costs.":
       "历史参考价格，不会自动更新。可自定义价格，估算未报告费用的工具。",
-    "Nome do modelo": "模型名称",
-    "Ex.: meu-modelo": "例如：my-model",
-    "Adicionar modelo": "添加模型",
-    "Entrada ($)": "输入（$）",
-    "Saída ($)": "输出（$）",
+    "Model name": "模型名称",
+    "E.g. my-model": "例如：my-model",
+    "Add model": "添加模型",
+    "Input ($)": "输入（$）",
+    "Output ($)": "输出（$）",
     "Cache ($)": "缓存（$）",
-    Ações: "操作",
-    Personalizado: "自定义",
-    Entrada: "输入",
-    Saída: "输出",
-    "Restaurar padrão": "恢复默认值",
-    "Remover modelo": "移除模型",
-    "Salvando…": "正在保存…",
-    "Preferências salvas": "偏好设置已保存",
-    "Salvar preferências": "保存偏好设置",
-    "Seu histórico fica aqui.": "历史记录保存在本机。",
-    "Os coletores leem contadores de tokens e metadados de sessão. O conteúdo das conversas não é enviado ao navegador.":
+    Actions: "操作",
+    Custom: "自定义",
+    Input: "输入",
+    Output: "输出",
+    "Restore default": "恢复默认值",
+    "Remove model": "移除模型",
+    "Saving…": "正在保存…",
+    "Preferences saved": "偏好设置已保存",
+    "Save preferences": "保存偏好设置",
+    "Your history stays here.": "历史记录保存在本机。",
+    "Collectors read token counters and session metadata. Conversation content is not sent to the browser.":
       "采集器读取令牌计数和会话元数据，不会将对话内容发送到浏览器。",
-    "Preferências e métricas são guardadas localmente neste computador. A dashboard não usa cookies de login nem chaves das suas ferramentas.":
+    "Preferences and metrics are stored locally on this computer. The dashboard uses no login cookies or tool keys.":
       "偏好设置和统计数据保存在本机。仪表盘不使用登录 Cookie 或工具密钥。",
-    "Execução local": "本地运行",
-    "Este modelo já está na tabela.": "此模型已在价格表中。",
-    "Informe o nome do modelo.": "请输入模型名称。",
-    "Não foi possível salvar.": "无法保存。",
-    "PERFIL DESTE COMPUTADOR": "这台电脑的配置",
-    "Suas fontes de consumo": "你的用量来源",
-    "Leitura automática do histórico local. Nenhuma chave de API necessária.":
+    "Local execution": "本地运行",
+    "This model is already in the table.": "此模型已在价格表中。",
+    "Enter the model name.": "请输入模型名称。",
+    "Could not save.": "无法保存。",
+    "THIS COMPUTER’S PROFILE": "这台电脑的配置",
+    "Your usage sources": "你的用量来源",
+    "Automatic reading of local history. No API key required.":
       "自动读取本地历史记录，无需 API 密钥。",
-    Coletando: "正在采集",
-    "Sem contadores": "没有计数",
-    "Não encontrado": "未找到",
-    "Requer atenção": "需要处理",
-    "arquivos consultados": "个已检查文件",
-    "registros de uso": "条用量记录",
-    "Último:": "最近：",
-    "arquivo(s) ou registro(s) não puderam ser lidos. Os totais podem estar incompletos.":
+    Collecting: "正在采集",
+    "No counters": "没有计数",
+    "Not found": "未找到",
+    "Needs attention": "需要处理",
+    "files checked": "个已检查文件",
+    "usage records": "条用量记录",
+    "Latest:": "最近：",
+    "files or records could not be read. Totals may be incomplete.":
       "个文件或记录无法读取。总计可能不完整。",
-    "CHAMADAS DOS SEUS PROJETOS": "项目请求",
-    "Traga seus logs de API": "导入 API 日志",
-    "Importe os contadores retornados por Grok, OpenAI, Claude ou Gemini. O arquivo é processado neste computador.":
+    "YOUR PROJECT REQUESTS": "项目请求",
+    "Bring your API logs": "导入 API 日志",
+    "Import counters returned by Grok, OpenAI, Claude or Gemini. The file is processed on this computer.":
       "导入 Grok、OpenAI、Claude 或 Gemini 返回的计数。文件将在本机处理。",
-    "Arquivo de consumo de API": "API 用量文件",
-    "Importando…": "正在导入…",
-    "Importar JSON ou JSONL": "导入 JSON 或 JSONL",
-    "Até 4 MB · 10.000 registros por arquivo":
+    "API usage file": "API 用量文件",
+    "Importing…": "正在导入…",
+    "Import JSON or JSONL": "导入 JSON 或 JSONL",
+    "Up to 4 MB · 10,000 records per file":
       "最大 4 MB · 每个文件最多 10,000 条记录",
-    "Como preparar o arquivo": "如何准备文件",
-    "Uma chamada por registro, com provider (codex, claude, grok ou gemini), timestamp, model, project opcional e usage. Para Gemini use usageMetadata. Inclua o ID da chamada para deduplicar.":
+    "How to prepare the file": "如何准备文件",
+    "One request per record, with provider (codex, claude, grok or gemini), timestamp, model, optional project and usage. For Gemini use usageMetadata. Include the request ID to avoid duplicates.":
       "每条记录包含一次请求，字段为 provider（codex、claude、grok 或 gemini）、timestamp、model、可选的 project 及 usage。Gemini 使用 usageMetadata。包含请求 ID 可避免重复。",
-    "Exemplo de formato. Esses valores não entram na dashboard.":
+    "Format example. These values are not added to the dashboard.":
       "格式示例，这些数值不会加入仪表盘。",
-    "O histórico local cobre as sessões salvas nesta máquina. Uso nos sites, em outros computadores e chamadas sem logs não aparece automaticamente.":
+    "Local history covers sessions saved on this computer. Website usage, other computers and requests without logs do not appear automatically.":
       "本地历史记录仅包含保存在本机的会话。网站、其他电脑上的使用及未记录日志的请求不会自动显示。",
-    "Selecione um arquivo de até 4 MB.": "请选择不超过 4 MB 的文件。",
-    "Não foi possível importar.": "无法导入。",
-    "Selecionar tema": "选择主题",
-    "Tema claro": "浅色主题",
-    "Tema escuro": "深色主题",
-    "Tema do sistema": "系统主题",
-    "Entrada + saída · inclui cache": "输入 + 输出 · 包含缓存",
-    "serviços usados": "个已用服务",
-    "Não foi possível consultar seu histórico.": "无法读取历史记录。",
-    "Falha na coleta.": "采集失败。",
-    "{input} entrada + {output} saída": "输入 {input} + 输出 {output}",
-    "{count} tokens reutilizados": "{count} 个复用令牌",
-    "{models} modelos · {projects} projetos":
+    "Select a file up to 4 MB.": "请选择不超过 4 MB 的文件。",
+    "Could not import.": "无法导入。",
+    "Select theme": "选择主题",
+    "Light theme": "浅色主题",
+    "Dark theme": "深色主题",
+    "System theme": "系统主题",
+    "Input + output · includes cache": "输入 + 输出 · 包含缓存",
+    "services used": "个已用服务",
+    "Could not read your history.": "无法读取历史记录。",
+    "Collection failed.": "采集失败。",
+    "{input} input + {output} output": "输入 {input} + 输出 {output}",
+    "{count} reused tokens": "{count} 个复用令牌",
+    "{models} models · {projects} projects":
       "{models} 个模型 · {projects} 个项目",
-    "Distribuição de {count} tokens por serviço": "按服务分布的 {count} 个令牌",
-    "{added} novos registros; {processed} processados. Importações repetidas não duplicam consumo.":
+    "Distribution of {count} tokens by service": "按服务分布的 {count} 个令牌",
+    "{added} new records; {processed} processed. Repeated imports do not duplicate usage.":
       "新增 {added} 条记录；已处理 {processed} 条。重复导入不会重复计入用量。",
-    "{count} registros ou arquivos não puderam ser lidos. Ver diagnóstico":
+    "{count} records or files could not be read. View diagnostics":
       "无法读取 {count} 条记录或文件。查看诊断",
-    "{count} de 4 fontes {kind} com histórico":
+    "{count} of 4 {kind} sources with history":
       "4 个{kind}来源中有 {count} 个包含历史记录",
-    locais: "本地",
-    importadas: "已导入",
-    "Atualizado às {time}": "更新时间 {time}",
-    "{label} de {model}": "{model} 的{label}",
-    "Codex · histórico local": "Codex · 本地历史记录",
-    "Claude Code · histórico local": "Claude Code · 本地历史记录",
-    "Grok Build · histórico local": "Grok Build · 本地历史记录",
-    "Gemini CLI · histórico local": "Gemini CLI · 本地历史记录",
-    "Histórico local não encontrado neste usuário.":
+    "local sources": "本地",
+    "imported sources": "已导入",
+    "Updated at {time}": "更新时间 {time}",
+    "{label} for {model}": "{model} 的{label}",
+    "Codex · local history": "Codex · 本地历史记录",
+    "Claude Code · local history": "Claude Code · 本地历史记录",
+    "Grok Build · local history": "Grok Build · 本地历史记录",
+    "Gemini CLI · local history": "Gemini CLI · 本地历史记录",
+    "Local history was not found for this user.":
       "未找到此用户的本地历史记录。",
-    "Não foi possível ler parte do histórico. Verifique as permissões.":
+    "Could not read part of the history. Check permissions.":
       "无法读取部分历史记录。请检查权限。",
-    "Tokens por turno e modelo. Custos informados pela ferramenta quando disponíveis.":
+    "Tokens per turn and model. Tool-reported costs when available.":
       "按轮次和模型统计令牌，费用以工具报告为准（如有）。",
-    "Tokens reais extraídos das sessões salvas neste computador.":
+    "Actual token counts from sessions saved on this computer.":
       "从本机保存的会话中提取实际令牌计数。",
-    "O histórico existe, mas alguns arquivos não puderam ser interpretados.":
+    "History exists, but some files could not be parsed.":
       "历史记录存在，但部分文件无法解析。",
-    "Gemini encontrado, mas sem sessões com contadores de tokens. Logs antigos de mensagens não informam consumo.":
+    "Gemini found, but no sessions have token counters. Older message logs do not report usage.":
       "已找到 Gemini，但会话不含令牌计数。旧版消息日志不提供用量。",
-    "Nenhum registro de tokens disponível nos últimos 90 dias.":
+    "No token records available in the last 90 days.":
       "最近 90 天没有可用的令牌记录。",
-    "Consumo importado dos seus projetos. Nenhuma consulta remota é feita.":
+    "Usage imported from your projects. No remote queries are made.":
       "从项目导入的用量，不会进行远程查询。",
-    "Importe logs JSON ou JSONL retornados pelas APIs.":
+    "Import JSON or JSONL logs returned by APIs.":
       "导入 API 返回的 JSON 或 JSONL 日志。",
-    "Origem não permitida.": "来源不被允许。",
-    "Não foi possível salvar as preferências locais.": "无法保存本地偏好设置。",
-    "Valores inválidos. Informe números positivos ou deixe os campos vazios.":
+    "Origin not allowed.": "来源不被允许。",
+    "Could not save local preferences.": "无法保存本地偏好设置。",
+    "Invalid values. Enter positive numbers or leave the fields blank.":
       "数值无效。请输入正数或留空。",
-    "Tokenusage · Seu consumo de IA": "Tokenusage · 你的 AI 用量",
-    "Importação local JSON / JSONL": "本地 JSON / JSONL 导入",
-    "Consumo extraído dos arquivos importados. Custos informados são preservados; os demais são estimados quando há preço configurado.":
+    "Tokenusage · Your AI usage": "Tokenusage · 你的 AI 用量",
+    "Local JSON / JSONL import": "本地 JSON / JSONL 导入",
+    "Usage extracted from imported files. Reported costs are preserved; others are estimated when a price is configured.":
       "从导入文件提取的用量。保留已报告费用；已设置价格时估算其余费用。",
-    "Importe logs com os contadores retornados pela API. Não requer chave administrativa.":
+    "Import logs with counters returned by the API. No admin key required.":
       "导入含 API 返回计数的日志，无需管理员密钥。",
-    "Selecione um arquivo de consumo.": "请选择用量文件。",
-    "O arquivo deve ter até 4 MB.": "文件大小不能超过 4 MB。",
-    "Limite de 100.000 registros locais atingido.":
+    "Select a usage file.": "请选择用量文件。",
+    "The file must be no larger than 4 MB.": "文件大小不能超过 4 MB。",
+    "The limit of 100,000 local records has been reached.":
       "已达到 100,000 条本地记录的上限。",
-    "Falha ao importar.": "导入失败。",
-    "Arquivo inválido. Use JSON ou JSONL com um registro de consumo por chamada.":
+    "Import failed.": "导入失败。",
+    "Invalid file. Use JSON or JSONL with one usage record per request.":
       "文件无效。请使用 JSON 或 JSONL，每次请求对应一条用量记录。",
-    "Importe entre 1 e 10.000 registros por arquivo.":
+    "Import between 1 and 10,000 records per file.":
       "每个文件请导入 1 至 10,000 条记录。",
-    "Registro {index}: informe provider, timestamp, model e usage (ou usageMetadata).":
+    "Record {index}: provide provider, timestamp, model and usage (or usageMetadata).":
       "第 {index} 条记录：请填写 provider、timestamp、model 及 usage（或 usageMetadata）。",
-    "Registro {index}: contadores devem ser inteiros não negativos.":
+    "Record {index}: counters must be nonnegative integers.":
       "第 {index} 条记录：计数必须是非负整数。",
-    "Registro {index}: nenhum contador de tokens reconhecido para {provider}.":
+    "Record {index}: no recognized token counter for {provider}.":
       "第 {index} 条记录：没有识别到 {provider} 的令牌计数。",
-    "Não foi possível ler os dados locais. Verifique o arquivo e as permissões.":
+    "Could not read local data. Check the file and permissions.":
       "无法读取本地数据。请检查文件和权限。",
-    "Não foi possível ler as preferências locais.": "无法读取本地偏好设置。",
-    "Acesso permitido apenas pela dashboard local.":
+    "Could not read local preferences.": "无法读取本地偏好设置。",
+    "Access is allowed only from the local dashboard.":
       "仅允许通过本地仪表盘访问。",
-    Custo: "费用",
-    "Alternar menu lateral": "切换侧边栏",
-    "Nenhum dado foi carregado ainda.": "尚未加载任何数据。",
-    "Lendo seu histórico local. A primeira coleta pode levar alguns instantes; depois, os arquivos inalterados ficam em cache.":
+    Cost: "费用",
+    "Toggle sidebar": "切换侧边栏",
+    "No data has been loaded yet.": "尚未加载任何数据。",
+    "Reading your local history. The first collection may take a moment; unchanged files are cached afterward.":
       "正在读取本地历史记录。首次采集可能需要一些时间，之后会缓存未更改的文件。",
-    "Os totais podem estar incompletos.": "总计可能不完整。",
-    "Ver diagnóstico": "查看诊断",
-    "Horários de São Paulo · Histórico de até 90 dias":
+    "Totals may be incomplete.": "总计可能不完整。",
+    "View diagnostics": "查看诊断",
+    "São Paulo time · Up to 90 days of history":
       "圣保罗时间 · 最多 90 天的历史记录",
-    "Uso local de IA": "本地 AI 用量",
-    Acompanhamento: "用量跟踪",
-    "sem dados": "暂无数据",
-    "Fica nesta máquina.": "保存在本机。",
-    "Só contadores e nomes de modelo; nenhuma conversa é lida.":
+    "Local AI usage": "本地 AI 用量",
+    Tracking: "用量跟踪",
+    "no data": "暂无数据",
+    "Stays on this computer.": "保存在本机。",
+    "Only counters and model names; no conversations are read.":
       "仅读取计数和模型名称，不读取对话。",
-    "Tokens consumidos": "已使用令牌",
-    "Acima do período anterior": "高于上一时间段",
-    "Abaixo do período anterior": "低于上一时间段",
-    "Sem período anterior para comparar": "没有可比较的上一时间段",
-    "entrada ·": "输入 ·",
-    saída: "输出",
-    "Custo no período": "此时间段费用",
-    Parcial: "部分",
-    "Economia por cache": "缓存节省费用",
-    "Sem tarifa para estimar": "没有可用于估算的价格",
-    "do custo sem cache": "的无缓存费用",
-    "registros com cache sem tarifa": "条缓存记录未设置价格",
-    "Aproveitamento de cache": "缓存利用率",
-    "tokens de entrada": "个输入令牌",
-    "Consumo por dia": "每日用量",
-    "Entrada + saída, com cache · últimos": "输入 + 输出，包含缓存 · 最近",
-    dias: "天",
-    "Sem consumo": "没有用量",
-    "Nenhum contador no histórico": "历史记录中没有计数",
+    "Tokens used": "已使用令牌",
+    "Above the previous period": "高于上一时间段",
+    "Below the previous period": "低于上一时间段",
+    "No previous period to compare": "没有可比较的上一时间段",
+    "input ·": "输入 ·",
+    output: "输出",
+    "Cost in this period": "此时间段费用",
+    Partial: "部分",
+    "Cache savings": "缓存节省费用",
+    "No rate to estimate": "没有可用于估算的价格",
+    "of the cost without cache": "的无缓存费用",
+    "cached records without a rate": "条缓存记录未设置价格",
+    "Cache utilization": "缓存利用率",
+    "input tokens": "个输入令牌",
+    "Daily usage": "每日用量",
+    "Input + output, including cache · last": "输入 + 输出，包含缓存 · 最近",
+    days: "天",
+    "No usage": "没有用量",
+    "No counters in the history": "历史记录中没有计数",
     local: "本地",
-    importado: "已导入",
-    ", mês atual": "，本月",
-    "Nenhuma meta definida. A meta acompanha o consumo sem bloquear suas ferramentas.":
+    imported: "已导入",
+    ", current month": "，本月",
+    "No goal set. The goal tracks usage without blocking your tools.":
       "未设置目标。目标用于跟踪用量，不会限制工具使用。",
-    Mensalidades: "订阅费用",
-    "Modelos mais usados": "最常使用的模型",
-    modelo: "个模型",
-    em: "在",
-    sessão: "次会话",
-    chamada: "次请求",
-    "Ver atividade": "查看活动",
-    "Custo parcial": "部分费用",
-    "sem tarifa cadastrada; esses registros ficam fora do custo.":
+    "Subscription fees": "订阅费用",
+    "Most used models": "最常使用的模型",
+    model: "个模型",
+    in: "在",
+    session: "次会话",
+    request: "次请求",
+    "View activity": "查看活动",
+    "Partial cost": "部分费用",
+    "without a configured rate; these records are excluded from cost.":
       "未设置价格；这些记录不计入费用。",
-    "Definir tarifa": "设置价格",
-    "sem tarifa": "未设置价格",
-    "Mensalidades, meta de tokens, cotação e tarifas por modelo.":
+    "Set rate": "设置价格",
+    "no rate": "未设置价格",
+    "Subscription fees, token goal, exchange rate and model prices.":
       "订阅费用、令牌目标、汇率及模型价格。",
-    "Seu histórico fica aqui": "历史记录保存在本机",
-    "Execução local, sem login.": "本地运行，无需登录。",
-    "Leitura automática do histórico local deste computador. Nenhuma chave de API necessária.":
+    "Your history stays here": "历史记录保存在本机",
+    "Local execution, no login.": "本地运行，无需登录。",
+    "Automatic reading of this computer’s local history. No API key required.":
       "自动读取本机的历史记录，无需 API 密钥。",
-    "arquivo consultado": "个已检查文件",
-    "registro de uso": "条用量记录",
-    "arquivo(s) ou registro(s) de": "个文件或记录，来自",
-    "não puderam ser lidos. Os totais podem estar incompletos.":
+    "file checked": "个已检查文件",
+    "usage record": "条用量记录",
+    "files or records from": "个文件或记录，来自",
+    "could not be read. Totals may be incomplete.":
       "无法读取。总计可能不完整。",
-    "{count} registros ou arquivos não puderam ser lidos":
+    "{count} records or files could not be read":
       "无法读取 {count} 条记录或文件",
-    "{amount} · cotação {rate}": "{amount} · 汇率 {rate}",
-    "Informado {amount}": "已报告 {amount}",
-    "estimado {amount}": "估算 {amount}",
-    "{amount} economizados": "已节省 {amount}",
-    "{amount}/mês": "{amount}/月",
-    "Meta mensal: {percent}": "每月目标：{percent}",
-    "e mais {count}": "及另外 {count} 个",
+    "{amount} · exchange rate {rate}": "{amount} · 汇率 {rate}",
+    "Reported {amount}": "已报告 {amount}",
+    "estimated {amount}": "估算 {amount}",
+    "{amount} saved": "已节省 {amount}",
+    "{amount}/month": "{amount}/月",
+    "Monthly goal: {percent}": "每月目标：{percent}",
+    "and {count} more": "及另外 {count} 个",
   },
 } as const;

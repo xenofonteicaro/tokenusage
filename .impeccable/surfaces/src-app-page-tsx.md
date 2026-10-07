@@ -2,23 +2,24 @@
 version: 1
 slug: "src-app-page-tsx"
 primary_target: "src/app/page.tsx"
-related_targets: ["src/components/overview.tsx","src/components/dashboard.tsx"]
+related_targets: ["src/components/overview.tsx", "src/components/dashboard.tsx"]
 ---
 
-# Visão geral (redesign claro + escuro)
+# Overview — light and dark redesign
 
-Mode: Operate. Surface: dashboard principal do tokenusage (src/app/page.tsx e componentes do dashboard). Mockup aprovado antes de mudar o app: mockups/visao-geral.tsx e mockups/png/.
+Mode: Operate. Surface: the main tokenusage dashboard and its components. The user approved a mockup before the redesign, originally referenced as `mockups/visao-geral.tsx` and `mockups/png/`.
 
-Audience/job: pessoa dev brasileira, uso pessoal local; olhada rápida diária em tokens, custo USD/BRL e economia de cache. Constraints: lacuna nunca como zero, Ferramentas e APIs separadas, dois temas com o mesmo cuidado, mobile responsivo.
+Audience/job: a developer tracking personal local usage; a quick daily check of tokens, USD/BRL costs, and cache savings. Constraints: missing data must not appear as zero; separate Tools and APIs; equally cared-for themes; responsive mobile layouts.
 
-Chosen direction: padrão da categoria (shadcn/ui, preset base-nova, cor base neutral), escolhido pelo usuário depois de rejeitar a direção Azulejo de Brasília por ser vibrante demais. Referência: bloco dashboard-01 do shadcn.
-Unresolved: migrar o app para componentes shadcn base-nova (hoje são componentes próprios) ou só os tokens.
+Chosen direction: the category canon — shadcn/ui, base-nova preset, neutral base color — selected after the user rejected the vibrant Brasília Tile direction. Reference: shadcn dashboard-01.
+
+The implementation uses the approved stock components and tokens. The former custom-component-versus-token-only question was resolved by the redesign.
 
 ## Direction contract
 
-THESIS: Painel shadcn padrão executado com rigor: neutro, legível, sem ornamento. Recusa cores vibrantes e qualquer mundo visual próprio.
-OWN-WORLD: Tokens neutral do shadcn (oklch sem croma), Geist, raio 0.625rem, Card/Badge outline/Progress/Table/Alert/ToggleGroup padrão; gráfico de área com var(--primary) e degradê suave; nenhuma cor de destaque além do primário.
-STORY: Quem abre vê em segundos tokens, custo (com cobertura de tarifa), economia e aproveitamento de cache; lacunas aparecem como tal.
-FIRST VIEWPORT: Sidebar inset à esquerda (navegação + ferramentas com total), header com título, tema, Atualizar e Exportar CSV; abas Ferramentas/APIs e filtros; quatro cards de resumo; gráfico de área diário com seletor 90/30/7 dias.
-FORM: canon (padrão da categoria), escolhido pelo usuário; seed c49cb29d.
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+THESIS: A disciplined stock shadcn dashboard: neutral, legible, and unadorned. No vibrant palette or separate visual world.
+OWN-WORLD: Achromatic neutral oklch tokens, Geist, 0.625rem radius, stock Card/Badge/Progress/Table/Alert/ToggleGroup, primary-color area chart with a subtle gradient.
+STORY: Show usage, cost with price coverage, savings, and cache utilization within seconds; identify coverage gaps explicitly.
+FIRST VIEWPORT: Inset sidebar with navigation and tool totals; header with title, theme, Refresh, and Export CSV; Tools/APIs tabs and filters; four summary cards; daily area chart and 90/30/7-day periods.
+FORM: Category canon chosen by the user; seed c49cb29d.
+FINISH: Review and document the shipped result in DESIGN.md; keep synthetic raster provenance explicit.

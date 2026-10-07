@@ -118,10 +118,10 @@ async function scanProvider(
     gemini: "~/.gemini/tmp/*/chats",
   };
   const names: Record<Provider, string> = {
-    codex: "Codex · histórico local",
-    claude: "Claude Code · histórico local",
-    grok: "Grok Build · histórico local",
-    gemini: "Gemini CLI · histórico local",
+    codex: "Codex · local history",
+    claude: "Claude Code · local history",
+    grok: "Grok Build · local history",
+    gemini: "Gemini CLI · local history",
   };
   const status: SourceStatus = {
     id: `${provider}-local`,
@@ -131,7 +131,7 @@ async function scanProvider(
     state: "missing",
     files: 0,
     events: 0,
-    detail: "Histórico local não encontrado neste usuário.",
+    detail: "Local history was not found for this user.",
     location: location[provider],
     latest: null,
     warnings: 0,
@@ -154,7 +154,7 @@ async function scanProvider(
       if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
         status.state = "error";
         status.detail =
-          "Não foi possível ler parte do histórico. Verifique as permissões.";
+          "Could not read part of the history. Check permissions.";
         status.warnings++;
       }
     }
@@ -210,7 +210,7 @@ async function scanProvider(
             const projectHash = path.basename(path.dirname(path.dirname(file)));
             const parser = geminiParser(
               path.basename(file),
-              `Projeto ${projectHash.slice(0, 8)}`,
+              `Project ${projectHash.slice(0, 8)}`,
             );
             if (file.endsWith(".json")) {
               parser.push(await readObject(file));
@@ -249,15 +249,15 @@ async function scanProvider(
     status.state = "connected";
     status.detail =
       provider === "grok"
-        ? "Tokens por turno e modelo. Custos informados pela ferramenta quando disponíveis."
-        : "Tokens reais extraídos das sessões salvas neste computador.";
+        ? "Tokens per turn and model. Tool-reported costs when available."
+        : "Actual token counts from sessions saved on this computer.";
   } else if (available && status.state !== "error") {
     status.state = status.warnings ? "error" : "empty";
     status.detail = status.warnings
-      ? "O histórico existe, mas alguns arquivos não puderam ser interpretados."
+      ? "History exists, but some files could not be parsed."
       : provider === "gemini"
-        ? "Gemini encontrado, mas sem sessões com contadores de tokens. Logs antigos de mensagens não informam consumo."
-        : "Nenhum registro de tokens disponível nos últimos 90 dias.";
+        ? "Gemini found, but no sessions have token counters. Older message logs do not report usage."
+        : "No token records available in the last 90 days.";
   }
   return { events: [...events.values()], status, cache: updated };
 }

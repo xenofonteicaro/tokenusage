@@ -145,7 +145,7 @@ export function Overview({
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Card data-metric={t("tokens")}>
           <CardHeader>
-            <CardDescription>{t("Tokens consumidos")}</CardDescription>
+            <CardDescription>{t("Tokens used")}</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums">
               {hasData ? formatTokens(metrics.tokens) : "—"}
             </CardTitle>
@@ -166,23 +166,23 @@ export function Overview({
             <div className="font-medium">
               {change !== null
                 ? change >= 0
-                  ? t("Acima do período anterior")
-                  : t("Abaixo do período anterior")
+                  ? t("Above the previous period")
+                  : t("Below the previous period")
                 : hasData
-                  ? t("Sem período anterior para comparar")
-                  : t("Sem registros no período")}
+                  ? t("No previous period to compare")
+                  : t("No records in this period")}
             </div>
             {hasData && (
               <div className="text-muted-foreground">
-                {formatTokens(metrics.input)} {t("entrada ·")}{" "}
-                {formatTokens(metrics.output)} {t("saída")}
+                {formatTokens(metrics.input)} {t("input ·")}{" "}
+                {formatTokens(metrics.output)} {t("output")}
               </div>
             )}
           </CardFooter>
         </Card>
         <Card data-metric="cost">
           <CardHeader>
-            <CardDescription>{t("Custo no período")}</CardDescription>
+            <CardDescription>{t("Cost in this period")}</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums">
               {hasCost ? formatUSD(metrics.totalCostUSD) : "—"}
             </CardTitle>
@@ -193,12 +193,12 @@ export function Overview({
                     <TriangleAlertIcon data-icon="inline-start" />
                   )}
                   {unestimatedRecords > 0
-                    ? t("Parcial")
+                    ? t("Partial")
                     : metrics.estimatedRecords
                       ? metrics.costsKnown
-                        ? t("Misto")
-                        : t("Estimado")
-                      : t("Real")}
+                        ? t("Mixed")
+                        : t("Estimated")
+                      : t("Actual")}
                 </Badge>
               </CardAction>
             )}
@@ -206,21 +206,21 @@ export function Overview({
           <CardFooter className="flex-1 flex-col items-start justify-start gap-1 text-sm">
             <div className="font-medium">
               {hasCost
-                ? t("{amount} · cotação {rate}", {
+                ? t("{amount} · exchange rate {rate}", {
                     amount: formatBRL(metrics.totalCostBRL),
                     rate: formatDecimal(rate, 2),
                   })
-                : t("Preço por modelo não cadastrado")}
+                : t("No price set for this model")}
             </div>
             {hasCost && (
               <div className="text-muted-foreground">
                 {[
                   metrics.costsKnown > 0 &&
-                    t("Informado {amount}", {
+                    t("Reported {amount}", {
                       amount: formatUSD(metrics.realCostUSD),
                     }),
                   metrics.estimatedRecords > 0 &&
-                    t("estimado {amount}", {
+                    t("estimated {amount}", {
                       amount: formatUSD(metrics.estimatedCostUSD),
                     }),
                 ]
@@ -230,15 +230,16 @@ export function Overview({
             )}
             {unestimatedRecords > 0 && (
               <div className="text-muted-foreground">
-                {formatNumber(unestimatedRecords)} {t("de")}{" "}
-                {formatNumber(metrics.records)} {t("registros sem estimativa")}
+                {formatNumber(unestimatedRecords)} {t("of")}{" "}
+                {formatNumber(metrics.records)}{" "}
+                {t("records without an estimate")}
               </div>
             )}
           </CardFooter>
         </Card>
         <Card data-metric="savings">
           <CardHeader>
-            <CardDescription>{t("Economia por cache")}</CardDescription>
+            <CardDescription>{t("Cache savings")}</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums">
               {hasSavings ? formatUSD(metrics.cacheSavingsUSD) : "—"}
             </CardTitle>
@@ -248,7 +249,7 @@ export function Overview({
                   {unpricedCache > 0 && (
                     <TriangleAlertIcon data-icon="inline-start" />
                   )}
-                  {unpricedCache > 0 ? t("Parcial") : t("Estimada")}
+                  {unpricedCache > 0 ? t("Partial") : t("Estimated savings")}
                 </Badge>
               </CardAction>
             )}
@@ -256,30 +257,30 @@ export function Overview({
           <CardFooter className="flex-1 flex-col items-start justify-start gap-1 text-sm">
             <div className="font-medium">
               {hasSavings
-                ? t("{amount} economizados", {
+                ? t("{amount} saved", {
                     amount: formatBRL(metrics.cacheSavingsBRL),
                   })
                 : cacheEvents.length
-                  ? t("Sem tarifa para estimar")
-                  : t("Sem tokens de cache no período")}
+                  ? t("No rate to estimate")
+                  : t("No cached tokens in this period")}
             </div>
             {hasSavings && (
               <div className="text-muted-foreground">
-                {percent(savingsShare)} {t("do custo sem cache")}
+                {percent(savingsShare)} {t("of the cost without cache")}
               </div>
             )}
             {hasSavings && unpricedCache > 0 && (
               <div className="text-muted-foreground">
-                {formatNumber(unpricedCache)} {t("de")}{" "}
+                {formatNumber(unpricedCache)} {t("of")}{" "}
                 {formatNumber(cacheEvents.length)}{" "}
-                {t("registros com cache sem tarifa")}
+                {t("cached records without a rate")}
               </div>
             )}
           </CardFooter>
         </Card>
         <Card data-metric="cache">
           <CardHeader>
-            <CardDescription>{t("Aproveitamento de cache")}</CardDescription>
+            <CardDescription>{t("Cache utilization")}</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums">
               {hasData ? percent(metrics.cacheRate) : "—"}
             </CardTitle>
@@ -287,14 +288,14 @@ export function Overview({
           <CardFooter className="flex-1 flex-col items-start justify-start gap-1 text-sm">
             <div className="font-medium">
               {hasData
-                ? t("{count} tokens reutilizados", {
+                ? t("{count} reused tokens", {
                     count: formatTokens(metrics.cache),
                   })
-                : t("Aguardando contadores de tokens")}
+                : t("Waiting for token counters")}
             </div>
             {hasData && (
               <div className="text-muted-foreground">
-                {t("de")} {formatTokens(metrics.input)} {t("tokens de entrada")}
+                {t("of")} {formatTokens(metrics.input)} {t("input tokens")}
               </div>
             )}
           </CardFooter>
@@ -304,10 +305,10 @@ export function Overview({
       {hasData ? (
         <Card>
           <CardHeader>
-            <CardTitle>{t("Consumo por dia")}</CardTitle>
+            <CardTitle>{t("Daily usage")}</CardTitle>
             <CardDescription>
-              {t("Entrada + saída, com cache · últimos")} {filters.days}{" "}
-              {t("dias")}
+              {t("Input + output, including cache · last")} {filters.days}{" "}
+              {t("days")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -324,26 +325,26 @@ export function Overview({
                 </EmptyMedia>
                 <EmptyTitle role="heading" aria-level={2}>
                   {filters.provider !== "all" || filters.project
-                    ? t("Sem consumo nesta seleção")
+                    ? t("No usage for this selection")
                     : filters.channel === "api"
-                      ? t("Suas chamadas de API, em um só lugar")
-                      : t("Seu histórico começa aqui")}
+                      ? t("Your API requests in one place")
+                      : t("Your history starts here")}
                 </EmptyTitle>
                 <EmptyDescription>
                   {filters.channel === "api"
                     ? t(
-                        "Importe logs com os contadores retornados pelas APIs. Sem registros locais, não há consumo remoto disponível para consultar.",
+                        "Import logs with the counters returned by APIs. Without local records, remote usage cannot be retrieved.",
                       )
                     : t(
-                        "Esta seleção não tem registros de tokens. Consulte o diagnóstico das fontes ou experimente outros filtros.",
+                        "This selection has no token records. Check source diagnostics or try other filters.",
                       )}
                 </EmptyDescription>
               </EmptyHeader>
               <EmptyContent>
                 <Button variant="outline" onClick={() => navigate("sources")}>
                   {filters.channel === "api"
-                    ? t("Importar consumo de API")
-                    : t("Ver fontes de dados")}
+                    ? t("Import API usage")
+                    : t("View data sources")}
                 </Button>
               </EmptyContent>
             </Empty>
@@ -354,8 +355,8 @@ export function Overview({
       <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-3">
         <Card>
           <CardHeader>
-            <CardTitle>{t("Por serviço")}</CardTitle>
-            <CardDescription>{t("Participação no consumo")}</CardDescription>
+            <CardTitle>{t("By service")}</CardTitle>
+            <CardDescription>{t("Share of usage")}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             {[...PROVIDERS]
@@ -394,7 +395,7 @@ export function Overview({
                         </span>
                       </span>
                       {!available.includes(provider) ? (
-                        <Badge variant="outline">{t("Sem dados")}</Badge>
+                        <Badge variant="outline">{t("No data")}</Badge>
                       ) : values[provider] ? (
                         <span className="tabular-nums">
                           {formatTokens(values[provider])}{" "}
@@ -404,7 +405,7 @@ export function Overview({
                         </span>
                       ) : (
                         <span className="text-muted-foreground">
-                          {t("Sem consumo")}
+                          {t("No usage")}
                         </span>
                       )}
                     </span>
@@ -415,10 +416,10 @@ export function Overview({
                       />
                     ) : (
                       <span className="text-xs text-muted-foreground">
-                        {t("Nenhum contador no histórico")}{" "}
+                        {t("No counters in the history")}{" "}
                         {filters.channel === "tool"
                           ? t("local")
-                          : t("importado")}
+                          : t("imported")}
                         .
                       </span>
                     )}
@@ -431,8 +432,10 @@ export function Overview({
         {hasData && (
           <Card>
             <CardHeader>
-              <CardTitle>{t("Por projeto")}</CardTitle>
-              <CardDescription>{t("Seu foco no período")}</CardDescription>
+              <CardTitle>{t("By project")}</CardTitle>
+              <CardDescription>
+                {t("Your focus in this period")}
+              </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-2">
               {projects.slice(0, 5).map((row) => {
@@ -472,12 +475,12 @@ export function Overview({
 
         <Card>
           <CardHeader>
-            <CardTitle>{t("Meta mensal de tokens")}</CardTitle>
+            <CardTitle>{t("Monthly token goal")}</CardTitle>
             <CardDescription>
-              {filters.channel === "tool" ? t("Ferramentas") : "APIs"}
-              {t(", mês atual")}
+              {filters.channel === "tool" ? t("Tools") : "APIs"}
+              {t(", current month")}
               {filters.provider !== "all" || filters.project
-                ? t(" · seleção atual")
+                ? t("· current selection")
                 : ""}
             </CardDescription>
           </CardHeader>
@@ -489,13 +492,13 @@ export function Overview({
                     {formatTokens(monthTokens)}
                   </span>
                   <span className="text-muted-foreground tabular-nums">
-                    {t("de")} {formatTokens(goal)} ·{" "}
+                    {t("of")} {formatTokens(goal)} ·{" "}
                     {percent(monthTokens / goal, 0)}
                   </span>
                 </div>
                 <Progress
                   value={Math.min(100, (monthTokens / goal) * 100)}
-                  aria-label={t("Meta mensal: {percent}", {
+                  aria-label={t("Monthly goal: {percent}", {
                     percent: percent(monthTokens / goal, 0),
                   })}
                 />
@@ -503,27 +506,23 @@ export function Overview({
             ) : (
               <p className="text-sm text-muted-foreground">
                 {t(
-                  "Nenhuma meta definida. A meta acompanha o consumo sem bloquear suas ferramentas.",
+                  "No goal set. The goal tracks usage without blocking your tools.",
                 )}
               </p>
             )}
             <Separator className="my-2" />
             <div className="flex items-baseline justify-between gap-2 text-sm">
-              <span className="font-medium">{t("Mensalidades")}</span>
+              <span className="font-medium">{t("Subscription fees")}</span>
               <span className="tabular-nums">
                 {subscriptions
-                  ? t("{amount}/mês", { amount: formatBRL(subscriptions) })
-                  : t("Não informado")}
+                  ? t("{amount}/month", { amount: formatBRL(subscriptions) })
+                  : t("Not provided")}
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
               {subscriptions
-                ? t(
-                    "Valores informados por você, separados do custo de tokens.",
-                  )
-                : t(
-                    "Adicione as mensalidades para acompanhar seu investimento em IA.",
-                  )}
+                ? t("Values provided by you, separate from token costs.")
+                : t("Add subscription fees to track your spending on AI.")}
             </p>
           </CardContent>
           <CardFooter>
@@ -532,7 +531,7 @@ export function Overview({
               size="sm"
               onClick={() => navigate("settings")}
             >
-              {t("Configurar")}
+              {t("Configure")}
             </Button>
           </CardFooter>
         </Card>
@@ -541,17 +540,17 @@ export function Overview({
       {hasData && (
         <Card>
           <CardHeader>
-            <CardTitle>{t("Modelos mais usados")}</CardTitle>
+            <CardTitle>{t("Most used models")}</CardTitle>
             <CardDescription>
-              {models.length} {models.length === 1 ? t("modelo") : t("modelos")}{" "}
-              {t("em")} {formatNumber(metrics.sessions)}{" "}
+              {models.length} {models.length === 1 ? t("model") : t("models")}{" "}
+              {t("in")} {formatNumber(metrics.sessions)}{" "}
               {filters.channel === "tool"
                 ? metrics.sessions === 1
-                  ? t("sessão")
-                  : t("sessões")
+                  ? t("session")
+                  : t("sessions")
                 : metrics.sessions === 1
-                  ? t("chamada")
-                  : t("chamadas")}
+                  ? t("request")
+                  : t("requests")}
             </CardDescription>
             <CardAction>
               <Button
@@ -559,7 +558,7 @@ export function Overview({
                 size="sm"
                 onClick={() => navigate("activity")}
               >
-                {t("Ver atividade")}
+                {t("View activity")}
                 <ArrowUpRightIcon data-icon="inline-end" />
               </Button>
             </CardAction>
@@ -568,25 +567,25 @@ export function Overview({
             {uncoveredModels.length > 0 && (
               <Alert>
                 <TriangleAlertIcon />
-                <AlertTitle>{t("Custo parcial")}</AlertTitle>
+                <AlertTitle>{t("Partial cost")}</AlertTitle>
                 <AlertDescription>
                   {uncoveredModels
                     .slice(0, 3)
                     .map((row) => row.name)
                     .join(", ")}
                   {uncoveredModels.length > 3 &&
-                    t("e mais {count}", {
+                    t("and {count} more", {
                       count: uncoveredModels.length - 3,
                     })}{" "}
                   {t(
-                    "sem tarifa cadastrada; esses registros ficam fora do custo.",
+                    "without a configured rate; these records are excluded from cost.",
                   )}{" "}
                   <button
                     type="button"
                     className="font-medium text-foreground underline underline-offset-3"
                     onClick={() => navigate("settings")}
                   >
-                    {t("Definir tarifa")}
+                    {t("Set rate")}
                   </button>
                 </AlertDescription>
               </Alert>
@@ -594,15 +593,15 @@ export function Overview({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>{t("Modelo")}</TableHead>
+                  <TableHead>{t("Model")}</TableHead>
                   <TableHead className="hidden sm:table-cell">
-                    {t("Serviço")}
+                    {t("Service")}
                   </TableHead>
                   <TableHead className="text-right">{t("Tokens")}</TableHead>
                   <TableHead className="text-right">{t("Cache")}</TableHead>
-                  <TableHead className="text-right">{t("Custo")}</TableHead>
+                  <TableHead className="text-right">{t("Cost")}</TableHead>
                   <TableHead className="hidden text-right sm:table-cell">
-                    {t("Participação")}
+                    {t("Share")}
                   </TableHead>
                 </TableRow>
               </TableHeader>
@@ -633,7 +632,7 @@ export function Overview({
                           formatUSD(row.totalCostUSD)
                         ) : (
                           <span className="text-muted-foreground">
-                            {t("sem tarifa")}
+                            {t("no rate")}
                           </span>
                         )}
                       </TableCell>

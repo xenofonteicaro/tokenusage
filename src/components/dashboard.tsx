@@ -65,10 +65,10 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type View = "overview" | "activity" | "sources" | "settings";
 const views: { id: View; label: string; icon: LucideIcon }[] = [
-  { id: "overview", label: "Visão geral", icon: LayoutDashboardIcon },
-  { id: "activity", label: "Atividade", icon: ActivityIcon },
-  { id: "sources", label: "Fontes de dados", icon: PlugIcon },
-  { id: "settings", label: "Preferências", icon: SlidersHorizontalIcon },
+  { id: "overview", label: "Overview", icon: LayoutDashboardIcon },
+  { id: "activity", label: "Activity", icon: ActivityIcon },
+  { id: "sources", label: "Data sources", icon: PlugIcon },
+  { id: "settings", label: "Preferences", icon: SlidersHorizontalIcon },
 ];
 
 export default function Dashboard() {
@@ -98,13 +98,11 @@ function DashboardContent() {
       const response = await fetch("/api/usage", { cache: "no-store" });
       const result = await response.json();
       if (!response.ok)
-        throw new Error(
-          result.error || "Não foi possível consultar seu histórico.",
-        );
+        throw new Error(result.error || "Could not read your history.");
       setSnapshot(result);
       setLanguage(resolveLanguage(result.settings.language));
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Falha na coleta.");
+      setError(error instanceof Error ? error.message : "Collection failed.");
     } finally {
       setBusy(false);
     }
@@ -202,13 +200,13 @@ function DashboardContent() {
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2 focus:text-sm"
         >
-          {t("Ir para o conteúdo")}
+          {t("Skip to content")}
         </a>
         <header className="flex h-14 shrink-0 items-center gap-2 border-b">
           <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
             <SidebarTrigger
               className="-ml-1"
-              aria-label={t("Alternar menu lateral")}
+              aria-label={t("Toggle sidebar")}
             />
             <Separator
               orientation="vertical"
@@ -221,9 +219,7 @@ function DashboardContent() {
                 variant="outline"
                 size="sm"
                 disabled={busy}
-                aria-label={
-                  busy && snapshot ? t("Atualizando") : t("Atualizar")
-                }
+                aria-label={busy && snapshot ? t("Refreshing") : t("Refresh")}
                 onClick={() => void refresh()}
               >
                 <RefreshCwIcon
@@ -231,18 +227,18 @@ function DashboardContent() {
                   className={cn(busy && "animate-spin")}
                 />
                 <span className="hidden sm:inline">
-                  {busy && snapshot ? t("Atualizando") : t("Atualizar")}
+                  {busy && snapshot ? t("Refreshing") : t("Refresh")}
                 </span>
               </Button>
               {exportable && (
                 <Button
                   size="sm"
                   disabled={!events.length}
-                  aria-label={t("Exportar CSV")}
+                  aria-label={t("Export CSV")}
                   onClick={download}
                 >
                   <DownloadIcon data-icon="inline-start" />
-                  <span className="hidden sm:inline">{t("Exportar CSV")}</span>
+                  <span className="hidden sm:inline">{t("Export CSV")}</span>
                 </Button>
               )}
             </div>
@@ -255,14 +251,16 @@ function DashboardContent() {
               <AlertTitle>{error}</AlertTitle>
               <AlertDescription>
                 {snapshot
-                  ? t("Os números abaixo são da última coleta bem-sucedida.")
-                  : t("Nenhum dado foi carregado ainda.")}{" "}
+                  ? t(
+                      "The numbers below are from the last successful collection.",
+                    )
+                  : t("No data has been loaded yet.")}{" "}
                 <button
                   type="button"
                   className="font-medium text-foreground underline underline-offset-3"
                   onClick={() => void refresh()}
                 >
-                  {t("Tentar novamente")}
+                  {t("Try again")}
                 </button>
               </AlertDescription>
             </Alert>
@@ -271,7 +269,7 @@ function DashboardContent() {
             <div role="status" className="flex flex-col gap-4 md:gap-6">
               <p className="text-sm text-muted-foreground">
                 {t(
-                  "Lendo seu histórico local. A primeira coleta pode levar alguns instantes; depois, os arquivos inalterados ficam em cache.",
+                  "Reading your local history. The first collection may take a moment; unchanged files are cached afterward.",
                 )}
               </p>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -290,16 +288,14 @@ function DashboardContent() {
                       value={filters.channel}
                       onValueChange={(value) => changeChannel(value as Channel)}
                     >
-                      <TabsList aria-label={t("Origem do consumo")}>
-                        <TabsTrigger value="tool">
-                          {t("Ferramentas")}
-                        </TabsTrigger>
+                      <TabsList aria-label={t("Usage source")}>
+                        <TabsTrigger value="tool">{t("Tools")}</TabsTrigger>
                         <TabsTrigger value="api">APIs</TabsTrigger>
                       </TabsList>
                     </Tabs>
                     <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto">
                       <NativeSelect
-                        aria-label={t("Serviço")}
+                        aria-label={t("Service")}
                         className="w-full sm:w-44"
                         value={filters.provider}
                         onChange={(event) =>
@@ -311,7 +307,7 @@ function DashboardContent() {
                         }
                       >
                         <NativeSelectOption value="all">
-                          {t("Todos os serviços")}
+                          {t("All services")}
                         </NativeSelectOption>
                         {PROVIDERS.map((provider) => (
                           <NativeSelectOption key={provider} value={provider}>
@@ -320,7 +316,7 @@ function DashboardContent() {
                         ))}
                       </NativeSelect>
                       <NativeSelect
-                        aria-label={t("Projeto")}
+                        aria-label={t("Project")}
                         className="w-full sm:w-44"
                         value={filters.project}
                         onChange={(event) =>
@@ -331,7 +327,7 @@ function DashboardContent() {
                         }
                       >
                         <NativeSelectOption value="">
-                          {t("Todos os projetos")}
+                          {t("All projects")}
                         </NativeSelectOption>
                         {projects.map((project) => (
                           <NativeSelectOption key={project} value={project}>
@@ -340,7 +336,7 @@ function DashboardContent() {
                         ))}
                       </NativeSelect>
                       <NativeSelect
-                        aria-label={t("Período")}
+                        aria-label={t("Period")}
                         className="col-span-2 w-full sm:w-40"
                         value={filters.days}
                         onChange={(event) =>
@@ -351,13 +347,13 @@ function DashboardContent() {
                         }
                       >
                         <NativeSelectOption value={7}>
-                          {t("Últimos 7 dias")}
+                          {t("Last 7 days")}
                         </NativeSelectOption>
                         <NativeSelectOption value={30}>
-                          {t("Últimos 30 dias")}
+                          {t("Last 30 days")}
                         </NativeSelectOption>
                         <NativeSelectOption value={90}>
-                          {t("Últimos 90 dias")}
+                          {t("Last 90 days")}
                         </NativeSelectOption>
                       </NativeSelect>
                     </div>
@@ -399,39 +395,38 @@ function DashboardContent() {
                   <Alert>
                     <TriangleAlertIcon />
                     <AlertTitle>
-                      {t(
-                        "{count} registros ou arquivos não puderam ser lidos",
-                        { count: warnings },
-                      )}
+                      {t("{count} records or files could not be read", {
+                        count: warnings,
+                      })}
                     </AlertTitle>
                     <AlertDescription>
-                      {t("Os totais podem estar incompletos.")}{" "}
+                      {t("Totals may be incomplete.")}{" "}
                       <button
                         type="button"
                         className="font-medium text-foreground underline underline-offset-3"
                         onClick={() => setView("sources")}
                       >
-                        {t("Ver diagnóstico")}
+                        {t("View diagnostics")}
                       </button>
                     </AlertDescription>
                   </Alert>
                 )}
                 <footer className="mt-auto flex flex-wrap justify-between gap-x-6 gap-y-1 text-xs text-muted-foreground">
                   <span>
-                    {t("{count} de 4 fontes {kind} com histórico", {
+                    {t("{count} of 4 {kind} sources with history", {
                       count: connected,
                       kind: t(
-                        filters.channel === "tool" ? "locais" : "importadas",
+                        filters.channel === "tool"
+                          ? "local sources"
+                          : "imported sources",
                       ),
                     })}{" "}
                     ·{" "}
-                    {t("Atualizado às {time}", {
+                    {t("Updated at {time}", {
                       time: formatTime(snapshot.generatedAt),
                     })}
                   </span>
-                  <span>
-                    {t("Horários de São Paulo · Histórico de até 90 dias")}
-                  </span>
+                  <span>{t("São Paulo time · Up to 90 days of history")}</span>
                 </footer>
               </>
             )
@@ -479,7 +474,7 @@ function AppSidebar({
               <div className="grid flex-1 text-left leading-tight">
                 <span className="truncate font-semibold">tokenusage</span>
                 <span className="truncate text-xs text-muted-foreground">
-                  {t("Uso local de IA")}
+                  {t("Local AI usage")}
                 </span>
               </div>
             </SidebarMenuButton>
@@ -488,7 +483,7 @@ function AppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>{t("Acompanhamento")}</SidebarGroupLabel>
+          <SidebarGroupLabel>{t("Tracking")}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {views.map(({ id, label, icon: Icon }) => (
@@ -510,7 +505,7 @@ function AppSidebar({
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>{t("Ferramentas")}</SidebarGroupLabel>
+          <SidebarGroupLabel>{t("Tools")}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {PROVIDERS.map((provider) => {
@@ -543,7 +538,7 @@ function AppSidebar({
                       <SidebarMenuBadge>
                         {available && toolTotals
                           ? formatTokens(toolTotals[provider])
-                          : t("sem dados")}
+                          : t("no data")}
                       </SidebarMenuBadge>
                     )}
                   </SidebarMenuItem>
@@ -559,16 +554,16 @@ function AppSidebar({
           <div className="flex flex-col gap-1">
             <p>
               <span className="font-medium text-foreground">
-                {t("Fica nesta máquina.")}
+                {t("Stays on this computer.")}
               </span>{" "}
-              {t("Só contadores e nomes de modelo; nenhuma conversa é lida.")}
+              {t("Only counters and model names; no conversations are read.")}
             </p>
             <button
               type="button"
               className="inline-flex items-center gap-1 self-start font-medium text-foreground underline-offset-4 hover:underline"
               onClick={() => go("sources")}
             >
-              {t("Sobre a coleta")}
+              {t("About collection")}
               <ArrowUpRightIcon className="size-3" />
             </button>
           </div>

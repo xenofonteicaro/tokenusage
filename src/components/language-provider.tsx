@@ -19,7 +19,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   );
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = value.t("Tokenusage · Seu consumo de IA");
+    document.title = value.t("Tokenusage · Your AI usage");
   }, [language, value]);
   return (
     <LanguageContext.Provider value={value}>

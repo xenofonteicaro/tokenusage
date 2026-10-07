@@ -1,5 +1,5 @@
 class Tokenusage < Formula
-  desc "Dashboard local de uso de tokens de ferramentas de IA"
+  desc "Local dashboard for AI tool token usage"
   homepage "https://github.com/xenofonteicaro/tokenusage"
   url "https://github.com/xenofonteicaro/tokenusage/releases/download/v0.2.0/tokenusage-0.2.0.tar.gz"
   version "0.2.0"
@@ -38,7 +38,7 @@ class Tokenusage < Formula
             fi
             sleep 1
           done
-          echo "O serviço iniciou, mas a dashboard não respondeu na porta 3000." >&2
+          echo "The service started, but the dashboard did not respond on port 3000." >&2
           exit 1
           ;;
         stop)
@@ -55,15 +55,15 @@ class Tokenusage < Formula
           ;;
         help|--help|-h)
           cat <<'HELP'
-      tokenusage start    Inicia o serviço local e abre a dashboard
-      tokenusage stop     Encerra o serviço
-      tokenusage restart  Reinicia o serviço
-      tokenusage open     Abre a dashboard no navegador
-      tokenusage logs     Acompanha o log local
+      tokenusage start    Start the local service and open the dashboard
+      tokenusage stop     Stop the service
+      tokenusage restart  Restart the service
+      tokenusage open     Open the dashboard in your browser
+      tokenusage logs     Follow the local service log
       HELP
           ;;
         *)
-          echo "Comando desconhecido: $1" >&2
+          echo "Unknown command: $1" >&2
           echo "Use: tokenusage --help" >&2
           exit 2
           ;;
@@ -81,13 +81,13 @@ class Tokenusage < Formula
 
   def caveats
     <<~EOS
-      Inicie a dashboard e abra o navegador com:
+      Start the dashboard and open your browser with:
         tokenusage start
 
-      Para encerrar o serviço:
+      To stop the service:
         tokenusage stop
 
-      Altere o idioma em Preferências → Geral → Idioma da interface.
+      Change the language under Preferences → General → Interface language.
     EOS
   end
 

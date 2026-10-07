@@ -22,19 +22,19 @@ export function ThemeToggle() {
       variant="outline"
       size="sm"
       spacing={0}
-      aria-label={t("Selecionar tema")}
+      aria-label={t("Select theme")}
       value={mounted && theme ? [theme] : []}
       onValueChange={(value) => {
         if (value[0]) setTheme(value[0]);
       }}
     >
-      <ToggleGroupItem value="light" aria-label={t("Tema claro")}>
+      <ToggleGroupItem value="light" aria-label={t("Light theme")}>
         <SunIcon />
       </ToggleGroupItem>
-      <ToggleGroupItem value="dark" aria-label={t("Tema escuro")}>
+      <ToggleGroupItem value="dark" aria-label={t("Dark theme")}>
         <MoonIcon />
       </ToggleGroupItem>
-      <ToggleGroupItem value="system" aria-label={t("Tema do sistema")}>
+      <ToggleGroupItem value="system" aria-label={t("System theme")}>
         <MonitorIcon />
       </ToggleGroupItem>
     </ToggleGroup>
