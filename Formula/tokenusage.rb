@@ -1,17 +1,19 @@
 class Tokenusage < Formula
   desc "Local dashboard for AI tool token usage"
   homepage "https://github.com/xenofonteicaro/tokenusage"
-  url "https://github.com/xenofonteicaro/tokenusage/releases/download/v0.2.0/tokenusage-0.2.0.tar.gz"
-  version "0.2.0"
-  sha256 "aaeca4e4d7931b631d3be78f45972a0fa1fa38c82ea08dd04d742d35254cc19c"
+  url "https://github.com/xenofonteicaro/tokenusage/releases/download/v0.3.0/tokenusage-0.3.0.tar.gz"
+  version "0.3.0"
+  sha256 "e60dbfd4298a04f6b512de90784f173d2b3c32f5624300fb8abb35850512d793"
 
   depends_on "node"
 
   def install
     system "npm", "ci"
     system "npm", "run", "build"
+    system "npm", "run", "build:tui"
 
     libexec.install ".next/standalone" => "app"
+    libexec.install "dist/tui.mjs"
     (libexec/"app/.next").install buildpath/".next/static" => "static"
     (libexec/"app/public").install buildpath/"public" if (buildpath/"public").directory?
 
@@ -53,6 +55,10 @@ class Tokenusage < Formula
         logs)
           exec tail -f "$(brew --prefix)/var/log/tokenusage.log"
           ;;
+        tui)
+          shift
+          exec "#{node}" "#{opt_libexec}/tui.mjs" "$@"
+          ;;
         help|--help|-h)
           cat <<'HELP'
       tokenusage start    Start the local service and open the dashboard
@@ -60,6 +66,7 @@ class Tokenusage < Formula
       tokenusage restart  Restart the service
       tokenusage open     Open the dashboard in your browser
       tokenusage logs     Follow the local service log
+      tokenusage tui      Show the dashboard in the terminal (tokenusage tui --help)
       HELP
           ;;
         *)
@@ -87,11 +94,16 @@ class Tokenusage < Formula
       To stop the service:
         tokenusage stop
 
+      To see the numbers in the terminal, without the web service:
+        tokenusage tui
+
       Change the language under Preferences → General → Interface language.
     EOS
   end
 
   test do
     assert_match "tokenusage start", shell_output("#{bin}/tokenusage --help")
+    assert_match "tokenusage tui", shell_output("#{bin}/tokenusage --help")
+    assert_match "Usage: tokenusage tui", shell_output("#{bin}/tokenusage tui --help --lang en")
   end
 end

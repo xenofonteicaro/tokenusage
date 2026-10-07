@@ -40,7 +40,8 @@ tokenusage start
 
 `tokenusage start` starts the service and opens **http://127.0.0.1:3000** in your
 browser. Use `tokenusage stop`, `tokenusage restart`, `tokenusage open`, or
-`tokenusage logs` to manage it. The service starts again when you log in to macOS.
+`tokenusage logs` to manage it, or `tokenusage tui` for the terminal version
+(see [Terminal UI](#terminal-ui-tui)). The service starts again when you log in to macOS.
 Preferences, prices, imports, and the collector cache are stored in
 `~/Library/Application Support/tokenusage`. Tool histories stay in their
 original directories.
@@ -69,6 +70,7 @@ history directly, so it needs neither the web service nor port 3000.
 
 ```sh
 npm run tui                          # from the repository
+tokenusage tui                       # installed with Homebrew
 tokenusage tui --days 7 --channel api
 tokenusage tui --once                # print the overview once and exit
 ```
@@ -88,8 +90,8 @@ It needs a terminal of at least 80×24. `--days` (7, 30, or 90) and `--channel`
 
 This first phase is read-only: preferences, prices, log import, and CSV export
 stay in the web dashboard. Colors follow `NO_COLOR`. `npm run build:tui` builds
-the single bundle `dist/tui.mjs`; the `tokenusage tui` Homebrew subcommand ships
-with the next formula release.
+the single bundle `dist/tui.mjs`, which the Homebrew formula installs for the
+`tokenusage tui` subcommand.
 
 The TUI speaks Portuguese (Brazil) and English. Without `--lang` it follows the
 language saved under **Preferences → General → Interface language**. Spanish,
