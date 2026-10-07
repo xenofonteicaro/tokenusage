@@ -1,5 +1,5 @@
 import { collectLocal, HISTORY_DAYS } from "@/lib/collectors/local";
-import { compactEvents } from "@/lib/analytics";
+import { compactEvents, totals } from "@/lib/analytics";
 import { readJson, readSettings } from "@/lib/local-store";
 import { isLocalRequest, privateHeaders } from "@/lib/local-security";
 import { PROVIDERS, type SourceStatus, type UsageEvent } from "@/lib/types";
@@ -35,13 +35,28 @@ export async function GET(request: Request) {
             .sort()
             .at(-1) ?? null,
         detail: matching.length
-          ? "Consumo extraído dos arquivos importados. Custos apenas quando informados no arquivo."
+          ? "Consumo extraído dos arquivos importados. Custos informados são preservados; os demais são estimados quando há preço configurado."
           : "Importe logs com os contadores retornados pela API. Não requer chave administrativa.",
       };
     });
+    const compacted = compactEvents([...local.events, ...events]);
+    const pricingConfig = {
+      usdToBrlRate: settings.usdToBrlRate,
+      customPrices: settings.customPricing,
+    };
     return Response.json(
       {
-        events: compactEvents([...local.events, ...events]),
+        events: compacted,
+        costMetrics: {
+          tool: totals(
+            compacted.filter((row) => row.channel === "tool"),
+            pricingConfig,
+          ),
+          api: totals(
+            compacted.filter((row) => row.channel === "api"),
+            pricingConfig,
+          ),
+        },
         sources: [...local.sources, ...sources],
         settings,
         generatedAt: new Date().toISOString(),

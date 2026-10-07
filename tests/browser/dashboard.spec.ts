@@ -149,12 +149,231 @@ test("toggles light and dark themes and displays cache savings and cost metrics"
     page.getByText("CUSTO ESTIMADO / REAL", { exact: false }),
   ).toBeVisible();
 
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.getByRole("button", { name: "Tema do sistema" }).click();
+  await expect(page.locator("html")).toHaveClass(/dark/);
+  await page.emulateMedia({ colorScheme: "light" });
+  await expect(page.locator("html")).not.toHaveClass(/dark/);
+  await page.reload();
+  await expect(
+    page.getByRole("button", { name: "Tema do sistema" }),
+  ).toHaveAttribute("aria-pressed", "true");
+
   // Verify pricing configuration in settings
   await page.getByRole("button", { name: "Preferências", exact: true }).click();
   await expect(
-    page.getByText("Tabela de Preços por Modelo", { exact: false }),
-  ).toBeVisible();
-  await expect(
     page.getByLabel("Cotação do Dólar", { exact: false }),
   ).toBeVisible();
+  const generalTab = page.getByRole("tab", { name: "Geral", exact: true });
+  await generalTab.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(
+    page.getByRole("tab", { name: "Tabela de preços" }),
+  ).toBeFocused();
+  await expect(
+    page.getByText("Tabela de Preços por Modelo", { exact: false }),
+  ).toBeVisible();
+});
+
+test("edits and persists model prices and exchange rate, updating costs immediately", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Fontes de dados", exact: false })
+    .click();
+  await page.getByLabel("Arquivo de consumo de API").setInputFiles({
+    name: "pricing.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(
+      JSON.stringify([
+        {
+          provider: "codex",
+          id: "pricing-estimated",
+          model: "gpt-4o",
+          project: "pricing-synthetic",
+          timestamp: new Date().toISOString(),
+          usage: {
+            prompt_tokens: 1000000,
+            completion_tokens: 100000,
+            prompt_tokens_details: { cached_tokens: 400000 },
+          },
+        },
+        {
+          provider: "codex",
+          id: "pricing-real",
+          model: "gpt-4o",
+          project: "pricing-synthetic",
+          timestamp: new Date().toISOString(),
+          costUSD: 0.42,
+          usage: { prompt_tokens: 1000, completion_tokens: 200 },
+        },
+      ]),
+    ),
+  });
+  await expect(page.getByRole("status")).toContainText("processados");
+  await page.getByRole("button", { name: "Visão geral", exact: true }).click();
+  await page.getByRole("button", { name: "APIs", exact: true }).click();
+  await page
+    .getByLabel("Projeto", { exact: true })
+    .selectOption("pricing-synthetic");
+  await page.getByRole("button", { name: "Preferências", exact: true }).click();
+  await page.getByLabel("Cotação do Dólar", { exact: false }).fill("6");
+  await page.getByRole("tab", { name: "Tabela de preços" }).click();
+  await page.getByLabel("Entrada de gpt-4o", { exact: true }).fill("4");
+  await page.getByLabel("Saída de gpt-4o", { exact: true }).fill("10");
+  await page.getByLabel("Cache de gpt-4o", { exact: true }).fill("1");
+  await page
+    .getByLabel("Nome do modelo", { exact: true })
+    .fill("custom-browser");
+  await page
+    .getByRole("button", { name: "Adicionar modelo", exact: true })
+    .click();
+  await page.getByLabel("Entrada de custom-browser", { exact: true }).fill("7");
+  await page.getByRole("button", { name: "Salvar preferências" }).click();
+  await expect(
+    page.getByRole("button", { name: "Preferências salvas" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Visão geral", exact: true }).click();
+  const costCard = page
+    .locator(".metric-card")
+    .filter({ hasText: "CUSTO ESTIMADO / REAL" });
+  await expect(costCard).toContainText(/25,32/);
+  await expect(costCard).toContainText(/4,22/);
+  await expect(costCard).toContainText(/0,42/);
+  const savingsCard = page
+    .locator(".metric-card")
+    .filter({ hasText: "ECONOMIA POR CACHE" });
+  await expect(savingsCard).toContainText(/1,20/);
+  await page.getByRole("button", { name: "Atividade", exact: true }).click();
+  await expect(page.locator(".activity-panel")).toContainText(/3,80/);
+  await expect(page.locator(".activity-panel")).toContainText(/0,42/);
+  await page.reload();
+  await page.getByRole("button", { name: "Preferências", exact: true }).click();
+  await expect(
+    page.getByLabel("Cotação do Dólar", { exact: false }),
+  ).toHaveValue("6");
+  await page.getByRole("tab", { name: "Tabela de preços" }).click();
+  await expect(
+    page.getByLabel("Entrada de custom-browser", { exact: true }),
+  ).toHaveValue("7");
+  await expect(
+    page.getByLabel("Entrada de gpt-4o", { exact: true }),
+  ).toHaveValue("4");
+  const settings = (await (await page.request.get("/api/usage")).json())
+    .settings;
+  const invalid = await page.request.put("/api/settings", {
+    headers: { Origin: "http://127.0.0.1:3101" },
+    data: { ...settings, usdToBrlRate: 0 },
+  });
+  expect(invalid.status()).toBe(400);
+  expect(
+    (await (await page.request.get("/api/usage")).json()).settings.usdToBrlRate,
+  ).toBe(6);
+  await page.getByRole("button", { name: "Tema escuro" }).click();
+  await page.screenshot({
+    path: "artifacts/pricing-dark-synthetic.png",
+    fullPage: true,
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect
+    .poll(() =>
+      page
+        .locator(".sidebar")
+        .evaluate((element) => element.getBoundingClientRect().right),
+    )
+    .toBeLessThanOrEqual(0);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: "artifacts/pricing-mobile-synthetic.png",
+    fullPage: true,
+  });
+  await page
+    .getByRole("button", {
+      name: "Remover modelo de custom-browser",
+      exact: true,
+    })
+    .click();
+  await expect(
+    page.getByLabel("Entrada de custom-browser", { exact: true }),
+  ).toHaveCount(0);
+  await page
+    .getByRole("button", { name: "Restaurar padrão de gpt-4o", exact: true })
+    .click();
+  await expect(
+    page.getByLabel("Entrada de gpt-4o", { exact: true }),
+  ).toHaveValue("2.5");
+  await page.getByRole("button", { name: "Salvar preferências" }).click();
+  await expect(
+    page.getByRole("button", { name: "Preferências salvas" }),
+  ).toBeVisible();
+  const restored = await (await page.request.get("/api/settings")).json();
+  expect(restored.settings.customPricing["custom-browser"]).toBeUndefined();
+  expect(restored.settings.customPricing["gpt-4o"]).toBeUndefined();
+});
+
+test("cache percentage uses model tariffs even for native zero costs and unknown models stay uncovered", async ({
+  page,
+}) => {
+  const result = await page.request.post("/api/import", {
+    headers: { Origin: "http://127.0.0.1:3101" },
+    data: [
+      {
+        provider: "claude",
+        id: "native-zero-pricing",
+        project: "native-zero-synthetic",
+        model: "claude-3-7-sonnet",
+        timestamp: new Date().toISOString(),
+        costUSD: 0,
+        usage: {
+          input_tokens: 0,
+          cache_read_input_tokens: 1000000,
+          output_tokens: 100000,
+        },
+      },
+      {
+        provider: "claude",
+        id: "unknown-pricing",
+        project: "unknown-synthetic",
+        model: "unknown-model-synthetic",
+        timestamp: new Date().toISOString(),
+        usage: { input_tokens: 100, output_tokens: 20 },
+      },
+    ],
+  });
+  expect(result.ok()).toBe(true);
+  await page.goto("/");
+  await page.getByRole("button", { name: "APIs", exact: true }).click();
+  await page
+    .getByLabel("Projeto", { exact: true })
+    .selectOption("native-zero-synthetic");
+  await expect(
+    page.locator(".metric-card").filter({ hasText: "ECONOMIA POR CACHE" }),
+  ).toContainText("60,0%");
+  await expect(
+    page.locator(".metric-card").filter({ hasText: "CUSTO ESTIMADO / REAL" }),
+  ).toContainText("0,00");
+  await page
+    .getByLabel("Projeto", { exact: true })
+    .selectOption("unknown-synthetic");
+  await expect(
+    page.locator(".metric-card").filter({ hasText: "CUSTO ESTIMADO / REAL" }),
+  ).toContainText("1 de 1 registros sem estimativa");
+  await expect(
+    page.locator(".metric-card").filter({ hasText: "ECONOMIA POR CACHE" }),
+  ).toContainText("0,00");
+  await page.getByRole("button", { name: "Tema claro" }).click();
+  await page.screenshot({
+    path: "artifacts/dashboard-light-synthetic.png",
+    fullPage: true,
+  });
+  await page.getByRole("button", { name: "Tema escuro" }).click();
+  await page.screenshot({
+    path: "artifacts/dashboard-dark-synthetic.png",
+    fullPage: true,
+  });
 });

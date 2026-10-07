@@ -82,7 +82,8 @@ export function totals(events: UsageEvent[], pricingConfig?: PricingConfig) {
       cost: result.cost + (row.costUSD ?? 0),
       records: result.records + (row.records ?? 1),
       costsKnown:
-        result.costsKnown + (row.costRecords ?? (row.costUSD !== null ? 1 : 0)),
+        result.costsKnown +
+        (row.costRecords ?? (row.costUSD == null ? 0 : (row.records ?? 1))),
     }),
     {
       input: 0,
@@ -100,14 +101,14 @@ export function totals(events: UsageEvent[], pricingConfig?: PricingConfig) {
     ...sum,
     cacheRate: sum.input ? sum.cache / sum.input : 0,
     sessions: new Set(events.map((row) => row.sessionId)).size,
-    realCostUSD: Number(realCostUSD.toFixed(4)),
-    realCostBRL: Number(realCostBRL.toFixed(4)),
-    estimatedCostUSD: Number(estimatedCostUSD.toFixed(4)),
-    estimatedCostBRL: Number(estimatedCostBRL.toFixed(4)),
-    totalCostUSD: Number((realCostUSD + estimatedCostUSD).toFixed(4)),
-    totalCostBRL: Number((realCostBRL + estimatedCostBRL).toFixed(4)),
-    cacheSavingsUSD: Number(cacheSavingsUSD.toFixed(4)),
-    cacheSavingsBRL: Number(cacheSavingsBRL.toFixed(4)),
+    realCostUSD,
+    realCostBRL,
+    estimatedCostUSD,
+    estimatedCostBRL,
+    totalCostUSD: realCostUSD + estimatedCostUSD,
+    totalCostBRL: realCostBRL + estimatedCostBRL,
+    cacheSavingsUSD,
+    cacheSavingsBRL,
     estimatedRecords,
   };
 }
@@ -209,13 +210,15 @@ export function compactEvents(events: UsageEvent[]): UsageEvent[] {
       row.model,
       row.project,
       dayKey(row.timestamp),
+      row.costUSD == null ? "unknown-cost" : "native-cost",
     ].join("\u001f");
     const previous = groups.get(key);
     if (!previous) {
       groups.set(key, {
         ...row,
         records: row.records ?? 1,
-        costRecords: row.costRecords ?? (row.costUSD === null ? 0 : 1),
+        costRecords:
+          row.costRecords ?? (row.costUSD == null ? 0 : (row.records ?? 1)),
       });
       continue;
     }
@@ -229,8 +232,9 @@ export function compactEvents(events: UsageEvent[]): UsageEvent[] {
     ] as const)
       previous[field] += row[field];
     previous.records! += row.records ?? 1;
-    previous.costRecords! += row.costRecords ?? (row.costUSD === null ? 0 : 1);
-    if (row.costUSD !== null)
+    previous.costRecords! +=
+      row.costRecords ?? (row.costUSD == null ? 0 : (row.records ?? 1));
+    if (row.costUSD != null)
       previous.costUSD = (previous.costUSD ?? 0) + row.costUSD;
     if (row.timestamp > previous.timestamp) previous.timestamp = row.timestamp;
   }

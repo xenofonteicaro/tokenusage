@@ -4,6 +4,12 @@ import { Check, Save, ShieldCheck, Wallet } from "lucide-react";
 import { PROVIDERS, providerInfo, type Settings } from "@/lib/types";
 import { formatBRL } from "@/lib/analytics";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Table } from "@/components/ui/table";
+import type { ModelPrice } from "@/lib/pricing/types";
 import { DEFAULT_MODEL_PRICES } from "@/lib/pricing/defaults";
 
 export function SettingsPanel({
@@ -16,6 +22,43 @@ export function SettingsPanel({
   const [values, setValues] = useState(settings),
     [state, setState] = useState<"idle" | "saving" | "saved">("idle"),
     [error, setError] = useState("");
+  const [modelName, setModelName] = useState("");
+  const prices = { ...DEFAULT_MODEL_PRICES, ...values.customPricing };
+  function updatePrice(model: string, field: keyof ModelPrice, value: number) {
+    setState("idle");
+    setValues({
+      ...values,
+      customPricing: {
+        ...values.customPricing,
+        [model]: { ...prices[model], [field]: value },
+      },
+    });
+  }
+  function removePrice(model: string) {
+    const customPricing = { ...values.customPricing };
+    delete customPricing[model];
+    setState("idle");
+    setValues({ ...values, customPricing });
+  }
+  function addModel() {
+    const model = modelName.trim().toLowerCase();
+    if (!model || Object.hasOwn(prices, model)) {
+      setError(
+        model ? "Este modelo já está na tabela." : "Informe o nome do modelo.",
+      );
+      return;
+    }
+    setValues({
+      ...values,
+      customPricing: {
+        ...values.customPricing,
+        [model]: { inputPer1M: 0, outputPer1M: 0, cacheReadPer1M: 0 },
+      },
+    });
+    setState("idle");
+    setError("");
+    setModelName("");
+  }
   const monthly = Object.values(values.subscriptions).reduce<number>(
     (sum, value) => sum + (value ?? 0),
     0,
@@ -51,166 +94,213 @@ export function SettingsPanel({
           </div>
           <Wallet size={22} />
         </div>
-        <p className="muted">
-          Informe o que você paga nas assinaturas. Esses valores ficam separados
-          dos custos registrados pelas ferramentas.
-        </p>
-        <div className="subscription-fields">
-          {PROVIDERS.map((provider) => (
-            <label key={provider}>
-              <span>
-                <span className={`provider-mark ${provider}`}>
-                  {providerInfo[provider].letter}
-                </span>
-                {providerInfo[provider].name}
-                <small>R$ / mês</small>
-              </span>
-              <input
+        <Tabs defaultValue="general">
+          <TabsList aria-label="Preferências">
+            <TabsTrigger value="general">Geral</TabsTrigger>
+            <TabsTrigger value="pricing">Tabela de preços</TabsTrigger>
+          </TabsList>
+          <TabsContent value="general">
+            <p className="muted">
+              Informe o que você paga nas assinaturas. Esses valores ficam
+              separados dos custos registrados pelas ferramentas.
+            </p>
+            <div className="subscription-fields">
+              {PROVIDERS.map((provider) => (
+                <label key={provider}>
+                  <span>
+                    <span className={`provider-mark ${provider}`}>
+                      {providerInfo[provider].letter}
+                    </span>
+                    {providerInfo[provider].name}
+                    <small>R$ / mês</small>
+                  </span>
+                  <Input
+                    type="number"
+                    min="0"
+                    max="1000000"
+                    step="0.01"
+                    inputMode="decimal"
+                    placeholder="Não informado"
+                    value={values.subscriptions[provider] ?? ""}
+                    onChange={(event) => {
+                      setState("idle");
+                      setValues({
+                        ...values,
+                        subscriptions: {
+                          ...values.subscriptions,
+                          [provider]:
+                            event.target.value === ""
+                              ? null
+                              : Number(event.target.value),
+                        },
+                      });
+                    }}
+                  />
+                </label>
+              ))}
+            </div>
+            <div className="subscription-total">
+              <span>Total mensal informado</span>
+              <strong>{formatBRL(monthly)}</strong>
+            </div>
+            <label className="goal-field">
+              <span>Meta mensal de tokens</span>
+              <small>
+                Opcional. Acompanhamento de consumo, sem bloquear suas
+                ferramentas.
+              </small>
+              <Input
                 type="number"
-                min="0"
-                max="1000000"
-                step="0.01"
-                inputMode="decimal"
-                placeholder="Não informado"
-                value={values.subscriptions[provider] ?? ""}
+                min="1"
+                max="1000000000000"
+                step="1"
+                inputMode="numeric"
+                placeholder="Ex.: 100000000"
+                value={values.monthlyTokenGoal ?? ""}
                 onChange={(event) => {
                   setState("idle");
                   setValues({
                     ...values,
-                    subscriptions: {
-                      ...values.subscriptions,
-                      [provider]:
-                        event.target.value === ""
-                          ? null
-                          : Number(event.target.value),
-                    },
+                    monthlyTokenGoal:
+                      event.target.value === ""
+                        ? null
+                        : Number(event.target.value),
                   });
                 }}
               />
             </label>
-          ))}
-        </div>
-        <div className="subscription-total">
-          <span>Total mensal informado</span>
-          <strong>{formatBRL(monthly)}</strong>
-        </div>
-        <label className="goal-field">
-          <span>Meta mensal de tokens</span>
-          <small>
-            Opcional. Acompanhamento de consumo, sem bloquear suas ferramentas.
-          </small>
-          <input
-            type="number"
-            min="1"
-            max="1000000000000"
-            step="1"
-            inputMode="numeric"
-            placeholder="Ex.: 100000000"
-            value={values.monthlyTokenGoal ?? ""}
-            onChange={(event) => {
-              setState("idle");
-              setValues({
-                ...values,
-                monthlyTokenGoal:
-                  event.target.value === "" ? null : Number(event.target.value),
-              });
-            }}
-          />
-        </label>
 
-        <label className="goal-field">
-          <span>Cotação do Dólar (USD / BRL)</span>
-          <small>
-            Usada para estimar custos e economia em reais. Padrão: R$ 5,75.
-          </small>
-          <input
-            type="number"
-            min="1"
-            max="100"
-            step="0.01"
-            inputMode="decimal"
-            placeholder="5.75"
-            value={values.usdToBrlRate ?? 5.75}
-            onChange={(event) => {
-              setState("idle");
-              setValues({
-                ...values,
-                usdToBrlRate:
-                  event.target.value === "" ? 5.75 : Number(event.target.value),
-              });
-            }}
-          />
-        </label>
-
-        <div className="pricing-section pt-2">
-          <div className="flex items-center justify-between mb-2">
-            <div>
-              <strong className="block text-sm font-semibold">
-                Tabela de Preços por Modelo (USD por 1M tokens)
-              </strong>
-              <small className="text-[var(--muted-foreground)]">
-                Utilizada para estimar custos de ferramentas sem valor
-                informado.
+            <label className="goal-field">
+              <span>Cotação do Dólar (USD / BRL)</span>
+              <small>
+                Usada para estimar custos e economia em reais. Padrão: R$ 5,75.
               </small>
-            </div>
-          </div>
+              <Input
+                type="number"
+                min="0.01"
+                max="100"
+                step="any"
+                inputMode="decimal"
+                placeholder="5.75"
+                value={values.usdToBrlRate ?? 5.75}
+                onChange={(event) => {
+                  setState("idle");
+                  setValues({
+                    ...values,
+                    usdToBrlRate:
+                      event.target.value === ""
+                        ? 5.75
+                        : Number(event.target.value),
+                  });
+                }}
+              />
+            </label>
+          </TabsContent>
+          <TabsContent value="pricing">
+            <div className="pricing-section pt-2">
+              <div className="flex items-center justify-between mb-2">
+                <div>
+                  <strong className="block text-sm font-semibold">
+                    Tabela de Preços por Modelo (USD por 1M tokens)
+                  </strong>
+                  <small className="text-[var(--muted-foreground)]">
+                    Preços de referência históricos, sem atualização automática.
+                    Personalize para estimar ferramentas sem custo informado.
+                  </small>
+                </div>
+              </div>
 
-          <div className="overflow-x-auto rounded-lg border border-[var(--border)] bg-[var(--card)] p-2 my-2 text-xs">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="border-b border-[var(--border)] text-[var(--muted-foreground)] pb-1">
-                  <th className="py-1 px-2 font-medium">Modelo</th>
-                  <th className="py-1 px-2 font-medium">Entrada ($)</th>
-                  <th className="py-1 px-2 font-medium">Saída ($)</th>
-                  <th className="py-1 px-2 font-medium">Cache ($)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries({
-                  ...DEFAULT_MODEL_PRICES,
-                  ...(values.customPricing || {}),
-                })
-                  .slice(0, 10)
-                  .map(([model, price]) => {
-                    const isCustom = Boolean(values.customPricing?.[model]);
-                    return (
-                      <tr
-                        key={model}
-                        className="border-b border-[var(--border)]/40 hover:bg-[var(--secondary)]/40"
-                      >
-                        <td className="py-1.5 px-2 font-mono">
-                          {model}{" "}
-                          {isCustom && (
-                            <Badge
-                              variant="outline"
-                              className="ml-1 text-[9px] py-0 px-1"
-                            >
-                              Personalizado
-                            </Badge>
+              <div className="add-model-fields">
+                <label>
+                  <span>Nome do modelo</span>
+                  <Input
+                    value={modelName}
+                    maxLength={100}
+                    placeholder="Ex.: meu-modelo"
+                    onChange={(event) => setModelName(event.target.value)}
+                  />
+                </label>
+                <Button variant="outline" type="button" onClick={addModel}>
+                  Adicionar modelo
+                </Button>
+              </div>
+              <div className="table-scroll pricing-table-scroll">
+                <Table className="pricing-table">
+                  <thead>
+                    <tr>
+                      <th>Modelo</th>
+                      <th>Entrada ($)</th>
+                      <th>Saída ($)</th>
+                      <th>Cache ($)</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.entries(prices).map(([model, price]) => (
+                      <tr key={model}>
+                        <td className="pricing-model">
+                          {model}
+                          {values.customPricing?.[model] && (
+                            <Badge variant="outline">Personalizado</Badge>
                           )}
                         </td>
-                        <td className="py-1.5 px-2 font-mono">
-                          ${price.inputPer1M.toFixed(2)}
-                        </td>
-                        <td className="py-1.5 px-2 font-mono">
-                          ${price.outputPer1M.toFixed(2)}
-                        </td>
-                        <td className="py-1.5 px-2 font-mono">
-                          ${price.cacheReadPer1M.toFixed(3)}
+                        {(
+                          [
+                            ["inputPer1M", "Entrada"],
+                            ["outputPer1M", "Saída"],
+                            ["cacheReadPer1M", "Cache"],
+                          ] as const
+                        ).map(([field, label]) => (
+                          <td key={field}>
+                            <Input
+                              type="number"
+                              min="0"
+                              max="1000000"
+                              step="any"
+                              required
+                              inputMode="decimal"
+                              aria-label={`${label} de ${model}`}
+                              value={price[field]}
+                              onChange={(event) =>
+                                updatePrice(
+                                  model,
+                                  field,
+                                  Number(event.target.value),
+                                )
+                              }
+                            />
+                          </td>
+                        ))}
+                        <td>
+                          {values.customPricing?.[model] && (
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              aria-label={`${DEFAULT_MODEL_PRICES[model] ? "Restaurar padrão" : "Remover modelo"} de ${model}`}
+                              onClick={() => removePrice(model)}
+                            >
+                              {DEFAULT_MODEL_PRICES[model]
+                                ? "Restaurar padrão"
+                                : "Remover modelo"}
+                            </Button>
+                          )}
                         </td>
                       </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
-          </div>
-        </div>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
         {error && (
           <p className="form-error" role="alert">
             {error}
           </p>
         )}
-        <button
+        <Button
+          variant="outline"
           className="button primary"
           disabled={state === "saving"}
           type="submit"
@@ -221,9 +311,9 @@ export function SettingsPanel({
             : state === "saved"
               ? "Preferências salvas"
               : "Salvar preferências"}
-        </button>
+        </Button>
       </form>
-      <aside className="privacy-panel">
+      <Card className="privacy-panel">
         <ShieldCheck size={30} />
         <h3>Seu histórico fica aqui.</h3>
         <p>
@@ -238,7 +328,7 @@ export function SettingsPanel({
           <i />
           Execução local
         </span>
-      </aside>
+      </Card>
     </div>
   );
 }

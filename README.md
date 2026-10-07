@@ -55,9 +55,7 @@ do perfil, principalmente para testes isolados.
 
 **Limites:** cobre sessões com contadores preservados nesta máquina, até 90
 dias. Conversas nos sites/apps, outros computadores, histórico removido e
-chamadas de API sem logs não podem ser recuperados pelo perfil local. Na
-validação inicial, Codex, Claude Code e Grok Build tinham dados reais; os
-arquivos antigos de Gemini encontrados não tinham contadores de tokens.
+chamadas de API sem logs não podem ser recuperados pelo perfil local. Logs antigos de Gemini sem contadores não geram métricas de consumo.
 
 Ferramentas e APIs têm visões separadas: um CLI autenticado por API pode aparecer
 nas duas fontes. Somar as duas visões poderia contar a mesma chamada duas vezes.
@@ -95,6 +93,32 @@ Codex agrupa também chamadas gerais de API; o modelo continua identificado.
 com o provedor. Inclua o ID real da chamada: reimportações do mesmo ID atualizam
 o registro. Sem ID, registros idênticos recebem o mesmo identificador e são
 deduplicados, inclusive dentro do arquivo.
+
+### Tarifas e estimativas
+
+Em **Preferências → Tabela de preços**, edite entrada, saída e leitura de cache
+em USD por milhão de tokens. Todos os modelos ficam visíveis; adicione um nome
+customizado quando o modelo do log não tiver tarifa. Restaurar um modelo padrão
+remove a substituição; remover um modelo customizado devolve seus eventos à
+cobertura sem estimativa. Salve as preferências para atualizar imediatamente os
+custos da visão geral e da atividade. A cotação fica na aba Geral.
+
+A tabela embutida contém presets históricos de texto da especificação da fase 1,
+sem atualização automática. Confira as tarifas aplicáveis em
+[Anthropic](https://platform.claude.com/docs/en/about-claude/pricing),
+[OpenAI](https://developers.openai.com/api/docs/pricing),
+[xAI](https://docs.x.ai/developers/pricing) e
+[Google](https://ai.google.dev/gemini-api/docs/pricing).
+Modelos sem tarifa permanecem sem estimativa; não recebem o preço de outro modelo.
+Custos do log são preservados, inclusive quando misturados com chamadas sem custo
+na mesma sessão. A cobertura indica registros informados, estimados e sem estimativa.
+
+A economia por cache é uma estimativa: `tokens de cache × (entrada − cache) / 1.000.000`.
+Seu percentual compara o custo modelado com o cenário sem cache. A estimativa não
+reproduz preços de contexto longo, processamento em lote, escrita de cache,
+armazenamento, imagens, ferramentas, impostos ou descontos. Mensalidades ficam
+separadas e esses valores não substituem uma fatura. Cotação ausente ou inválida
+no arquivo local usa 5,75; a API rejeita atualizações inválidas.
 
 ## Privacidade e armazenamento
 

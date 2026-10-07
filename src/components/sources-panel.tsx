@@ -12,6 +12,9 @@ import {
 } from "lucide-react";
 import { formatDate, formatNumber, formatTime } from "@/lib/analytics";
 import { providerInfo, type SourceStatus } from "@/lib/types";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 const statusLabels = {
   connected: "Coletando",
   empty: "Sem contadores",
@@ -61,7 +64,7 @@ export function SourcesPanel({
   }
   return (
     <div className="sources-layout">
-      <section className="panel">
+      <Card className="panel">
         <div className="panel-heading">
           <div>
             <span className="eyebrow">PERFIL DESTE COMPUTADOR</span>
@@ -117,9 +120,9 @@ export function SourcesPanel({
               </article>
             ))}
         </div>
-      </section>
+      </Card>
       <div className="source-aside">
-        <section className="panel import-panel">
+        <Card className="panel import-panel">
           <span className="import-icon">
             <FileJson2 size={25} />
           </span>
@@ -129,7 +132,7 @@ export function SourcesPanel({
             Importe os contadores retornados por Grok, OpenAI, Claude ou Gemini.
             O arquivo é processado neste computador.
           </p>
-          <input
+          <Input
             hidden
             ref={fileInput}
             type="file"
@@ -137,14 +140,15 @@ export function SourcesPanel({
             aria-label="Arquivo de consumo de API"
             onChange={(event) => upload(event.target.files?.[0])}
           />
-          <button
+          <Button
+            variant="outline"
             className="button primary"
             disabled={uploading}
             onClick={() => fileInput.current?.click()}
           >
             <Upload size={16} />
             {uploading ? "Importando…" : "Importar JSON ou JSONL"}
-          </button>
+          </Button>
           <small>Até 4 MB · 10.000 registros por arquivo</small>
           {message && (
             <p
@@ -172,7 +176,7 @@ export function SourcesPanel({
               Exemplo de formato. Esses valores não entram na dashboard.
             </small>
           </details>
-        </section>
+        </Card>
         <div className="source-note">
           <Info size={18} />
           <p>

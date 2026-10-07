@@ -2,6 +2,7 @@ import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
 import { defaultSettings, type Settings } from "./types";
+import { DEFAULT_USD_TO_BRL_RATE } from "./pricing/defaults";
 
 // Runtime user data must never be bundled into a build artifact.
 export const dataDirectory = () =>
@@ -71,7 +72,16 @@ export async function writeJson(name: string, value: unknown): Promise<void> {
 }
 export async function readSettings(): Promise<Settings> {
   const saved = await readJson<unknown>("settings.json");
-  return saved === null
-    ? structuredClone(defaultSettings)
-    : settingsSchema.parse(saved);
+  if (saved === null) return structuredClone(defaultSettings);
+  // Reject invalid updates, but recover a manually edited exchange rate on read.
+  if (typeof saved === "object" && saved !== null && "usdToBrlRate" in saved) {
+    const rate = settingsSchema.shape.usdToBrlRate.safeParse(
+      saved.usdToBrlRate,
+    );
+    return settingsSchema.parse({
+      ...saved,
+      usdToBrlRate: rate.success ? rate.data : DEFAULT_USD_TO_BRL_RATE,
+    });
+  }
+  return settingsSchema.parse(saved);
 }

@@ -1,5 +1,29 @@
-import { settingsSchema, serialized, writeJson } from "@/lib/local-store";
+import {
+  readSettings,
+  settingsSchema,
+  serialized,
+  writeJson,
+} from "@/lib/local-store";
 import { isLocalRequest, privateHeaders } from "@/lib/local-security";
+
+export async function GET(request: Request) {
+  if (!isLocalRequest(request))
+    return Response.json(
+      { error: "Acesso permitido apenas pela dashboard local." },
+      { status: 403, headers: privateHeaders },
+    );
+  try {
+    return Response.json(
+      { settings: await readSettings() },
+      { headers: privateHeaders },
+    );
+  } catch {
+    return Response.json(
+      { error: "Não foi possível ler as preferências locais." },
+      { status: 500, headers: privateHeaders },
+    );
+  }
+}
 
 export async function PUT(request: Request) {
   if (!isLocalRequest(request, true))

@@ -32,6 +32,9 @@ import {
   type Snapshot,
   type UsageEvent,
 } from "@/lib/types";
+import { calculateEventCost } from "@/lib/pricing/calculator";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ProviderDonut, UsageChart } from "./usage-chart";
 
@@ -67,13 +70,22 @@ export function Overview({
   const now = new Date(snapshot.generatedAt);
   const change = previousChange(snapshot.events, filters, now),
     hasData = events.length > 0;
-  const costCoverage = metrics.records
-    ? (metrics.costsKnown / metrics.records) * 100
-    : 0;
-  const costCoverageLabel =
-    costCoverage < 0.1
-      ? "<0,1%"
-      : `${costCoverage.toFixed(1).replace(".", ",")}%`;
+  const unestimatedRecords = Math.max(
+    0,
+    metrics.records - metrics.costsKnown - metrics.estimatedRecords,
+  );
+  const modeledCostUSD = events.reduce(
+    (sum, event) =>
+      sum +
+      (calculateEventCost({ ...event, costUSD: null }, pricingConfig).costUSD ??
+        0),
+    0,
+  );
+  const savingsPercentage =
+    modeledCostUSD + metrics.cacheSavingsUSD > 0
+      ? (metrics.cacheSavingsUSD / (modeledCostUSD + metrics.cacheSavingsUSD)) *
+        100
+      : 0;
   const subscriptions = Object.values(
     snapshot.settings.subscriptions,
   ).reduce<number>((sum, value) => sum + (value ?? 0), 0);
@@ -136,23 +148,21 @@ export function Overview({
         </Metric>
         <Metric
           label="ECONOMIA POR CACHE"
-          value={
-            hasData && metrics.cacheSavingsUSD > 0
-              ? formatUSD(metrics.cacheSavingsUSD)
-              : "—"
-          }
+          value={hasData ? formatUSD(metrics.cacheSavingsUSD) : "—"}
           icon={Sparkles}
         >
           <span>
-            {hasData && metrics.cacheSavingsUSD > 0 ? (
+            {hasData ? (
               <>
                 <Badge
                   variant="success"
                   className="mr-1 text-[10px] px-1.5 py-0"
                 >
-                  Economizado
+                  Estimada
                 </Badge>
-                {formatBRL(metrics.cacheSavingsBRL)}
+                {formatBRL(metrics.cacheSavingsBRL)} ·{" "}
+                {savingsPercentage.toFixed(1).replace(".", ",")}% do custo sem
+                cache
               </>
             ) : (
               "Sem tokens de cache no período"
@@ -177,30 +187,38 @@ export function Overview({
         <Metric
           label="CUSTO ESTIMADO / REAL"
           value={
-            metrics.totalCostUSD > 0
+            metrics.costsKnown + metrics.estimatedRecords > 0
               ? formatUSD(metrics.totalCostUSD)
-              : metrics.costsKnown
-                ? formatUSD(metrics.cost)
-                : "—"
+              : "—"
           }
           icon={Coins}
         >
           <span>
-            {metrics.totalCostUSD > 0 ? (
+            {metrics.costsKnown + metrics.estimatedRecords > 0 ? (
               <>
                 <span className="font-medium mr-1">
                   {formatBRL(metrics.totalCostBRL)}
                 </span>
-                {metrics.estimatedRecords > 0 && (
-                  <Badge variant="outline" className="text-[10px] px-1.5 py-0">
-                    {metrics.costsKnown > 0 ? "Híbrido" : "Estimado"}
-                  </Badge>
-                )}
+                <Badge variant="outline" className="text-[10px] px-1.5 py-0">
+                  {metrics.estimatedRecords
+                    ? metrics.costsKnown
+                      ? "Misto"
+                      : "Estimado"
+                    : "Real"}
+                </Badge>
+                <span className="cost-breakdown">
+                  Real: {formatUSD(metrics.realCostUSD)} · Estimado:{" "}
+                  {formatUSD(metrics.estimatedCostUSD)}
+                </span>
               </>
-            ) : metrics.costsKnown ? (
-              `${costCoverageLabel} dos registros têm custo`
             ) : (
               "Preço por modelo não cadastrado"
+            )}
+            {unestimatedRecords > 0 && (
+              <span className="coverage-note">
+                {formatNumber(unestimatedRecords)} de{" "}
+                {formatNumber(metrics.records)} registros sem estimativa
+              </span>
             )}
             <span
               className="info-tip"
@@ -277,7 +295,8 @@ export function Overview({
               ? "Importe logs com os contadores retornados pelas APIs. Sem registros locais, não há consumo remoto disponível para consultar."
               : "Esta seleção não tem registros de tokens. Consulte o diagnóstico das fontes ou experimente outros filtros."}
           </p>
-          <button
+          <Button
+            variant="outline"
             className="button primary"
             onClick={() => navigate("sources")}
           >
@@ -285,7 +304,7 @@ export function Overview({
               ? "Importar consumo de API"
               : "Ver fontes de dados"}
             <ArrowRight size={15} />
-          </button>
+          </Button>
         </section>
       ) : (
         <>
@@ -476,13 +495,13 @@ function Metric({
   children: React.ReactNode;
 }) {
   return (
-    <section className={`metric-card ${highlight ? "metric-highlight" : ""}`}>
+    <Card className={`metric-card ${highlight ? "metric-highlight" : ""}`}>
       <div>
         <span>{label}</span>
         <Icon size={17} />
       </div>
       <strong>{value}</strong>
       <div className="metric-caption">{children}</div>
-    </section>
+    </Card>
   );
 }

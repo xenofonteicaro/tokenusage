@@ -40,6 +40,7 @@ import { ActivityPanel } from "./activity-panel";
 import { Overview } from "./overview";
 import { SettingsPanel } from "./settings-panel";
 import { SourcesPanel } from "./sources-panel";
+import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./theme-toggle";
 
 type View = "overview" | "activity" | "sources" | "settings";
@@ -304,23 +305,25 @@ export default function Dashboard() {
               </p>
             </div>
             <div className="heading-actions">
-              <button
+              <Button
+                variant="outline"
                 className="button"
                 disabled={busy}
                 onClick={() => void refresh()}
               >
                 <RefreshCw size={15} className={busy ? "spinning" : ""} />
                 {busy && snapshot ? "Atualizando" : "Atualizar"}
-              </button>
+              </Button>
               {["overview", "activity"].includes(view) && (
-                <button
+                <Button
+                  variant="outline"
                   className="button export-button"
                   disabled={!events.length}
                   onClick={download}
                 >
                   <ArrowDownToLine size={15} />
                   Exportar CSV
-                </button>
+                </Button>
               )}
             </div>
           </div>
@@ -450,6 +453,10 @@ export default function Dashboard() {
                     key={`${filters.channel}:${filters.provider}:${filters.days}:${filters.project}`}
                     events={events}
                     channel={filters.channel}
+                    pricingConfig={{
+                      customPrices: snapshot.settings.customPricing,
+                      usdToBrlRate: snapshot.settings.usdToBrlRate,
+                    }}
                   />
                 )}
                 {view === "sources" && (

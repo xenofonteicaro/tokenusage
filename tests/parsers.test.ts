@@ -339,7 +339,7 @@ test("Compacting for browser delivery preserves tokens, session counts and parti
     cachedTokens: 120,
   });
   const compact = compactEvents([a, b]);
-  assert.equal(compact.length, 1);
+  assert.equal(compact.length, 2);
   assert.deepEqual(totals(compact), totals([a, b]));
   assert.equal(totals(compact).costsKnown, 1);
   assert.equal(totals(compact).records, 2);

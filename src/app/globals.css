@@ -131,7 +131,7 @@ select {
 }
 input {
   border: 1px solid var(--line);
-  background: #fff;
+  background: var(--surface);
   border-radius: 6px;
   padding: 11px 13px;
   color: var(--ink);
@@ -168,7 +168,7 @@ input::placeholder {
   position: fixed;
   top: -80px;
   left: 20px;
-  background: #fff;
+  background: var(--surface);
   padding: 14px;
   z-index: 100;
 }
@@ -204,7 +204,7 @@ input::placeholder {
   gap: 7px;
   border: 1px solid #dce2d4;
   border-radius: 6px;
-  background: white;
+  background: var(--surface);
   font-size: 11px;
   font-weight: 500;
   white-space: nowrap;
@@ -698,7 +698,7 @@ main {
   border-radius: 5px;
 }
 .channel-tabs button.selected {
-  background: #fff;
+  background: var(--surface);
   box-shadow: 0 1px 3px #0000000b;
   color: #50673b;
   font-weight: 500;
@@ -741,7 +741,7 @@ main {
   margin-bottom: 18px;
 }
 .metric-card {
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 19px 19px 17px;
@@ -834,7 +834,7 @@ main {
   margin-bottom: 24px;
 }
 .provider-card {
-  background: #fff;
+  background: var(--surface);
   padding: 13px 16px;
   border: 1px solid var(--line);
   border-radius: 7px;
@@ -994,7 +994,7 @@ main {
   right: 8px;
   padding: 12px 14px;
   border: 1px solid #d8e5cb;
-  background: #fffefbf5;
+  background: var(--popover);
   border-radius: 7px;
   box-shadow: 0 5px 24px #28311d14;
   z-index: 4;
@@ -1079,7 +1079,7 @@ main {
   width: 99px;
   height: 99px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--surface);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1336,7 +1336,7 @@ td small {
   align-items: center;
   gap: 20px;
   padding: 18px;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 8px;
   margin-top: 12px;
@@ -2386,4 +2386,239 @@ td small {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Keep local tables scrollable without widening the dashboard. */
+[hidden] {
+  display: none !important;
+}
+.settings-layout > *,
+.sources-layout > *,
+.main-shell,
+.pricing-section {
+  min-width: 0;
+}
+.settings-form [role="tablist"] {
+  margin-top: 20px;
+}
+.add-model-fields {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  margin: 18px 0;
+}
+.add-model-fields label {
+  flex: 1;
+  min-width: 0;
+}
+.add-model-fields label > span {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 12px;
+}
+.pricing-table-scroll {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 14px 0 20px;
+}
+.pricing-table {
+  min-width: 640px;
+}
+.pricing-table th,
+.pricing-table td {
+  padding: 10px;
+}
+.pricing-table td:first-child {
+  display: table-cell;
+}
+.pricing-table input {
+  min-width: 90px;
+  width: 105px;
+}
+.pricing-table .pricing-model {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  min-width: 160px;
+  max-width: 220px;
+}
+.pricing-model > span {
+  display: block;
+  width: fit-content;
+  margin-top: 5px;
+}
+.coverage-note {
+  display: block;
+  margin-top: 5px;
+}
+.dark .channel-tabs,
+.dark .select-wrap,
+.dark .monthly-strip,
+.dark .goal-progress,
+.dark .subscription-total,
+.dark .source-note,
+.dark .import-icon,
+.dark .import-panel pre,
+.dark .empty-state > span,
+.dark .search-field,
+.dark th,
+.dark .ranking-bar,
+.dark .status-pill,
+.dark .table-scroll tr:hover,
+.dark .provider-card.chosen {
+  background: var(--secondary);
+  border-color: var(--line);
+}
+.dark .channel-tabs button.selected {
+  background: var(--card);
+  color: var(--foreground);
+}
+.dark .metric-card > strong,
+.dark .provider-card strong,
+.dark .donut span,
+.dark .goal-strip strong,
+.dark .subscription-total strong,
+.dark .distribution-list b,
+.dark .select-wrap select,
+.dark .import-panel summary,
+.dark .import-panel pre,
+.dark .ranking-row strong,
+.dark .model-row strong {
+  color: var(--foreground);
+}
+.dark .metric-card > div > span,
+.dark .metric-caption,
+.dark .provider-card small,
+.dark .source-detail p,
+.dark .source-detail code,
+.dark .source-metadata,
+.dark .import-panel > p,
+.dark .import-panel > small,
+.dark .import-panel details > p,
+.dark .import-panel details > small,
+.dark .subscription-fields label small,
+.dark .goal-field small,
+.dark .page-footer,
+.dark .panel-heading p,
+.dark .table-scroll th,
+.dark .table-scroll td,
+.dark .table-scroll td small,
+.dark .channel-tabs button,
+.dark .distribution-list > div > span,
+.dark .donut small,
+.dark .monthly-strip p,
+.dark .goal-strip span,
+.dark .source-note,
+.dark .source-note p {
+  color: var(--muted-foreground);
+}
+.dark .status-pill.connected {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+.dark .status-pill.error,
+.dark .collection-warning {
+  background: #34271b;
+  color: #edbb85;
+}
+@media (max-width: 560px) {
+  .add-model-fields {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .settings-form {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+.dark .topbar {
+  background: var(--background);
+  border-color: var(--line);
+}
+.dark .privacy-panel {
+  background: var(--accent);
+  border-color: var(--line);
+}
+.dark .privacy-panel h3,
+.dark .privacy-panel > svg,
+.dark .privacy-badge {
+  color: var(--accent-foreground);
+  border-color: var(--line);
+}
+.dark .privacy-panel p {
+  color: var(--muted-foreground);
+}
+.dark .export-button,
+.dark .avatar {
+  background: var(--secondary);
+  border-color: var(--line);
+  color: var(--foreground);
+}
+.dark .breadcrumb,
+.dark .breadcrumb strong,
+.dark .select-wrap svg {
+  color: var(--foreground);
+}
+.dark .page-heading p,
+.dark .page-heading .eyebrow,
+.dark .local-indicator,
+.dark .panel-footer-link,
+.dark .empty-state p,
+.dark .empty-table p,
+.dark .chart-tooltip,
+.dark .chart-tooltip strong,
+.dark .chart-tooltip span {
+  color: var(--muted-foreground);
+}
+.dark .metric-highlight > strong {
+  color: #fff;
+}
+.dark .metric-highlight > div:first-child > span,
+.dark .metric-highlight .metric-caption {
+  color: #c4d2b0;
+}
+
+.cost-breakdown {
+  flex-basis: 100%;
+}
+/* Explicit component states take precedence over global button resets. */
+[role="tab"][aria-selected="true"] {
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 1px 4px #00000018;
+  font-weight: 600;
+}
+[role="tab"][aria-selected="false"] {
+  color: var(--muted-foreground);
+}
+.pricing-table tr {
+  border-color: var(--border);
+}
+.dark {
+  --muted: #abb7a7;
+  --muted-foreground: #abb7a7;
+}
+.dark .panel-footer-link {
+  background: var(--secondary);
+  color: var(--foreground);
+}
+.dark .panel-footer-link:hover {
+  background: var(--accent);
+}
+.dark .project-insight {
+  background: var(--secondary);
+  border-color: var(--border);
+  color: var(--muted-foreground);
+}
+.dark .project-insight strong,
+.dark .project-list b {
+  color: var(--foreground);
+}
+.dark .project-list > button {
+  border-color: var(--border);
+}
+.dark .project-progress {
+  background: var(--secondary);
+}
+.dark .project-rank {
+  color: var(--muted-foreground);
 }

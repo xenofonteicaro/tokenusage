@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 const profile = path.resolve(".test-profile");
 const now = new Date().toISOString();
@@ -13,6 +13,8 @@ async function save(relative: string, data: unknown, lines = false) {
   );
 }
 async function main() {
+  await rm(profile, { recursive: true, force: true });
+  await rm(path.resolve(".test-data"), { recursive: true, force: true });
   await save(
     ".codex/sessions/2026/10/07/session.jsonl",
     [

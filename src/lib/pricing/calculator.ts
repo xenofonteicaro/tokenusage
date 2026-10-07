@@ -7,41 +7,38 @@ import type {
   PricingConfig,
 } from "./types";
 
+function exchangeRate(config: PricingConfig): number {
+  const rate = config.usdToBrlRate;
+  return typeof rate === "number" && Number.isFinite(rate) && rate > 0
+    ? rate
+    : DEFAULT_USD_TO_BRL_RATE;
+}
+
+function matchesModel(model: string, key: string): boolean {
+  if (model === key) return true;
+  // Only dated snapshots inherit a base model's rates. Other suffixes can be
+  // distinct products and must remain uncovered until explicitly configured.
+  return (
+    model.startsWith(`${key}-`) &&
+    /^(?:\d{8}|\d{4}-\d{2}-\d{2})$/.test(model.slice(key.length + 1))
+  );
+}
+
 export function findModelPrice(
   rawModel: string,
   customPrices?: Record<string, ModelPrice>,
 ): ModelPrice | null {
-  if (!rawModel) return null;
   const normalized = rawModel.trim().toLowerCase();
-
-  // 1. Check custom prices first
-  if (customPrices) {
-    if (customPrices[normalized]) return customPrices[normalized];
-    const customSorted = Object.keys(customPrices).sort(
-      (a, b) => b.length - a.length,
+  if (!normalized) return null;
+  for (const prices of [customPrices, DEFAULT_MODEL_PRICES]) {
+    if (!prices) continue;
+    const entries = Object.entries(prices).sort(
+      (a, b) => b[0].length - a[0].length,
     );
-    for (const key of customSorted) {
-      if (normalized.startsWith(key.toLowerCase())) {
-        return customPrices[key];
-      }
+    for (const [key, price] of entries) {
+      if (matchesModel(normalized, key.trim().toLowerCase())) return price;
     }
   }
-
-  // 2. Exact match in default prices
-  if (DEFAULT_MODEL_PRICES[normalized]) {
-    return DEFAULT_MODEL_PRICES[normalized];
-  }
-
-  // 3. Prefix match with longest key first (e.g. gpt-4o-mini before gpt-4o)
-  const defaultSorted = Object.keys(DEFAULT_MODEL_PRICES).sort(
-    (a, b) => b.length - a.length,
-  );
-  for (const key of defaultSorted) {
-    if (normalized.startsWith(key)) {
-      return DEFAULT_MODEL_PRICES[key];
-    }
-  }
-
   return null;
 }
 
@@ -49,24 +46,20 @@ export function calculateEventCost(
   event: UsageEvent,
   config: PricingConfig = {},
 ): CalculatedEventCost {
-  const rate = config.usdToBrlRate ?? DEFAULT_USD_TO_BRL_RATE;
+  const rate = exchangeRate(config);
   const price = findModelPrice(event.model, config.customPrices);
 
   const cacheSavingsUSD = price
-    ? Number(
-        (
-          (event.cachedTokens *
-            Math.max(0, price.inputPer1M - price.cacheReadPer1M)) /
-          1_000_000
-        ).toFixed(4),
-      )
+    ? (event.cachedTokens *
+        Math.max(0, price.inputPer1M - price.cacheReadPer1M)) /
+      1_000_000
     : 0;
-  const cacheSavingsBRL = Number((cacheSavingsUSD * rate).toFixed(4));
+  const cacheSavingsBRL = cacheSavingsUSD * rate;
 
   // Native cost already provided
   if (event.costUSD !== null && event.costUSD !== undefined) {
-    const costUSD = Number(event.costUSD.toFixed(4));
-    const costBRL = Number((costUSD * rate).toFixed(4));
+    const costUSD = event.costUSD;
+    const costBRL = costUSD * rate;
     return {
       isEstimated: false,
       costUSD,
@@ -92,8 +85,8 @@ export function calculateEventCost(
   const cacheCost = (event.cachedTokens * price.cacheReadPer1M) / 1_000_000;
   const outputCost = (event.outputTokens * price.outputPer1M) / 1_000_000;
 
-  const costUSD = Number((freshInputCost + cacheCost + outputCost).toFixed(4));
-  const costBRL = Number((costUSD * rate).toFixed(4));
+  const costUSD = freshInputCost + cacheCost + outputCost;
+  const costBRL = costUSD * rate;
 
   return {
     isEstimated: true,
@@ -108,7 +101,7 @@ export function calculateCacheSavings(
   events: UsageEvent[],
   config: PricingConfig = {},
 ): CacheSavings {
-  const rate = config.usdToBrlRate ?? DEFAULT_USD_TO_BRL_RATE;
+  const rate = exchangeRate(config);
   let tokensSaved = 0;
   let amountUSD = 0;
 
@@ -124,12 +117,9 @@ export function calculateCacheSavings(
     }
   }
 
-  const roundedUSD = Number(amountUSD.toFixed(4));
-  const roundedBRL = Number((roundedUSD * rate).toFixed(4));
-
   return {
     tokensSaved,
-    amountUSD: roundedUSD,
-    amountBRL: roundedBRL,
+    amountUSD,
+    amountBRL: amountUSD * rate,
   };
 }

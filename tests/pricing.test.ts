@@ -145,3 +145,60 @@ test("calculateEventCost handles unknown model gracefully", () => {
   assert.equal(cost.costBRL, null);
   assert.equal(cost.cacheSavingsUSD, 0);
 });
+
+const tinyEvent: UsageEvent = {
+  id: "synthetic-tiny",
+  provider: "codex",
+  channel: "api",
+  timestamp: "2026-10-07T12:00:00Z",
+  model: "gpt-4o-mini",
+  project: "synthetic",
+  sessionId: "synthetic-session",
+  inputTokens: 1,
+  outputTokens: 0,
+  cachedTokens: 0,
+  cacheWriteTokens: 0,
+  reasoningTokens: 0,
+  totalTokens: 1,
+  costUSD: null,
+};
+
+test("native costs and tiny estimates retain full precision", () => {
+  const native = calculateEventCost({ ...tinyEvent, costUSD: 0.123456789 });
+  assert.equal(native.costUSD, 0.123456789);
+  assert.equal(native.costBRL, 0.123456789 * 5.75);
+  assert.equal(calculateEventCost(tinyEvent).costUSD, 0.15 / 1_000_000);
+});
+
+test("invalid exchange rates fall back to the positive default", () => {
+  for (const usdToBrlRate of [0, -1, NaN, Infinity]) {
+    const cost = calculateEventCost(
+      { ...tinyEvent, costUSD: 1 },
+      { usdToBrlRate },
+    );
+    assert.equal(cost.costBRL, 5.75);
+    const savings = calculateCacheSavings([{ ...tinyEvent, cachedTokens: 1 }], {
+      usdToBrlRate,
+    });
+    assert.equal(savings.amountBRL, savings.amountUSD * 5.75);
+  }
+});
+
+test("only exact models and supported dated snapshots match prices", () => {
+  for (const model of [
+    "gpt-4o-unrelated",
+    "gpt-4o-miniature",
+    "grok-30",
+    "o1-unrecognized",
+  ])
+    assert.equal(findModelPrice(model), null);
+  const custom = {
+    "Custom-LLM": { inputPer1M: 1, outputPer1M: 2, cacheReadPer1M: 0.1 },
+  };
+  assert.equal(findModelPrice(" custom-llm ", custom), custom["Custom-LLM"]);
+  assert.equal(
+    findModelPrice("custom-llm-2026-10-07", custom),
+    custom["Custom-LLM"],
+  );
+  assert.equal(findModelPrice("custom-llm-unrelated", custom), null);
+});
