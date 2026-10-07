@@ -27,17 +27,19 @@ npm start
 
 ## Install with Homebrew
 
-The formula builds the production app, registers a macOS service, and reads
-usage counters from the local profile. Code, formula, and releases live in this
-repository. Use the explicit URL because the repository name does not start
-with `homebrew-`:
+Requires macOS and [Homebrew](https://brew.sh). The formula installs Node.js as
+a dependency, builds the production app from the release archive, registers a
+macOS service, and reads usage counters from the local profile. Code, formula,
+and releases live in this repository. Use the explicit URL because the
+repository name does not start with `homebrew-`:
 
 ```sh
 brew tap --custom-remote xenofonteicaro/tokenusage https://github.com/xenofonteicaro/tokenusage.git
-brew install --build-from-source xenofonteicaro/tokenusage/tokenusage
+brew install xenofonteicaro/tokenusage/tokenusage
 tokenusage start
 ```
 
+The first install compiles the app, so it takes a few minutes.
 `tokenusage start` starts the service and opens **http://127.0.0.1:3000** in your
 browser. Use `tokenusage stop`, `tokenusage restart`, `tokenusage open`, or
 `tokenusage logs` to manage it, or `tokenusage tui` for the terminal version
@@ -46,9 +48,34 @@ Preferences, prices, imports, and the collector cache are stored in
 `~/Library/Application Support/tokenusage`. Tool histories stay in their
 original directories.
 
+### Upgrade
+
+```sh
+brew update
+brew upgrade tokenusage
+tokenusage restart
+```
+
+The restart makes the running service use the new version. Your preferences,
+prices, and imports are kept.
+
 The tap command also migrates installations that used the archived
 `homebrew-tokenusage` repository. After migration, `brew update` and
 `brew upgrade tokenusage` use this repository.
+
+### Uninstall
+
+```sh
+tokenusage stop
+brew uninstall tokenusage
+brew untap xenofonteicaro/tokenusage
+```
+
+Uninstalling does not delete `~/Library/Application Support/tokenusage`. Remove
+that directory too if you want to erase preferences, prices, and imports. Tool
+histories are never touched.
+
+### Release archive
 
 The release archive contains only the source and configuration needed to build
 the app. It excludes Git history, internal documentation, screenshots, tests,
