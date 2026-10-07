@@ -54,6 +54,7 @@ export interface SourceStatus {
 }
 
 export interface Settings {
+  language?: import("./i18n/languages").Language;
   monthlyTokenGoal: number | null;
   subscriptions: Record<Provider, number | null>;
   usdToBrlRate?: number;
@@ -61,6 +62,7 @@ export interface Settings {
 }
 
 export const defaultSettings: Settings = {
+  language: "pt-BR",
   monthlyTokenGoal: null,
   subscriptions: { codex: null, claude: null, grok: null, gemini: null },
   usdToBrlRate: 5.75,

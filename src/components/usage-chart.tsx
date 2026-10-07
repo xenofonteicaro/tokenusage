@@ -1,6 +1,7 @@
 "use client";
+import { useI18n } from "./language-provider";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
-import { dailySeries, formatDate, formatTokens } from "@/lib/analytics";
+import { dailySeries } from "@/lib/analytics";
 import {
   ChartContainer,
   ChartTooltip,
@@ -12,15 +13,21 @@ const chartConfig = {
   total: { label: "Tokens", color: "var(--primary)" },
 } satisfies ChartConfig;
 
-const label = (date: string) => formatDate(`${date}T12:00:00Z`);
-
 export function UsageChart({
   series,
 }: {
   series: ReturnType<typeof dailySeries>;
 }) {
+  const { t, formatTokens, formatDate } = useI18n();
+  const label = (date: string) => formatDate(`${date}T12:00:00Z`);
   return (
-    <ChartContainer config={chartConfig} className="aspect-auto h-64 w-full">
+    <ChartContainer
+      config={{
+        ...chartConfig,
+        total: { ...chartConfig.total, label: t("Tokens") },
+      }}
+      className="aspect-auto h-64 w-full"
+    >
       <AreaChart data={series} margin={{ left: 0, right: 8 }}>
         <defs>
           <linearGradient id="fillTotal" x1="0" y1="0" x2="0" y2="1">
@@ -59,7 +66,7 @@ export function UsageChart({
               labelFormatter={(value) => label(String(value))}
               formatter={(value) => (
                 <div className="flex w-full justify-between gap-4">
-                  <span className="text-muted-foreground">Tokens</span>
+                  <span className="text-muted-foreground">{t("Tokens")}</span>
                   <span className="font-mono font-medium tabular-nums">
                     {formatTokens(Number(value))}
                   </span>
