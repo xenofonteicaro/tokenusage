@@ -58,13 +58,11 @@ test("imports API logs without duplicate consumption and persists settings", asy
     },
   ];
   const upload = () =>
-    page
-      .getByLabel("Arquivo de consumo de API")
-      .setInputFiles({
-        name: "usage.json",
-        mimeType: "application/json",
-        buffer: Buffer.from(JSON.stringify(log)),
-      });
+    page.getByLabel("Arquivo de consumo de API").setInputFiles({
+      name: "usage.json",
+      mimeType: "application/json",
+      buffer: Buffer.from(JSON.stringify(log)),
+    });
   await upload();
   await expect(page.getByRole("status")).toContainText("processados");
   await upload();
